@@ -15,8 +15,12 @@ namespace VigilantCupcake {
             hostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
         }
 
-        private void saveToolStripButton_Click(object sender, EventArgs e) {
-            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile);
+        private void save_Click(object sender, EventArgs e) {
+            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+        }
+
+        private void flushDns_Click(object sender, EventArgs e) {
+            OS_Utils.DnsUtil.FlushDns();
         }
     }
 }
