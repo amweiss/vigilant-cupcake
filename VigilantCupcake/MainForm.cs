@@ -8,16 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VigilantCupcake.TreeViewUtils;
 
 namespace VigilantCupcake {
     public partial class MainForm : Form {
         public MainForm() {
             InitializeComponent();
-            hostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+            hostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
+        }
+
+        private void exit_Click(object sender, EventArgs e) {
+            Close();
         }
 
         private void save_Click(object sender, EventArgs e) {
-            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
         }
 
         private void flushDns_Click(object sender, EventArgs e) {
@@ -25,40 +30,26 @@ namespace VigilantCupcake {
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
-            ListDirectory(localFragmentTree, OS_Utils.LocalFiles.BaseDirectory);
+            FileTreeUtils.ListDirectory(localFragmentTree, OS_Utils.LocalFiles.BaseDirectory);
             localFragmentTree.Nodes[0].Expand();
         }
 
-        private void ListDirectory(TreeView treeView, string path) {
-            treeView.Nodes.Clear();
-            var rootDirectoryInfo = new DirectoryInfo(path);
-            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+        private void localFragmentTree_AfterCheck(object sender, TreeViewEventArgs e) {
+            FileTreeUtils.CheckAllChildNodes(e.Node, e.Node.Checked);
+            var allchecked = FileTreeUtils.GetAllCheckedFullPaths(e.Node.TreeView.Nodes);
+            var paths = allchecked.Select(x => Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, x));
+
+            //TODO: frag
+            var files = from path in paths
+                       select File.ReadAllText(path);
+
+            hostsFileView.Text = (files.Count() > 0) ? files.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
         }
 
-        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo) {
-            var directoryNode = new TreeNode(directoryInfo.Name);
-            foreach (var directory in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
-            foreach (var file in directoryInfo.GetFiles())
-                directoryNode.Nodes.Add(new TreeNode(file.Name));
-            return directoryNode;
-        }
-
-        private string GetFullPathOfFileNode(TreeNode treeNode, string current) {
-            if (treeNode.Parent != null) {
-                return Path.Combine(GetFullPathOfFileNode(treeNode.Parent, current), treeNode.Text);
-            }
-            return current;
-        }
-
-        private void localFragmentTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) {
-            if (e.Node.Nodes.Count != 0) return;
-            var filename = GetFullPathOfFileNode(e.Node, OS_Utils.LocalFiles.BaseDirectory);
-            currentFragmentView.LoadFile(filename, RichTextBoxStreamType.PlainText);
-        }
-
-        private void exit_Click(object sender, EventArgs e) {
-            Close();
+        private void localFragmentTree_AfterSelect(object sender, TreeViewEventArgs e) {
+            if (e.Node.Nodes.Count != 0 || e.Node.IsSelected == false) return;
+            var fullpath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, e.Node.FullPath);
+            currentFragmentView.LoadFile(fullpath, RichTextBoxStreamType.PlainText);
         }
     }
 }

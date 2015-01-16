@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 
 namespace VigilantCupcake.OS_Utils {
     public static class LocalFiles {
-        public static string BaseDirectory { get { return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName); } }
+        public static string BaseDirectoryRoot {
+            get {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+        }
+
+        public static string BaseDirectory {
+            get {
+                return System.IO.Path.Combine(BaseDirectoryRoot, FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName);
+            }
+        }
     }
 }
