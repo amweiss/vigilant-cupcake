@@ -22,5 +22,16 @@ namespace VigilantCupcake.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection SelectedFiles {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SelectedFiles"]));
+            }
+            set {
+                this["SelectedFiles"] = value;
+            }
+        }
     }
 }
