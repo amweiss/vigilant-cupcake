@@ -48,7 +48,6 @@ namespace VigilantCupcake {
             if (treeNode.Parent != null) {
                 return Path.Combine(GetFullPathOfFileNode(treeNode.Parent, current), treeNode.Text);
             }
-
             return current;
         }
 
@@ -56,6 +55,10 @@ namespace VigilantCupcake {
             if (e.Node.Nodes.Count != 0) return;
             var filename = GetFullPathOfFileNode(e.Node, OS_Utils.LocalFiles.BaseDirectory);
             currentFragmentView.LoadFile(filename, RichTextBoxStreamType.PlainText);
+        }
+
+        private void exit_Click(object sender, EventArgs e) {
+            Close();
         }
     }
 }
