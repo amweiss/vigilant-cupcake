@@ -20,6 +20,10 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
+
+            //TODO: Make save on start work with background loading.
+            saveOnProgramStartToolStripMenuItem.Visible = false;
+
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
             currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
@@ -85,6 +89,17 @@ namespace VigilantCupcake {
                 _loadedFragments = new List<Fragment>();
             }
             fragmentBindingSource1.DataSource = _loadedFragments;
+
+            _loadedFragments.ForEach(x => x.ContentsDownloaded += fragment_ContentsDownloaded);
+        }
+
+        private void fragment_ContentsDownloaded(object sender, EventArgs e) {
+            var fragment = (Fragment)sender;
+            if (fragment == _selectedFragment) {
+                remoteUrlView.Text = _selectedFragment.RemoteLocation;
+                updateCurrentFragmentView();
+            }
+            updateHostsFileView();
         }
 
         private void updateHostsFileView() {
@@ -123,7 +138,9 @@ namespace VigilantCupcake {
                     break;
                 case 1:
                     if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
-                        using (File.Create(_loadedFragments.Last().FullPath)) { }
+                        using (File.Create(_loadedFragments.Last().FullPath)) {
+                            _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
+                        }
                     }
                     break;
                 default:
