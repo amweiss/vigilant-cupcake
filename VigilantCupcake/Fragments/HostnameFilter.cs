@@ -5,25 +5,15 @@ using System.Text.RegularExpressions;
 
 namespace Fragments
 {
+
     public class HostnameFilter
     {
-        private string _filter, _fileName;
+        private string _fileName;
+        private HostfileRecord _hnRecord;
         public HostnameFilter(string filter, string fileName)
         {
-            _filter = filter;
             _fileName = fileName;
-        }
-
-        public String Filter
-        {
-            get
-            {
-                return this._filter;
-            }
-            set
-            {
-                this._filter = value;
-            }
+            _hnRecord = new HostfileRecord();
         }
 
         public void Apply(string filter)
@@ -38,35 +28,20 @@ namespace Fragments
                 if(Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#"))
                 {
                     writeBackLine = "#" + writeBackLine;
-                }
-                appliedFilter.Add(writeBackLine);
-            }
-            file.Write(appliedFilter.ToArray());
-        }
-        public void Apply()
-        {
-            HostfileFragment file = new HostfileFragment(this._fileName);
-            string[] fileData = file.Read();
-            List<string> appliedFilter = new List<string>();
-            appliedFilter.Add("#Filter: " + _filter);
-            foreach (string line in fileData)
-            {
-                string writeBackLine = line;
-                if (Regex.IsMatch(line, _filter) && !Regex.IsMatch(line, @"^#"))
-                {
-                    writeBackLine = "#" + writeBackLine;
+                    //EXPLODE AND FIGURE SHIT OUT
                 }
                 appliedFilter.Add(writeBackLine);
             }
             file.Write(appliedFilter.ToArray());
         }
 
+
         public void Remove(string filter)
         {
             HostfileFragment file = new HostfileFragment(this._fileName);
             string[] fileData = file.Read();
             List<string> removeFilter = new List<string>();
-            string[] otherFilters = this.getOtherFilters(fileData);
+            string[] otherFilters = this.getAllFilters(fileData);
             foreach (string line in fileData)
             {
                 string writeBackLine = line;
@@ -86,7 +61,7 @@ namespace Fragments
             }
         }
 
-        public string[] getOtherFilters(string[] fileData)
+        public string[] getAllFilters(string[] fileData)
         {
             List<string> otherFilters = new List<string>();
             Regex isFilter = new Regex(@"^#Filter:\s*");
