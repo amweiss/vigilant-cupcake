@@ -16,6 +16,7 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
+            saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -23,6 +24,10 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
+            saveAll();
+        }
+
+        private void saveAll() {
             if (fragmentGrid.SelectedRows.Count > 0) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
                 if (currentFragmentView.Enabled)
@@ -48,6 +53,7 @@ namespace VigilantCupcake {
         private void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             updateHostsFileView();
+            if (Properties.Settings.Default.AutoSaveOnStartup) saveAll();
         }
 
         private void savePreferences() {
@@ -159,6 +165,11 @@ namespace VigilantCupcake {
 
         private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
             File.Delete(_loadedFragments[e.Row.Index].FullPath);
+        }
+
+        private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

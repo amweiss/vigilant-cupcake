@@ -114,5 +114,17 @@ namespace VigilantCupcake.Properties {
                 return ((string)(this["LinuxHostsFilePath"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveOnStartup {
+            get {
+                return ((bool)(this["AutoSaveOnStartup"]));
+            }
+            set {
+                this["AutoSaveOnStartup"] = value;
+            }
+        }
     }
 }

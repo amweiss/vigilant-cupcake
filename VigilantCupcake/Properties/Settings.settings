@@ -32,5 +32,8 @@
     <Setting Name="LinuxHostsFilePath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/etc/hosts</Value>
     </Setting>
+    <Setting Name="AutoSaveOnStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

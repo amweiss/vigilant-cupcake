@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace VigilantCupcake.Models {
     class Fragment {
 
-        private bool _dirty = false;
+        private bool _loaded = false;
         private string _currentContents = null;
         private string _remoteLocation = null;
 
@@ -22,8 +22,8 @@ namespace VigilantCupcake.Models {
                 return _remoteLocation;
             }
             set {
+                if (_remoteLocation != null && _remoteLocation.Equals(value)) return;
                 _remoteLocation = value;
-                _dirty = true;
                 if (!string.IsNullOrWhiteSpace(RemoteLocation))
                     downloadFile();
             }
@@ -37,21 +37,19 @@ namespace VigilantCupcake.Models {
 
         public string FileContents {
             get {
-                if (_dirty == false) {
+                if (!_loaded) {
                     if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
                         downloadFile();
                     } else {
                         _currentContents = Regex.Replace(File.ReadAllText(FullPath), @"\r\n|\n\r|\n|\r", "\r\n");
                         checkForRemoteLocation();
-                        if (!string.IsNullOrWhiteSpace(RemoteLocation))
-                            downloadFile();
                     }
                 }
+                _loaded = true;
                 return _currentContents;
             }
             set {
                 _currentContents = Regex.Replace(value, @"\r\n|\n\r|\n|\r", "\r\n"); ;
-                _dirty = true;
                 checkForRemoteLocation();
             }
         }
@@ -73,7 +71,6 @@ namespace VigilantCupcake.Models {
                 var firstLine = _currentContents.Substring(0, length);
                 if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
                     RemoteLocation = firstLine.Substring(Properties.Settings.Default.RemoteLocationSyntax.Length);
-                    _currentContents = _currentContents.Substring(length);
                 }
             }
         }
