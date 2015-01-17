@@ -78,12 +78,13 @@ namespace Fragments
                 }
                 removeFilter.Add(writeBackLine);
             }
+            file.Write(removeFilter.ToArray());
             //reapply leftover filters
             foreach( string line in otherFilters)
             {
-                if (!Regex.IsMatch(line, @"^Filter: " + filter + "$"))
+                if (line != filter)
                 {
-                    this.Apply(Regex.Replace(line, @"^Filter: ", "").Trim());
+                    this.Apply(line);
                 }
             }
         }
