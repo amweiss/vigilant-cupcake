@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Net;
 
-namespace Fragment
+namespace Fragments
 {
     public class HostfileFragment
     {
@@ -35,22 +35,23 @@ namespace Fragment
 
         public void Write(string[] fragmentOutput, string remoteLocation = "")
         {
-            StreamWriter writer = new StreamWriter(this.fileName);
+            StreamWriter writer = new StreamWriter(this._fileName);
             if (remoteLocation != "")
             {
-                writer.WriteLine("#Remote: " + remoteLocation;
+                writer.WriteLine("#Remote: " + remoteLocation);
             }
-            for (int i = 0; i < fragmentOutput.Length(); i++)
+            for (int i = 0; i < fragmentOutput.Length; i++)
             {
                 writer.WriteLine(fragmentOutput[i]);
             }
             writer.Close();
         }
 
-        public Bool updateFromRemote(string localfileName)
+        public bool updateFromRemote(string localfileName)
         {
             Regex isRemote = new Regex(@"^#Remote:\s*");
             string[] fragmentData = this.Read();
+            string remoteLocation = "";
             foreach(string line in fragmentData)
             {
                 if(isRemote.IsMatch(line.Trim()))
@@ -63,7 +64,7 @@ namespace Fragment
                     return false; //Remote location will be in a comment block at the top of the file. If we leave the comment block, then this file is not remote... Stop looking
                 }
             }
-            string remoteLocation = isRemote.Replace(remoteLocation,""); //Strip off the defining tag #Remote:
+            remoteLocation = isRemote.Replace(remoteLocation,""); //Strip off the defining tag #Remote:
             WebClient client = new WebClient();
             client.DownloadFile(remoteLocation, this._fileName);
             this.Write(this.Read(), remoteLocation);
