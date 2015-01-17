@@ -21,7 +21,7 @@ namespace Fragment
             }
         }
 
-        public string[] read()
+        public string[] Read()
         {
             List<string> fragmentInput = new List<string>();
             StreamReader reader = new StreamReader(this._fileName);
@@ -29,10 +29,11 @@ namespace Fragment
             {
                 fragmentInput.Add(reader.ReadLine());
             }
+            reader.Close();
             return fragmentInput.ToArray();
         }
 
-        public void write(string[] fragmentOutput, string remoteLocation = "")
+        public void Write(string[] fragmentOutput, string remoteLocation = "")
         {
             StreamWriter writer = new StreamWriter(this.fileName);
             if (remoteLocation != "")
@@ -43,20 +44,21 @@ namespace Fragment
             {
                 writer.WriteLine(fragmentOutput[i]);
             }
+            writer.Close();
         }
 
         public Bool updateFromRemote(string localfileName)
         {
             Regex isRemote = new Regex(@"^#Remote:\s*");
-            string[] fragmentData = this.read();
-            for(int i = 0; i < fragmentData.Length(); i++)
+            string[] fragmentData = this.Read();
+            foreach(string line in fragmentData)
             {
-                if(isRemote.IsMatch(fragmentData[i].Trim()))
+                if(isRemote.IsMatch(line.Trim()))
                 {
-                    remoteLocation = fragmentData[i];
+                    remoteLocation = line;
                     break; //We found the comment specifying the remote location. No need to continue searching
                 }
-                if (!Regex.IsMatch(fragmentData[i].Trim(), @"^#"))
+                if (!Regex.IsMatch(line.Trim(), @"^#"))
                 {
                     return false; //Remote location will be in a comment block at the top of the file. If we leave the comment block, then this file is not remote... Stop looking
                 }
