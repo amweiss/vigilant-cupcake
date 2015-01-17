@@ -3,12 +3,12 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Fragment
+namespace Fragments
 {
     public class HostnameFilter
     {
         private string _filter, _fileName;
-        public HostnameFilter(string filter)
+        public HostnameFilter(string filter, string fileName)
         {
             _filter = filter;
             _fileName = fileName;
@@ -26,36 +26,55 @@ namespace Fragment
             }
         }
 
-        public void Apply(string filter = this._filter)
+        public void Apply(string filter)
         {
-            HostFileFragment file = new HostFileFragment(this._fileName);
+            HostfileFragment file = new HostfileFragment(this._fileName);
             string[] fileData = file.Read();
             List<string> appliedFilter = new List<string>();
             appliedFilter.Add("#Filter: " + filter);
-            foreach (string line in fileDate)
+            foreach (string line in fileData)
             {
+                string writeBackLine = line;
                 if(Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#"))
                 {
-                    line = "#" + line;
+                    writeBackLine = "#" + writeBackLine;
                 }
-                appliedFilter.Add(line);
+                appliedFilter.Add(writeBackLine);
+            }
+            file.Write(appliedFilter.ToArray());
+        }
+        public void Apply()
+        {
+            HostfileFragment file = new HostfileFragment(this._fileName);
+            string[] fileData = file.Read();
+            List<string> appliedFilter = new List<string>();
+            appliedFilter.Add("#Filter: " + _filter);
+            foreach (string line in fileData)
+            {
+                string writeBackLine = line;
+                if (Regex.IsMatch(line, _filter) && !Regex.IsMatch(line, @"^#"))
+                {
+                    writeBackLine = "#" + writeBackLine;
+                }
+                appliedFilter.Add(writeBackLine);
             }
             file.Write(appliedFilter.ToArray());
         }
 
         public void Remove(string filter)
         {
-            HostFileFragment file = new HostFileFragment(this._fileName);
+            HostfileFragment file = new HostfileFragment(this._fileName);
             string[] fileData = file.Read();
             List<string> removeFilter = new List<string>();
             string[] otherFilters = this.getOtherFilters(fileData);
             foreach (string line in fileData)
             {
-                if (Regex.IsMatch(line, filter))
+                string writeBackLine = line;
+                if (Regex.IsMatch(writeBackLine, filter))
                 {
-                    line = Regex.Replace(line, @"^#", "");
+                    writeBackLine = Regex.Replace(writeBackLine, @"^#", "");
                 }
-                removeFilter.Add(line);
+                removeFilter.Add(writeBackLine);
             }
             //reapply leftover filters
             foreach( string line in otherFilters)
@@ -77,7 +96,7 @@ namespace Fragment
                 {
                     break; //Remote location will be in a comment block at the top of the file. If we leave the comment block, then this file is not remote... Stop looking
                 }
-                if (isFilter.isMatch(line))
+                if (isFilter.IsMatch(line))
                 {
                     otherFilters.Add(isFilter.Replace(line, "").Trim());
                 }

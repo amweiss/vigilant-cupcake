@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fragment\FragmentCombiner.cs" />
+    <Compile Include="Fragment\HostfileFragment.cs" />
+    <Compile Include="Fragment\HostnameFilter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
