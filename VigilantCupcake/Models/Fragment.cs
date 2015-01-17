@@ -76,7 +76,7 @@ namespace VigilantCupcake.Models {
         }
 
         private async void downloadFile() {
-            _currentContents = "Loading...";
+            _currentContents = "127.0.0.1 Loading...";
             var sb = new StringBuilder();
             try {
                 using (var client = new HttpClient()) {
