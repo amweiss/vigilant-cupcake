@@ -97,25 +97,25 @@ namespace Fragments
                 string ipAddress = splittedRecord.Item1;
                 string[] hostnames = splittedRecord.Item2;
                 foreach (string host in hostnames) {
-                    if (this._hasCollision(ipAddress, host)) // There was a collision
-                    {
-                        /* 
-                         *  check to see if the key exists in the collision array
-                         *  if it does, then append the ip address to the list already there
-                         *  if it does not, then add it in with the 2 colliding IP Addresses
-                         */
-                        if (this.collisions.ContainsKey(host)) {
-                            if (!this.collisions[host].Contains(ipAddress)) {
-                                this.collisions[host].Add(ipAddress);
-                            }
-                        } else {
-                            List<string> collisionList = new List<string>();
-                            collisionList.Add(ipAddress);
-                            collisionList.AddRange(hostToIPMapping[host]);
-                            this.collisions.Add(host, collisionList);
-                        }
-                    } else //There was no collision
-                    {
+                    //if (this._hasCollision(ipAddress, host)) // There was a collision
+                    //{
+                    //    /* 
+                    //     *  check to see if the key exists in the collision array
+                    //     *  if it does, then append the ip address to the list already there
+                    //     *  if it does not, then add it in with the 2 colliding IP Addresses
+                    //     */
+                    //    if (this.collisions.ContainsKey(host)) {
+                    //        if (!this.collisions[host].Contains(ipAddress)) {
+                    //            this.collisions[host].Add(ipAddress);
+                    //        }
+                    //    } else {
+                    //        List<string> collisionList = new List<string>();
+                    //        collisionList.Add(ipAddress);
+                    //        collisionList.AddRange(hostToIPMapping[host]);
+                    //        this.collisions.Add(host, collisionList);
+                    //    }
+                    //} else //There was no collision
+                    //{
                         if (this.ipToHostMapping.ContainsKey(ipAddress)) {
                             if (!this.ipToHostMapping[ipAddress].Contains(host)) {
                                 this.ipToHostMapping[ipAddress].Add(host);
@@ -125,7 +125,8 @@ namespace Fragments
                             hostToAdd.Add(host);
                             ipToHostMapping.Add(ipAddress, hostToAdd);
                         }
-                    }
+                    //}
+
                     if (this.hostToIPMapping.ContainsKey(host)) {
                         if (!this.hostToIPMapping[host].Contains(ipAddress)) {
                             this.hostToIPMapping[host].Add(ipAddress);

@@ -11,6 +11,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 ##Features
 * Combine multiple "fragments" to produce a your hosts file
 * Sync fragments with remote URLs
+* Merge entries for easier review and smaller files
 
 ##Usage
 The fragment list on the left is a collection of all the possible hosts file fragments you can use.
@@ -70,8 +71,7 @@ In fragment editors:
 
 ##Coming Soon
 * Automatically identify conflicts
-* Intelligent file merging and formatting
-* Asyncronous file downloads
+* Intelligent filtering
 * Filter the merged hosts file to exclude entries you don't want
 * Install from [Chocolatey](http://chocolatey.org/)
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
