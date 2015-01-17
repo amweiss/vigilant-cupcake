@@ -19,7 +19,6 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
-            //hostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -27,7 +26,13 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
+            if (fragmentGrid.SelectedRows.Count > 0)
+                currentFragmentView.SaveFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
+
+            updateHostsFileView();
+
             hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
+
             OS_Utils.DnsUtil.FlushDns();
         }
 
@@ -55,7 +60,7 @@ namespace VigilantCupcake {
                         };
 
             _loadedFragments = names.ToList();
-            fragmentGrid.DataSource = _loadedFragments;
+            fragmentBindingSource1.DataSource = _loadedFragments;
         }
 
         private void updateHostsFileView() {
@@ -63,9 +68,8 @@ namespace VigilantCupcake {
 
             if (_loadedFragments != null) {
                 foreach (var item in _loadedFragments.Where(x => x.Enabled)) {
-                    var fullPath = Path.Combine(OS_Utils.LocalFiles.BaseDirectory, item.Name);
-                    if ((File.GetAttributes(fullPath) & FileAttributes.Directory) == 0) {
-                        text.Add(File.ReadAllText(fullPath));
+                    if ((File.GetAttributes(item.FullPath) & FileAttributes.Directory) == 0) {
+                        text.Add(File.ReadAllText(item.FullPath));
                     }
                 }
 
@@ -77,14 +81,19 @@ namespace VigilantCupcake {
             savePreferences();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
-            savePreferences();
-
-            loadFragments();
-        }
-
         private void fragmentGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            updateHostsFileView();
+            switch (e.ColumnIndex) {
+                case 0:
+                    updateHostsFileView();
+                    break;
+                case 1:
+                    if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
+                        File.Create(_loadedFragments.Last().FullPath);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void fragmentGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e) {
@@ -96,9 +105,19 @@ namespace VigilantCupcake {
         private void fragmentGrid_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
 
-            if (fragmentGrid.SelectedRows.Count == 0) return;
-            var fullpath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name));
-            currentFragmentView.LoadFile(fullpath, RichTextBoxStreamType.PlainText);
+            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
+            currentFragmentView.LoadFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
+        }
+
+        private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
+            if (e.ColumnIndex == 1 && e.RowIndex < _loadedFragments.Count - 1) {
+                var newValue = e.FormattedValue.ToString();
+                File.Move(_loadedFragments[e.RowIndex].FullPath, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
+            }
+        }
+
+        private void currentFragmentView_TextChanged(object sender, EventArgs e) {
+            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
         }
     }
 }
