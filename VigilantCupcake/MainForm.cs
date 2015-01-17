@@ -28,6 +28,9 @@ namespace VigilantCupcake {
 
         private void save_Click(object sender, EventArgs e) {
             hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
+            if (fragmentGrid.SelectedRows.Count > 0)
+                currentFragmentView.SaveFile(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name), RichTextBoxStreamType.PlainText);
+
             OS_Utils.DnsUtil.FlushDns();
         }
 
@@ -55,7 +58,7 @@ namespace VigilantCupcake {
                         };
 
             _loadedFragments = names.ToList();
-            fragmentGrid.DataSource = _loadedFragments;
+            fragmentBindingSource1.DataSource = _loadedFragments;
         }
 
         private void updateHostsFileView() {
@@ -77,14 +80,19 @@ namespace VigilantCupcake {
             savePreferences();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
-            savePreferences();
-
-            loadFragments();
-        }
-
         private void fragmentGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            updateHostsFileView();
+            switch (e.ColumnIndex) {
+                case 0:
+                    updateHostsFileView();
+                    break;
+                case 1:
+                    if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
+                        File.Create(Path.Combine(OS_Utils.LocalFiles.BaseDirectory,_loadedFragments.Last().Name));
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void fragmentGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e) {
@@ -96,9 +104,17 @@ namespace VigilantCupcake {
         private void fragmentGrid_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
 
-            if (fragmentGrid.SelectedRows.Count == 0) return;
+            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
             var fullpath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name));
             currentFragmentView.LoadFile(fullpath, RichTextBoxStreamType.PlainText);
+        }
+
+        private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
+            if (e.ColumnIndex == 1 && e.RowIndex < _loadedFragments.Count - 1) {
+                var oldValue = _loadedFragments[e.RowIndex].Name;
+                var newValue = e.FormattedValue.ToString();
+                File.Move(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, oldValue), Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
+            }
         }
     }
 }

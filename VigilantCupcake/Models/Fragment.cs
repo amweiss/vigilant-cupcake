@@ -9,4 +9,5 @@ namespace VigilantCupcake.Models {
         public bool Enabled { get; set; }
         public string Name { get; set; }
     }
+
 }
