@@ -24,7 +24,8 @@ namespace VigilantCupcake.Models {
             set {
                 _remoteLocation = value;
                 _dirty = true;
-                downloadFile();
+                if (!string.IsNullOrWhiteSpace(RemoteLocation))
+                    downloadFile();
             }
         }
 
@@ -37,13 +38,14 @@ namespace VigilantCupcake.Models {
         public string FileContents {
             get {
                 if (_dirty == false) {
-                    if (RemoteLocation != null) {
+                    if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
                         downloadFile();
                     } else {
                         _currentContents = Regex.Replace(File.ReadAllText(FullPath), @"\r\n|\n\r|\n|\r", "\r\n");
+                        checkForRemoteLocation();
+                        if (!string.IsNullOrWhiteSpace(RemoteLocation))
+                            downloadFile();
                     }
-
-                    checkForRemoteLocation();
                 }
                 return _currentContents;
             }
@@ -55,24 +57,30 @@ namespace VigilantCupcake.Models {
         }
 
         public void save() {
-            File.WriteAllText(FullPath, FileContents);
+            var sb = new StringBuilder();
+            if (RemoteLocation != null) {
+                sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
+                sb.AppendLine(RemoteLocation);
+            }
+            sb.Append(FileContents);
+
+            File.WriteAllText(FullPath, sb.ToString());
         }
 
         private void checkForRemoteLocation() {
             var length = (_currentContents.IndexOf(Environment.NewLine) > 0)? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
             if (length >= 0) {
                 var firstLine = _currentContents.Substring(0, length);
-                if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine))
+                if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
                     RemoteLocation = firstLine.Substring(Properties.Settings.Default.RemoteLocationSyntax.Length);
+                    _currentContents = _currentContents.Substring(length);
+                }
             }
         }
 
         private void downloadFile() {
             _currentContents = null;
             var sb = new StringBuilder();
-            sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
-            sb.AppendLine(RemoteLocation);
-
             try {
                 using (var client = new HttpClient()) {
                     var result = client.GetStringAsync(RemoteLocation).Result;

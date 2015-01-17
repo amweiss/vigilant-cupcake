@@ -16,6 +16,7 @@ namespace VigilantCupcake {
     public partial class MainForm : Form {
 
         private List<Fragment> _loadedFragments = null;
+        private Fragment _selectedFragment = null;
 
         public MainForm() {
             InitializeComponent();
@@ -27,15 +28,19 @@ namespace VigilantCupcake {
 
         private void save_Click(object sender, EventArgs e) {
             if (fragmentGrid.SelectedRows.Count > 0) {
-                var selectedFragment = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem);
-                selectedFragment.FileContents = currentFragmentView.Text;
-                selectedFragment.save();
-                currentFragmentView.Text = selectedFragment.FileContents;
+                _selectedFragment.RemoteLocation = remoteUrlView.Text;
+                if (currentFragmentView.Enabled)
+                    _selectedFragment.FileContents = currentFragmentView.Text;
+                _selectedFragment.save();
+                updateCurrentFragmentView();
             }
 
             updateHostsFileView();
-
-            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag?
+            var hostsFileFree = OS_Utils.LocalFiles.WaitForFile(OS_Utils.HostsFileUtil.CurrentHostsFile);
+            if (hostsFileFree)
+                hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+            else
+                MessageBox.Show("There was an error saving the hosts file", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             OS_Utils.DnsUtil.FlushDns();
         }
@@ -83,6 +88,7 @@ namespace VigilantCupcake {
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
             savePreferences();
+            OS_Utils.DnsUtil.FlushDns();
         }
 
         private void fragmentGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
@@ -108,9 +114,13 @@ namespace VigilantCupcake {
 
         private void fragmentGrid_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
-
-            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
-            currentFragmentView.Text = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FileContents;
+            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) {
+                _selectedFragment = null;
+                return;
+            }
+            _selectedFragment = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem);
+            remoteUrlView.Text = _selectedFragment.RemoteLocation;
+            updateCurrentFragmentView();
         }
 
         private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
@@ -120,6 +130,24 @@ namespace VigilantCupcake {
                 if (!oldValue.Equals(newValue)) {
                     File.Move(_loadedFragments[e.RowIndex].FullPath, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
                 }
+            }
+        }
+
+        private void remoteUrlView_Validated(object sender, EventArgs e) {
+            _selectedFragment.RemoteLocation = remoteUrlView.Text;
+            updateCurrentFragmentView();
+        }
+
+        private void updateCurrentFragmentView() {
+            currentFragmentView.Text = _selectedFragment.FileContents;
+            currentFragmentView.Enabled = string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+        }
+
+        private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (char)Keys.Return) {
+                _selectedFragment.RemoteLocation = remoteUrlView.Text;
+                updateCurrentFragmentView();
+                e.Handled = true;
             }
         }
     }
