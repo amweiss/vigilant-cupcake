@@ -117,6 +117,9 @@
     <Content Include="VC2-nobg-whitecake.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)\packages\ilmerge.2.14.1208\tools\ilmerge.exe $(TargetPath) $(TargetDir)\FastColoredTextBox.dll /out:$(TargetPath) /target:winexe /ndebug</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
