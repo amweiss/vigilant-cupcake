@@ -19,7 +19,6 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
-            //hostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -27,10 +26,12 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
-            updateHostsFileView();
-            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
             if (fragmentGrid.SelectedRows.Count > 0)
-                currentFragmentView.SaveFile(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name), RichTextBoxStreamType.PlainText);
+                currentFragmentView.SaveFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
+
+            updateHostsFileView();
+
+            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
 
             OS_Utils.DnsUtil.FlushDns();
         }
@@ -67,9 +68,8 @@ namespace VigilantCupcake {
 
             if (_loadedFragments != null) {
                 foreach (var item in _loadedFragments.Where(x => x.Enabled)) {
-                    var fullPath = Path.Combine(OS_Utils.LocalFiles.BaseDirectory, item.Name);
-                    if ((File.GetAttributes(fullPath) & FileAttributes.Directory) == 0) {
-                        text.Add(File.ReadAllText(fullPath));
+                    if ((File.GetAttributes(item.FullPath) & FileAttributes.Directory) == 0) {
+                        text.Add(File.ReadAllText(item.FullPath));
                     }
                 }
 
@@ -88,7 +88,7 @@ namespace VigilantCupcake {
                     break;
                 case 1:
                     if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
-                        File.Create(Path.Combine(OS_Utils.LocalFiles.BaseDirectory,_loadedFragments.Last().Name));
+                        File.Create(_loadedFragments.Last().FullPath);
                     }
                     break;
                 default:
@@ -106,15 +106,13 @@ namespace VigilantCupcake {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
 
             if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
-            var fullpath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name));
-            currentFragmentView.LoadFile(fullpath, RichTextBoxStreamType.PlainText);
+            currentFragmentView.LoadFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
         }
 
         private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
             if (e.ColumnIndex == 1 && e.RowIndex < _loadedFragments.Count - 1) {
-                var oldValue = _loadedFragments[e.RowIndex].Name;
                 var newValue = e.FormattedValue.ToString();
-                File.Move(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, oldValue), Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
+                File.Move(_loadedFragments[e.RowIndex].FullPath, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
             }
         }
 
