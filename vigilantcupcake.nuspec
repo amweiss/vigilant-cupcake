@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if ??? doesn?t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>vigilantcupcake</id>
+    <title>Vigilant Cupcake</title>
+    <version>0.0.1</version>
+    <authors>Adam Weiss, Matt Gaczewski</authors>
+    <owners>Adam Weiss</owners>
+    <summary>Keeping your hosts file fully baked</summary>
+    <description>A tool to update and maintain you hosts file from fragments and remote sources</description>
+    <projectUrl>http://vigilantcupcake.com</projectUrl>
+    <tags>vigilantcupcake admin hosts</tags>
+    <copyright>2015</copyright>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <iconUrl>https://cdn.rawgit.com/amweiss/vigilant-cupcake/15b5c8eafd721346cfe2eee6e7aaad8cf4bfa353/images/VC2-nobg-whitecake.png</iconUrl>
+    <releaseNotes>Initial release</releaseNotes>
+  </metadata>
+</package>
