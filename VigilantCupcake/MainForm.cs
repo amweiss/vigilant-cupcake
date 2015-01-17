@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -34,7 +35,7 @@ namespace VigilantCupcake {
         private void saveAll() {
             if (fragmentGrid.SelectedRows.Count > 0) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
-                if (currentFragmentView.Enabled)
+                if (!currentFragmentView.ReadOnly)
                     _selectedFragment.FileContents = currentFragmentView.Text;
                 _selectedFragment.save();
                 updateCurrentFragmentView();
@@ -152,7 +153,8 @@ namespace VigilantCupcake {
 
         private void updateCurrentFragmentView() {
             currentFragmentView.Text = _selectedFragment.FileContents;
-            currentFragmentView.Enabled = string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+            currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+            currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
         }
 
         private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
