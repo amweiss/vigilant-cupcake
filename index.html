@@ -56,6 +56,102 @@
 </ul>
 
 <h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The fragment list on the left is a collection of all the possible hosts file fragments you can use.</p>
+
+<p>Double click the new row at the bottom to create a new fragment.</p>
+
+<p>Select a row to view it.</p>
+
+<p>While viewing a row, you can add a Remote URL where the fragment will always sync from.
+If you do this, you will not be able to edit the fragment manually.</p>
+
+<p>Double click an existing row to rename it.</p>
+
+<p>Check the box to make the fragment active.</p>
+
+<h3>
+<a id="hotkeys" class="anchor" href="#hotkeys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hotkeys</h3>
+
+<p>The file windows support the following hotkeys:
+Main tools:</p>
+
+<ul>
+<li>
+<strong>Ctrl+S</strong> - save and flush DNS</li>
+<li>
+<strong>Ctrl+Shift+S</strong> - set option to save and flush DNS on program load</li>
+<li>
+<strong>Ctrl+D</strong> - flush dns</li>
+<li>
+<strong>Ctrl+O</strong> - show current hosts file</li>
+</ul>
+
+<p>In fragment editors:</p>
+
+<ul>
+<li>
+<strong>Left, Right, Up, Down, Home, End, PageUp, PageDown</strong> - moves caret</li>
+<li>
+<strong>Shift+(Left, Right, Up, Down, Home, End, PageUp, PageDown)</strong> - moves caret with selection</li>
+<li>
+<strong>Ctrl+F, Ctrl+H</strong> - shows Find and Replace dialogs</li>
+<li>
+<strong>F3</strong> - find next</li>
+<li>
+<strong>Ctrl+G</strong> - shows GoTo dialog</li>
+<li>
+<strong>Ctrl+(C, V, X)</strong> - standard clipboard operations</li>
+<li>
+<strong>Ctrl+A</strong> - selects all text</li>
+<li>
+<strong>Ctrl+Z, Alt+Backspace, Ctrl+R</strong> - Undo/Redo opertions</li>
+<li>
+<strong>Tab, Shift+Tab</strong> - increase/decrease left indent of selected range</li>
+<li>
+<strong>Ctrl+Home, Ctrl+End</strong> - go to first/last char of the text</li>
+<li>
+<strong>Shift+Ctrl+Home, Shift+Ctrl+End</strong> - go to first/last char of the text with selection</li>
+<li>
+<strong>Ctrl+Left, Ctrl+Right</strong> - go word left/right</li>
+<li>
+<strong>Shift+Ctrl+Left, Shift+Ctrl+Right</strong> - go word left/right with selection</li>
+<li>
+<strong>Ctrl+-, Shift+Ctrl+-</strong> - backward/forward navigation</li>
+<li>
+<strong>Ctrl+U, Shift+Ctrl+U</strong> - converts selected text to upper/lower case</li>
+<li>
+<strong>Ctrl+Shift+C</strong> - inserts/removes comment prefix in selected lines</li>
+<li>
+<strong>Ins</strong> - switches between Insert Mode and Overwrite Mode</li>
+<li>
+<strong>Ctrl+Backspace, Ctrl+Del</strong> - remove word left/right</li>
+<li>
+<strong>Alt+Mouse, Alt+Shift+(Up, Down, Right, Left)</strong> - enables column selection mode</li>
+<li>
+<strong>Alt+Up, Alt+Down</strong> - moves selected lines up/down</li>
+<li>
+<strong>Shift+Del</strong> - removes current line</li>
+<li>
+<strong>Ctrl+B, Ctrl+Shift-B, Ctrl+N, Ctrl+Shift+N</strong> - add, removes and navigates to bookmark</li>
+<li>
+<strong>Esc</strong> - closes all opened tooltips, menus and hints</li>
+<li>
+<strong>Ctrl+Wheel</strong> - zooming</li>
+<li>
+<strong>Ctrl+M, Ctrl+E</strong> - start/stop macro recording, executing of macro</li>
+<li>
+<strong>Alt+F [char]</strong> - finds nearest [char]</li>
+<li>
+<strong>Ctrl+(Up, Down)</strong> - scrolls Up/Down</li>
+<li>
+<strong>Ctrl+(NumpadPlus, NumpadMinus, 0)</strong> - zoom in, zoom out, no zoom</li>
+<li>
+<strong>Ctrl+I</strong> - forced AutoIndentChars of current line</li>
+</ul>
+
+<h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
 <ul>
@@ -67,7 +163,8 @@
 
 <ul>
 <li>Automatically identify conflicts</li>
-<li>Improved UI</li>
+<li>Intelligent file merging and formatting</li>
+<li>Asyncronous file downloads</li>
 <li>Filter the merged hosts file to exclude entries you don't want</li>
 <li>Install from <a href="http://chocolatey.org/">Chocolatey</a>
 </li>
@@ -84,6 +181,10 @@
 <p>Domain donated by <a href="https://github.com/speljamr">Tim Finucane</a></p>
 
 <p>Name donated by Greg Houston</p>
+
+<hr>
+
+<p>Uses <a href="https://github.com/PavelTorgashov/FastColoredTextBox">FastColoredTextBox</a></p>
       </section>
     </div>
 
