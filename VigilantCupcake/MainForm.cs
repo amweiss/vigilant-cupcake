@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fragments;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
@@ -20,6 +21,7 @@ namespace VigilantCupcake {
         public MainForm() {
             InitializeComponent();
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
+            mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
             currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
             hostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
         }
@@ -95,7 +97,17 @@ namespace VigilantCupcake {
                     }
                 }
 
-                hostsFileView.Text = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                //TODO: More efficient????
+                var newHosts = string.Empty;
+                if (Properties.Settings.Default.MergeHostsEntries) {
+                    var combiner = new FragmentCombiner();
+                    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    var result = combiner.generateOutput(blob.Split(Environment.NewLine.ToArray()));
+                    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                } else {
+                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                }
+                hostsFileView.Text = newHosts;
             }
         }
 
@@ -176,6 +188,12 @@ namespace VigilantCupcake {
         private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Properties.Settings.Default.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void mergeHostsEntriesToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.MergeHostsEntries = mergeHostsEntriesToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
+            updateHostsFileView();
         }
     }
 }
