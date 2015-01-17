@@ -166,11 +166,13 @@ namespace Fragment
                 string[] records = this.CombineDNSRecord(pair.Key(), pair.Value());
                 foreach(string line in records)
                 {
-                    writer.Write(line + "\r\n");
+                    writer.WriteLine(line);
                 }
             }
-            //TODO: Prompt user will collision cases
-
+            foreach(KeyValuePair<string, List<string>> pair in this.collisions)
+            {
+                //TODO: Prompt user will collision cases
+            }
         }
     }
 }
