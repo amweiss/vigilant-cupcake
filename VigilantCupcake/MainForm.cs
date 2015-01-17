@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
+using VigilantCupcake.SubForms;
 
 
 namespace VigilantCupcake {
@@ -20,6 +16,7 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
+            saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -27,6 +24,10 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
+            saveAll();
+        }
+
+        private void saveAll() {
             if (fragmentGrid.SelectedRows.Count > 0) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
                 if (currentFragmentView.Enabled)
@@ -52,6 +53,7 @@ namespace VigilantCupcake {
         private void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             updateHostsFileView();
+            if (Properties.Settings.Default.AutoSaveOnStartup) saveAll();
         }
 
         private void savePreferences() {
@@ -61,6 +63,8 @@ namespace VigilantCupcake {
         }
 
         private void loadFragments() {
+            if (!File.Exists(OS_Utils.LocalFiles.BaseDirectory))
+                Directory.CreateDirectory(OS_Utils.LocalFiles.BaseDirectory);
             var files = Directory.GetFiles(OS_Utils.LocalFiles.BaseDirectory);
             if (files.Count() > 0) {
                 var names = from file in files
@@ -153,6 +157,19 @@ namespace VigilantCupcake {
                 updateCurrentFragmentView();
                 e.Handled = true;
             }
+        }
+
+        private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
+            new ActualHostsFile().ShowDialog();
+        }
+
+        private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
+            File.Delete(_loadedFragments[e.Row.Index].FullPath);
+        }
+
+        private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

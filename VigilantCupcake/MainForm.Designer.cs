@@ -45,6 +45,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewCurrentHostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
@@ -135,6 +138,7 @@
             this.fragmentGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentGrid_CellValueChanged);
             this.fragmentGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentGrid_CurrentCellDirtyStateChanged);
             this.fragmentGrid.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentGrid_RowStateChanged);
+            this.fragmentGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentGrid_UserDeletingRow);
             // 
             // splitContainer2
             // 
@@ -247,15 +251,16 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Hosts";
+            this.label1.Text = "New Hosts";
             // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -298,7 +303,8 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.flushDNSToolStripMenuItem});
+            this.flushDNSToolStripMenuItem,
+            this.viewCurrentHostsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
@@ -307,9 +313,38 @@
             // 
             this.flushDNSToolStripMenuItem.Name = "flushDNSToolStripMenuItem";
             this.flushDNSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.flushDNSToolStripMenuItem.Text = "&Flush DNS";
             this.flushDNSToolStripMenuItem.Click += new System.EventHandler(this.flushDns_Click);
+            // 
+            // viewCurrentHostsToolStripMenuItem
+            // 
+            this.viewCurrentHostsToolStripMenuItem.Name = "viewCurrentHostsToolStripMenuItem";
+            this.viewCurrentHostsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.viewCurrentHostsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.viewCurrentHostsToolStripMenuItem.Text = "&View Current Hosts";
+            this.viewCurrentHostsToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentHostsToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveOnProgramStartToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // saveOnProgramStartToolStripMenuItem
+            // 
+            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
+            this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
+            this.saveOnProgramStartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveOnProgramStartToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
+            this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
             // 
             // enabledDataGridViewCheckBoxColumn
             // 
@@ -394,6 +429,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox remoteUrlView;
+        private System.Windows.Forms.ToolStripMenuItem viewCurrentHostsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveOnProgramStartToolStripMenuItem;
 
     }
 }

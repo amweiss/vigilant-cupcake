@@ -42,5 +42,89 @@ namespace VigilantCupcake.Properties {
                 return ((string)(this["RemoteLocationSyntax"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ipconfig")]
+        public string DnsFlushCommand {
+            get {
+                return ((string)(this["DnsFlushCommand"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/flushdns")]
+        public string DnsFlushArguments {
+            get {
+                return ((string)(this["DnsFlushArguments"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("killall")]
+        public string DnsFlushCommandMac {
+            get {
+                return ((string)(this["DnsFlushCommandMac"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-HUP mDNSResponder")]
+        public string DnsFlushArgumentsMac {
+            get {
+                return ((string)(this["DnsFlushArgumentsMac"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("nscd")]
+        public string DnsFlushCommandLinux {
+            get {
+                return ((string)(this["DnsFlushCommandLinux"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-I hosts")]
+        public string DnsFlushArgumentsLinux {
+            get {
+                return ((string)(this["DnsFlushArgumentsLinux"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("System32\\drivers\\etc\\hosts")]
+        public string WindowsHostsFilePath {
+            get {
+                return ((string)(this["WindowsHostsFilePath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/etc/hosts")]
+        public string LinuxHostsFilePath {
+            get {
+                return ((string)(this["LinuxHostsFilePath"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveOnStartup {
+            get {
+                return ((bool)(this["AutoSaveOnStartup"]));
+            }
+            set {
+                this["AutoSaveOnStartup"] = value;
+            }
+        }
     }
 }
