@@ -75,23 +75,34 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private void downloadFile() {
-            _currentContents = null;
+        private async void downloadFile() {
+            _currentContents = "Loading...";
             var sb = new StringBuilder();
             try {
                 using (var client = new HttpClient()) {
-                    var result = client.GetStringAsync(RemoteLocation).Result;
+                    var result = await client.GetStringAsync(RemoteLocation);
                     sb.Append(Regex.Replace(result, @"\r\n|\n\r|\n|\r", "\r\n"));
                 }
             } catch (Exception e) {
                 sb.Append(e.InnerException.Message);
             }
             _currentContents = sb.ToString();
+            OnContentsDownloaded(EventArgs.Empty);
         }
 
         public static bool IsARemoteUrlString(string value) {
             return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
         }
+
+
+        protected virtual void OnContentsDownloaded(EventArgs e) {
+            EventHandler handler = ContentsDownloaded;
+            if (handler != null) {
+                handler(this, e);
+            }
+        }
+
+        public event EventHandler ContentsDownloaded;
     }
 
 }

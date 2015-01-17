@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Fragments
 {
@@ -11,7 +12,7 @@ namespace Fragments
         private string _fileName;
         private HostfileRecord _hnRecord;
         private Dictionary<string,List<string>> hostToIPMapping, ipToHostMapping, collisions;
-        public FragmentCombiner(string fileName, HostfileFragment left = null, HostfileFragment right = null)
+        public FragmentCombiner(string fileName = null, HostfileFragment left = null, HostfileFragment right = null)
         {
             _left = left;
             _right = right;
@@ -67,22 +68,35 @@ namespace Fragments
             string[] merged = new string[left.Length + right.Length];
             Array.Copy(left, merged, left.Length);
             Array.Copy(right, 0, merged, left.Length, right.Length);
+            generateMappingsFromMerged(merged);
+        }
 
-            Dictionary<string, string> hostIPMap = new Dictionary<string, string>();
-            Dictionary<string, List<string>> collisions = new Dictionary<string, List<string>>();
+        public IEnumerable<string> generateOutput(IEnumerable<string> mergedFile) {
+            generateMappingsFromMerged(mergedFile.ToArray());
 
-            foreach (string entry in merged)
-            {
+            var results = new List<string>();
+            foreach (KeyValuePair<string, List<string>> pair in this.ipToHostMapping) {
+                var records = this._hnRecord.CombineHostfileRecord(pair.Key, pair.Value);
+                results.AddRange(records);
+            }
+            return results;
+        }
+
+        private void generateMappingsFromMerged(string[] merged) {
+
+            foreach (string entry in merged) {
                 string trimmedEntry = entry.Trim();
-                if(!Regex.IsMatch(trimmedEntry, @"^\d+")) //skip this one if it is not an entry.. has to start with a digit
+                if (!Regex.IsMatch(trimmedEntry, @"^\d+")) //skip this one if it is not an entry.. has to start with a digit
                 {
                     continue;
                 }
+
+                trimmedEntry = Regex.Replace(trimmedEntry, @"#.*", string.Empty);
+
                 Tuple<string, string[]> splittedRecord = this._hnRecord.SplitHostfileRecord(trimmedEntry);
                 string ipAddress = splittedRecord.Item1;
                 string[] hostnames = splittedRecord.Item2;
-                foreach (string host in hostnames)
-                {
+                foreach (string host in hostnames) {
                     if (this._hasCollision(ipAddress, host)) // There was a collision
                     {
                         /* 
@@ -90,46 +104,33 @@ namespace Fragments
                          *  if it does, then append the ip address to the list already there
                          *  if it does not, then add it in with the 2 colliding IP Addresses
                          */
-                        if (this.collisions.ContainsKey(host))
-                        {
-                            if (!this.collisions[host].Contains(ipAddress))
-                            {
+                        if (this.collisions.ContainsKey(host)) {
+                            if (!this.collisions[host].Contains(ipAddress)) {
                                 this.collisions[host].Add(ipAddress);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             List<string> collisionList = new List<string>();
                             collisionList.Add(ipAddress);
                             collisionList.AddRange(hostToIPMapping[host]);
                             this.collisions.Add(host, collisionList);
                         }
-                    }
-                    else //There was no collision
+                    } else //There was no collision
                     {
-                        if(this.ipToHostMapping.ContainsKey(ipAddress))
-                        {
-                            if (!this.ipToHostMapping[ipAddress].Contains(host))
-                            {
+                        if (this.ipToHostMapping.ContainsKey(ipAddress)) {
+                            if (!this.ipToHostMapping[ipAddress].Contains(host)) {
                                 this.ipToHostMapping[ipAddress].Add(host);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             List<string> hostToAdd = new List<string>();
                             hostToAdd.Add(host);
                             ipToHostMapping.Add(ipAddress, hostToAdd);
                         }
                     }
-                    if (this.hostToIPMapping.ContainsKey(host))
-                    {
-                        if (!this.hostToIPMapping[host].Contains(ipAddress))
-                        {
+                    if (this.hostToIPMapping.ContainsKey(host)) {
+                        if (!this.hostToIPMapping[host].Contains(ipAddress)) {
                             this.hostToIPMapping[host].Add(ipAddress);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         List<string> ipToAdd = new List<string>();
                         ipToAdd.Add(ipAddress);
                         hostToIPMapping.Add(host, ipToAdd);

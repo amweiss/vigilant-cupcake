@@ -126,5 +126,17 @@ namespace VigilantCupcake.Properties {
                 this["AutoSaveOnStartup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MergeHostsEntries {
+            get {
+                return ((bool)(this["MergeHostsEntries"]));
+            }
+            set {
+                this["MergeHostsEntries"] = value;
+            }
+        }
     }
 }

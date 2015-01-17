@@ -27,7 +27,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.fragmentGrid = new System.Windows.Forms.DataGridView();
+            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.label4 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -43,16 +48,12 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentHostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeHostsEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -60,7 +61,9 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -71,8 +74,6 @@
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -110,6 +111,21 @@
             this.splitContainer1.SplitterDistance = 220;
             this.splitContainer1.TabIndex = 2;
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.fragmentGrid, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
+            this.tableLayoutPanel4.TabIndex = 2;
+            // 
             // fragmentGrid
             // 
             this.fragmentGrid.AllowUserToResizeColumns = false;
@@ -132,6 +148,35 @@
             this.fragmentGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentGrid_CurrentCellDirtyStateChanged);
             this.fragmentGrid.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentGrid_RowStateChanged);
             this.fragmentGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentGrid_UserDeletingRow);
+            // 
+            // enabledDataGridViewCheckBoxColumn
+            // 
+            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
+            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
+            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.enabledDataGridViewCheckBoxColumn.Width = 20;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // fragmentBindingSource1
+            // 
+            this.fragmentBindingSource1.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(214, 20);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Fragment List";
             // 
             // splitContainer2
             // 
@@ -345,27 +390,6 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exit_Click);
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
-            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveOnProgramStartToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "&Options";
-            // 
-            // saveOnProgramStartToolStripMenuItem
-            // 
-            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
-            this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
-            this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
-            this.saveOnProgramStartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveOnProgramStartToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
-            this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
-            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -391,49 +415,37 @@
             this.viewCurrentHostsToolStripMenuItem.Text = "&View Current Hosts";
             this.viewCurrentHostsToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentHostsToolStripMenuItem_Click);
             // 
-            // tableLayoutPanel4
+            // optionsToolStripMenuItem
             // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.fragmentGrid, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
-            this.tableLayoutPanel4.TabIndex = 2;
+            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveOnProgramStartToolStripMenuItem,
+            this.mergeHostsEntriesToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
             // 
-            // label4
+            // saveOnProgramStartToolStripMenuItem
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(214, 20);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Fragment List";
+            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
+            this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
+            this.saveOnProgramStartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveOnProgramStartToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
+            this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
             // 
-            // enabledDataGridViewCheckBoxColumn
+            // mergeHostsEntriesToolStripMenuItem
             // 
-            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
-            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
-            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
-            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.enabledDataGridViewCheckBoxColumn.Width = 20;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // fragmentBindingSource1
-            // 
-            this.fragmentBindingSource1.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            this.mergeHostsEntriesToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.MergeHostsEntries;
+            this.mergeHostsEntriesToolStripMenuItem.CheckOnClick = true;
+            this.mergeHostsEntriesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mergeHostsEntriesToolStripMenuItem.Name = "mergeHostsEntriesToolStripMenuItem";
+            this.mergeHostsEntriesToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.mergeHostsEntriesToolStripMenuItem.Text = "&Merge Hosts Entries";
+            this.mergeHostsEntriesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.mergeHostsEntriesToolStripMenuItem_CheckedChanged);
             // 
             // MainForm
             // 
@@ -456,7 +468,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -471,9 +486,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -508,6 +520,7 @@
         private FastColoredTextBoxNS.FastColoredTextBox hostsFileView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripMenuItem mergeHostsEntriesToolStripMenuItem;
 
     }
 }

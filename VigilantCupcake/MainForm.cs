@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fragments;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
@@ -19,7 +20,12 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
+
+            //TODO: Make save on start work with background loading.
+            saveOnProgramStartToolStripMenuItem.Visible = false;
+
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
+            mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
             currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
             hostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
         }
@@ -83,6 +89,17 @@ namespace VigilantCupcake {
                 _loadedFragments = new List<Fragment>();
             }
             fragmentBindingSource1.DataSource = _loadedFragments;
+
+            _loadedFragments.ForEach(x => x.ContentsDownloaded += fragment_ContentsDownloaded);
+        }
+
+        private void fragment_ContentsDownloaded(object sender, EventArgs e) {
+            var fragment = (Fragment)sender;
+            if (fragment == _selectedFragment) {
+                remoteUrlView.Text = _selectedFragment.RemoteLocation;
+                updateCurrentFragmentView();
+            }
+            updateHostsFileView();
         }
 
         private void updateHostsFileView() {
@@ -95,7 +112,17 @@ namespace VigilantCupcake {
                     }
                 }
 
-                hostsFileView.Text = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                //TODO: More efficient????
+                var newHosts = string.Empty;
+                if (Properties.Settings.Default.MergeHostsEntries) {
+                    var combiner = new FragmentCombiner();
+                    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    var result = combiner.generateOutput(blob.Split(Environment.NewLine.ToArray()));
+                    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                } else {
+                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                }
+                hostsFileView.Text = newHosts;
             }
         }
 
@@ -111,7 +138,9 @@ namespace VigilantCupcake {
                     break;
                 case 1:
                     if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
-                        using (File.Create(_loadedFragments.Last().FullPath)) { }
+                        using (File.Create(_loadedFragments.Last().FullPath)) {
+                            _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
+                        }
                     }
                     break;
                 default:
@@ -176,6 +205,12 @@ namespace VigilantCupcake {
         private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Properties.Settings.Default.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void mergeHostsEntriesToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.MergeHostsEntries = mergeHostsEntriesToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
+            updateHostsFileView();
         }
     }
 }
