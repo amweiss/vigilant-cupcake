@@ -18,4 +18,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Improved UI
 * Filter the merged hosts file to exclude entries you don't want
 
+-----
 Logo created by [Todd Burnett](toddjburnett@gmail.com)
+
+Domain donated by [Tim Finucane](https://github.com/speljamr)
