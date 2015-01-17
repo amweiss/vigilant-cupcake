@@ -62,13 +62,17 @@ namespace VigilantCupcake {
 
         private void loadFragments() {
             var files = Directory.GetFiles(OS_Utils.LocalFiles.BaseDirectory);
-            var names = from file in files
-                        select new Fragment() {
-                            Name = new FileInfo(file).Name,
-                            Enabled = Properties.Settings.Default.SelectedFiles.Contains(new FileInfo(file).Name)
-                        };
+            if (files.Count() > 0) {
+                var names = from file in files
+                            select new Fragment() {
+                                Name = new FileInfo(file).Name,
+                                Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(new FileInfo(file).Name)
+                            };
 
-            _loadedFragments = names.ToList();
+                _loadedFragments = names.ToList();
+            } else {
+                _loadedFragments = new List<Fragment>();
+            }
             fragmentBindingSource1.DataSource = _loadedFragments;
         }
 

@@ -306,8 +306,9 @@
             // flushDNSToolStripMenuItem
             // 
             this.flushDNSToolStripMenuItem.Name = "flushDNSToolStripMenuItem";
-            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.flushDNSToolStripMenuItem.Text = "Flush DNS";
+            this.flushDNSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.flushDNSToolStripMenuItem.Text = "&Flush DNS";
             this.flushDNSToolStripMenuItem.Click += new System.EventHandler(this.flushDns_Click);
             // 
             // enabledDataGridViewCheckBoxColumn
