@@ -25,32 +25,32 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.hostsFileView = new System.Windows.Forms.RichTextBox();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.fragmentGrid = new System.Windows.Forms.DataGridView();
+            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.currentFragmentView = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.remoteUrlView = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentHostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -59,28 +59,18 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // hostsFileView
-            // 
-            this.hostsFileView.DetectUrls = false;
-            this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hostsFileView.Location = new System.Drawing.Point(3, 49);
-            this.hostsFileView.MaxLength = 0;
-            this.hostsFileView.Name = "hostsFileView";
-            this.hostsFileView.Size = new System.Drawing.Size(594, 746);
-            this.hostsFileView.TabIndex = 1;
-            this.hostsFileView.Text = "";
-            this.hostsFileView.WordWrap = false;
             // 
             // toolStripContainer2
             // 
@@ -140,6 +130,25 @@
             this.fragmentGrid.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentGrid_RowStateChanged);
             this.fragmentGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentGrid_UserDeletingRow);
             // 
+            // enabledDataGridViewCheckBoxColumn
+            // 
+            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
+            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
+            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.enabledDataGridViewCheckBoxColumn.Width = 20;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // fragmentBindingSource1
+            // 
+            this.fragmentBindingSource1.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -161,8 +170,8 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.currentFragmentView, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel1, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
@@ -174,6 +183,37 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(600, 792);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
+            // currentFragmentView
+            // 
+            this.currentFragmentView.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.currentFragmentView.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.currentFragmentView.BackBrush = null;
+            this.currentFragmentView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.currentFragmentView.CharHeight = 14;
+            this.currentFragmentView.CharWidth = 8;
+            this.currentFragmentView.CommentPrefix = "#";
+            this.currentFragmentView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.currentFragmentView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.currentFragmentView.IsReplaceMode = false;
+            this.currentFragmentView.Location = new System.Drawing.Point(3, 49);
+            this.currentFragmentView.Name = "currentFragmentView";
+            this.currentFragmentView.Paddings = new System.Windows.Forms.Padding(0);
+            this.currentFragmentView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.currentFragmentView.Size = new System.Drawing.Size(594, 740);
+            this.currentFragmentView.TabIndex = 2;
+            this.currentFragmentView.Zoom = 100;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -182,18 +222,6 @@
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Selected File";
-            // 
-            // currentFragmentView
-            // 
-            this.currentFragmentView.DetectUrls = false;
-            this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.currentFragmentView.Location = new System.Drawing.Point(3, 49);
-            this.currentFragmentView.MaxLength = 0;
-            this.currentFragmentView.Name = "currentFragmentView";
-            this.currentFragmentView.Size = new System.Drawing.Size(594, 746);
-            this.currentFragmentView.TabIndex = 0;
-            this.currentFragmentView.Text = "";
-            this.currentFragmentView.WordWrap = false;
             // 
             // tableLayoutPanel1
             // 
@@ -255,6 +283,39 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "New Hosts";
             // 
+            // hostsFileView
+            // 
+            this.hostsFileView.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.hostsFileView.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.hostsFileView.BackBrush = null;
+            this.hostsFileView.BackColor = System.Drawing.SystemColors.Control;
+            this.hostsFileView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hostsFileView.CharHeight = 14;
+            this.hostsFileView.CharWidth = 8;
+            this.hostsFileView.CommentPrefix = "#";
+            this.hostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hostsFileView.IsReplaceMode = false;
+            this.hostsFileView.Location = new System.Drawing.Point(3, 49);
+            this.hostsFileView.Name = "hostsFileView";
+            this.hostsFileView.Paddings = new System.Windows.Forms.Padding(0);
+            this.hostsFileView.ReadOnly = true;
+            this.hostsFileView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.hostsFileView.Size = new System.Drawing.Size(594, 740);
+            this.hostsFileView.TabIndex = 2;
+            this.hostsFileView.Zoom = 100;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -300,6 +361,27 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exit_Click);
             // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveOnProgramStartToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // saveOnProgramStartToolStripMenuItem
+            // 
+            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
+            this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
+            this.saveOnProgramStartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveOnProgramStartToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
+            this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
+            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -325,46 +407,6 @@
             this.viewCurrentHostsToolStripMenuItem.Text = "&View Current Hosts";
             this.viewCurrentHostsToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentHostsToolStripMenuItem_Click);
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
-            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveOnProgramStartToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "&Options";
-            // 
-            // saveOnProgramStartToolStripMenuItem
-            // 
-            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
-            this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
-            this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
-            this.saveOnProgramStartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveOnProgramStartToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
-            this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
-            // 
-            // enabledDataGridViewCheckBoxColumn
-            // 
-            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
-            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
-            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
-            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.enabledDataGridViewCheckBoxColumn.Width = 20;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // fragmentBindingSource1
-            // 
-            this.fragmentBindingSource1.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -387,26 +429,27 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox hostsFileView;
         private System.Windows.Forms.ToolStripContainer toolStripContainer2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -417,7 +460,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RichTextBox currentFragmentView;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.DataGridView fragmentGrid;
@@ -432,6 +474,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewCurrentHostsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveOnProgramStartToolStripMenuItem;
+        private FastColoredTextBoxNS.FastColoredTextBox currentFragmentView;
+        private FastColoredTextBoxNS.FastColoredTextBox hostsFileView;
 
     }
 }

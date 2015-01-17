@@ -14,9 +14,13 @@ namespace VigilantCupcake {
         private List<Fragment> _loadedFragments = null;
         private Fragment _selectedFragment = null;
 
+        private ActualHostsFile _currentHostsForm = new ActualHostsFile();
+
         public MainForm() {
             InitializeComponent();
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
+            currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
+            hostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -39,7 +43,7 @@ namespace VigilantCupcake {
             updateHostsFileView();
             var hostsFileFree = OS_Utils.LocalFiles.WaitForFile(OS_Utils.HostsFileUtil.CurrentHostsFile);
             if (hostsFileFree)
-                hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+                File.WriteAllText(OS_Utils.HostsFileUtil.CurrentHostsFile, hostsFileView.Text);
             else
                 MessageBox.Show("There was an error saving the hosts file", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -160,7 +164,7 @@ namespace VigilantCupcake {
         }
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ActualHostsFile().ShowDialog();
+            _currentHostsForm.ShowDialog();
         }
 
         private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,11 @@ namespace VigilantCupcake.SubForms {
     public partial class ActualHostsFile : Form {
         public ActualHostsFile() {
             InitializeComponent();
+            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
         }
 
         private void ActualHostsFile_Load(object sender, EventArgs e) {
-            actualHostsFileView.LoadFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+            actualHostsFileView.Text = File.ReadAllText(OS_Utils.HostsFileUtil.CurrentHostsFile);
         }
 
         private void actualHostsFileView_KeyPress(object sender, KeyPressEventArgs e) {
