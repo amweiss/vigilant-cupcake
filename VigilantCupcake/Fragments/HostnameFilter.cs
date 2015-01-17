@@ -10,7 +10,7 @@ namespace Fragments
     {
         private string _fileName;
         private HostfileRecord _hnRecord;
-        public HostnameFilter(string filter, string fileName)
+        public HostnameFilter(string fileName)
         {
             _fileName = fileName;
             _hnRecord = new HostfileRecord();
@@ -21,16 +21,39 @@ namespace Fragments
             HostfileFragment file = new HostfileFragment(this._fileName);
             string[] fileData = file.Read();
             List<string> appliedFilter = new List<string>();
-            appliedFilter.Add("#Filter: " + filter);
+            if (!new List<string>(fileData).Contains("#Filter: " + filter))
+            {
+                appliedFilter.Add("#Filter: " + filter);
+            }
             foreach (string line in fileData)
             {
                 string writeBackLine = line;
-                if(Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#"))
+                if (Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#"))
                 {
-                    writeBackLine = "#" + writeBackLine;
-                    //EXPLODE AND FIGURE SHIT OUT
+                    List<string> matchedFilter = new List<string>();
+                    List<string> keepAsIs = new List<string>();
+                    Tuple<string, string[]> splitRecord = _hnRecord.SplitHostfileRecord(writeBackLine);
+                    foreach (string host in splitRecord.Item2)
+                    {
+                        if (Regex.IsMatch(host, filter))
+                        {
+                            matchedFilter.Add(host);
+                        }
+                        else
+                        {
+                            keepAsIs.Add(host);
+                        }
+                    }
+                    foreach (string record in _hnRecord.CombineHostfileRecord(splitRecord.Item1, matchedFilter))
+                    {
+                        appliedFilter.Add('#' + record);
+                    }
+                    appliedFilter.AddRange(_hnRecord.CombineHostfileRecord(splitRecord.Item1, keepAsIs));
                 }
-                appliedFilter.Add(writeBackLine);
+                else
+                {
+                    appliedFilter.Add(writeBackLine);
+                }
             }
             file.Write(appliedFilter.ToArray());
         }
@@ -44,6 +67,10 @@ namespace Fragments
             string[] otherFilters = this.getAllFilters(fileData);
             foreach (string line in fileData)
             {
+                if(Regex.IsMatch(line, @"^#Filter:") && Regex.IsMatch(line, filter))
+                {
+                    continue; //We want to make sure we do not keep the metadata for this filter at the top of the file
+                }
                 string writeBackLine = line;
                 if (Regex.IsMatch(writeBackLine, filter))
                 {
