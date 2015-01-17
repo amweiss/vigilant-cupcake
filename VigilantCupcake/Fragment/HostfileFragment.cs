@@ -37,11 +37,11 @@ namespace Fragment
             StreamWriter writer = new StreamWriter(this.fileName);
             if (remoteLocation != "")
             {
-                writer.Write("#Remote: " + remoteLocation);
+                writer.WriteLine("#Remote: " + remoteLocation;
             }
             for (int i = 0; i < fragmentOutput.Length(); i++)
             {
-                writer.Write(fragmentOutput[i]);
+                writer.WriteLine(fragmentOutput[i]);
             }
         }
 
