@@ -147,12 +147,12 @@ namespace VigilantCupcake {
         }
 
         private void remoteUrlView_Validated(object sender, EventArgs e) {
-            _selectedFragment.RemoteLocation = remoteUrlView.Text;
             updateCurrentFragmentView();
         }
 
         private void updateCurrentFragmentView() {
             currentFragmentView.Text = _selectedFragment.FileContents;
+            remoteUrlView.Text = _selectedFragment.RemoteLocation;
             currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
             currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
         }
