@@ -26,12 +26,16 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
-            if (fragmentGrid.SelectedRows.Count > 0)
-                currentFragmentView.SaveFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
+            if (fragmentGrid.SelectedRows.Count > 0) {
+                var selectedFragment = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem);
+                selectedFragment.FileContents = currentFragmentView.Text;
+                selectedFragment.save();
+                currentFragmentView.Text = selectedFragment.FileContents;
+            }
 
             updateHostsFileView();
 
-            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
+            hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag?
 
             OS_Utils.DnsUtil.FlushDns();
         }
@@ -69,7 +73,7 @@ namespace VigilantCupcake {
             if (_loadedFragments != null) {
                 foreach (var item in _loadedFragments.Where(x => x.Enabled)) {
                     if ((File.GetAttributes(item.FullPath) & FileAttributes.Directory) == 0) {
-                        text.Add(File.ReadAllText(item.FullPath));
+                        text.Add(item.FileContents);
                     }
                 }
 
@@ -88,7 +92,7 @@ namespace VigilantCupcake {
                     break;
                 case 1:
                     if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
-                        File.Create(_loadedFragments.Last().FullPath);
+                        using (File.Create(_loadedFragments.Last().FullPath)) { }
                     }
                     break;
                 default:
@@ -106,18 +110,17 @@ namespace VigilantCupcake {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
 
             if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
-            currentFragmentView.LoadFile(((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FullPath, RichTextBoxStreamType.PlainText);
+            currentFragmentView.Text = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).FileContents;
         }
 
         private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
             if (e.ColumnIndex == 1 && e.RowIndex < _loadedFragments.Count - 1) {
+                var oldValue = _loadedFragments[e.RowIndex].Name;
                 var newValue = e.FormattedValue.ToString();
-                File.Move(_loadedFragments[e.RowIndex].FullPath, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
+                if (!oldValue.Equals(newValue)) {
+                    File.Move(_loadedFragments[e.RowIndex].FullPath, Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
+                }
             }
-        }
-
-        private void currentFragmentView_TextChanged(object sender, EventArgs e) {
-            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
         }
     }
 }

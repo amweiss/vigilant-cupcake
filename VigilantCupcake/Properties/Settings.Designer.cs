@@ -33,5 +33,14 @@ namespace VigilantCupcake.Properties {
                 this["SelectedFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#Remote:")]
+        public string RemoteLocationSyntax {
+            get {
+                return ((string)(this["RemoteLocationSyntax"]));
+            }
+        }
     }
 }

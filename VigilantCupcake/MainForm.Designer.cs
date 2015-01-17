@@ -184,7 +184,6 @@
             this.currentFragmentView.TabIndex = 0;
             this.currentFragmentView.Text = "";
             this.currentFragmentView.WordWrap = false;
-            this.currentFragmentView.TextChanged += new System.EventHandler(this.currentFragmentView_TextChanged);
             // 
             // tableLayoutPanel2
             // 
