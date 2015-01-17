@@ -136,6 +136,7 @@
             this.fragmentGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentGrid_CellValueChanged);
             this.fragmentGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentGrid_CurrentCellDirtyStateChanged);
             this.fragmentGrid.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentGrid_RowStateChanged);
+            this.fragmentGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentGrid_UserDeletingRow);
             // 
             // enabledDataGridViewCheckBoxColumn
             // 

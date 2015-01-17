@@ -58,7 +58,7 @@ namespace VigilantCupcake.Models {
 
         public void save() {
             var sb = new StringBuilder();
-            if (RemoteLocation != null) {
+            if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
                 sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
                 sb.AppendLine(RemoteLocation);
             }

@@ -156,5 +156,9 @@ namespace VigilantCupcake {
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             new ActualHostsFile().ShowDialog();
         }
+
+        private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
+            File.Delete(_loadedFragments[e.Row.Index].FullPath);
+        }
     }
 }
