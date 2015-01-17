@@ -1,6 +1,8 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
+Get it [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/master/VigilantCupcake/bin/Release/VigilantCupcake.exe)
+
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
 
