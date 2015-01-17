@@ -39,6 +39,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox, Version=2.16.1.1, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FCTB.2.16.1.1\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -76,6 +80,7 @@
     <Compile Include="SubForms\ActualHostsFile.Designer.cs">
       <DependentUpon>ActualHostsFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="View Utils\FastColoredTextBoxUtil.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +97,7 @@
       <DependentUpon>ActualHostsFile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\VigilantCupcake.Models.Fragment.datasource" />
     <None Include="Properties\DataSources\VigilantCupcake.Models.FragmentList.datasource" />
     <None Include="Properties\Settings.settings">

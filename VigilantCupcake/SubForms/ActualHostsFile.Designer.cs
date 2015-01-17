@@ -23,23 +23,43 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActualHostsFile));
-            this.actualHostsFileView = new System.Windows.Forms.RichTextBox();
+            this.actualHostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.actualHostsFileView)).BeginInit();
             this.SuspendLayout();
             // 
             // actualHostsFileView
             // 
-            this.actualHostsFileView.DetectUrls = false;
+            this.actualHostsFileView.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.actualHostsFileView.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.actualHostsFileView.BackBrush = null;
+            this.actualHostsFileView.BackColor = System.Drawing.SystemColors.Control;
+            this.actualHostsFileView.CharHeight = 14;
+            this.actualHostsFileView.CharWidth = 8;
+            this.actualHostsFileView.CommentPrefix = "#";
+            this.actualHostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.actualHostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.actualHostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.actualHostsFileView.IsReplaceMode = false;
             this.actualHostsFileView.Location = new System.Drawing.Point(0, 0);
-            this.actualHostsFileView.MaxLength = 0;
             this.actualHostsFileView.Name = "actualHostsFileView";
+            this.actualHostsFileView.Paddings = new System.Windows.Forms.Padding(0);
             this.actualHostsFileView.ReadOnly = true;
+            this.actualHostsFileView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.actualHostsFileView.Size = new System.Drawing.Size(1047, 791);
             this.actualHostsFileView.TabIndex = 0;
-            this.actualHostsFileView.Text = "";
-            this.actualHostsFileView.WordWrap = false;
-            this.actualHostsFileView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.actualHostsFileView_KeyPress);
+            this.actualHostsFileView.Zoom = 100;
             // 
             // ActualHostsFile
             // 
@@ -51,12 +71,14 @@
             this.Name = "ActualHostsFile";
             this.Text = "Current Hosts File";
             this.Load += new System.EventHandler(this.ActualHostsFile_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.actualHostsFileView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox actualHostsFileView;
+        private FastColoredTextBoxNS.FastColoredTextBox actualHostsFileView;
+
     }
 }

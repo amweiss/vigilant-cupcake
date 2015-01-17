@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,9 +15,13 @@ namespace VigilantCupcake {
         private List<Fragment> _loadedFragments = null;
         private Fragment _selectedFragment = null;
 
+        private ActualHostsFile _currentHostsForm = new ActualHostsFile();
+
         public MainForm() {
             InitializeComponent();
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
+            currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
+            hostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -30,7 +35,7 @@ namespace VigilantCupcake {
         private void saveAll() {
             if (fragmentGrid.SelectedRows.Count > 0) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
-                if (currentFragmentView.Enabled)
+                if (!currentFragmentView.ReadOnly)
                     _selectedFragment.FileContents = currentFragmentView.Text;
                 _selectedFragment.save();
                 updateCurrentFragmentView();
@@ -39,7 +44,7 @@ namespace VigilantCupcake {
             updateHostsFileView();
             var hostsFileFree = OS_Utils.LocalFiles.WaitForFile(OS_Utils.HostsFileUtil.CurrentHostsFile);
             if (hostsFileFree)
-                hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText);
+                File.WriteAllText(OS_Utils.HostsFileUtil.CurrentHostsFile, hostsFileView.Text);
             else
                 MessageBox.Show("There was an error saving the hosts file", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -148,7 +153,8 @@ namespace VigilantCupcake {
 
         private void updateCurrentFragmentView() {
             currentFragmentView.Text = _selectedFragment.FileContents;
-            currentFragmentView.Enabled = string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+            currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+            currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
         }
 
         private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
@@ -160,7 +166,7 @@ namespace VigilantCupcake {
         }
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
-            new ActualHostsFile().ShowDialog();
+            _currentHostsForm.ShowDialog();
         }
 
         private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
