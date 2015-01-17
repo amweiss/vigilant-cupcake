@@ -8,10 +8,17 @@ namespace Fragment
     public class FragmentCombiner
     {
         private HostfileFragment _left, _right;
-        public FragmentCombiner(HostfileFragment left = null, HostfileFragment right = null)
+        private string _fileName;
+        private Dictionary<string,List<string>> hostToIPMapping, ipToHostMapping, collisions;
+        public FragmentCombiner(string fileName, HostfileFragment left = null, HostfileFragment right = null)
         {
             _left = left;
             _right = right;
+            _fileName = fileName;
+            if( left != null && right != null)
+            {
+                self.generateMappings();
+            }
         }
 
         public HostileFragment Left
@@ -36,6 +43,17 @@ namespace Fragment
                 _right = value;
             }
         }
+        public string FileName
+        {
+            get
+            {
+                return this._filename;
+            }
+            set
+            {
+                _filename = value;
+            }
+        }
 
         private Tuple<string, string[]> _SplitDNSRecord(string dnsRecord)
         {
@@ -50,7 +68,7 @@ namespace Fragment
             return new Tuple<string, string[]>(ip, hosts.ToArray());
         }
         
-        public Dictionary<string,List<string>> getCollisions()
+        public void generateMappings()
         {
             string[] left = this.getLeft().Read();
             string[] right = this.getRight().Read();
@@ -60,47 +78,98 @@ namespace Fragment
 
             Dictionary hostIPMap = new Dictionary<string, string>();
             Dictionary collisions = new Dictionary<string, List<string>);
-
+            
             foreach(string entry in merged)
             {
                 Tuple<string, string[]> splittedRecord = this._SplitDNSRecord(entry);
                 string ipAddress = splittedRecord.Item1;
-                foreach(string host in splittedRecord.Item2)
+                string hostname = splittedRecord.Item2;
+                
+                if(this._hasCollision(ipAddress, hostname)) // There was a collision
                 {
-                    host.Trim();
-                    if(Regex.IsMatch(host, @"^#")) //it is a comment... cannot possibly collide
+                    /* 
+                     *  check to see if the key exists in the collision array
+                     *  if it does, then append the ip address to the list already there
+                     *  if it does not, then add it in with the 2 colliding IP Addresses
+                     */
+                    if (this.collisions.ContainsKey(host))
                     {
-                        continue;
+                        if (!this.collisions[host].Contains(ipAddress))
+                        {
+                            this.collisions[host].Add(ipAddress);
+                        }
                     }
-                    host = Regex.Replace(host,@"#.*",""); //remove the comment, not part of the host
-                    //Check for collisions. if a host maps to more than 1 IP Address
-                    if (hostIPMap.ContainsKey(host) && hostIPMap[host] != ipAddress) //Then we have a collision
-                    {
-                        /* 
-                         *  check to see if the key exists in the collision array
-                         *  if it does not, then add it in with the 2 colliding IP Addresses
-                         *  if it does, then append the ip address to the list already there
-                         */ 
-                        if(collisions.ContainsKey(host))
-                        {
-                            if(collisions[host].Contains(ipAddress))
-                            {
-                                continue;
-                            }
-                            collisions[host].Add(ipAddress);
-                        }
                         else
-                        {
-                            collisions.Add(host, new List<string>(ipAddress,hostIPMap[host]));
-                        }
+                    {
+                        this.collisions.Add(host, new List<string>(ipAddress, hostToIPMapping[host]));
                     }
                 }
-                return collisions;
+                else //There was no collision
+                {
+                    if (!this.ipToHostMapping[ipAddress].Contains(host))
+                    {
+                        this.ipToHostMapping[ipAddress].Add(host);
+                    }
+                }
+                if (!this.hostToIPMapping[host].Contains(ipAdress))
+                {
+                    this.hostToIPMapping[host].Add(ipAddress);
+                }
             }
         }
-  
-        public void Combine()
+
+        private bool _hasCollision(string ipaddress, string host)
         {
+            if (this.hostToIPMapping.ContainsKey(host) && hostIPMap[host] != ipAddress) //Then we have a collision
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string[] CombineDNSRecord(string ipAddress, List<string> hostnames)
+        {
+            int maxLength = 1020; //We want to wrap into a second entry if the length of the line will be greater than 1020
+            int entryLength = 0;
+            List<string> combinedRecords = new List<string>();
+
+            string entryString = ipAddress;
+            int entryLength = ipAddress.Length();
+            foreach(string host in hostnames)
+            {
+                if(entryLength + host.Length() + 1 <= maxLength)
+                {
+                    entryString = entryString + " " + host;
+                    entryLength = entryLength + host.Length() + 1;
+                }
+                else
+                {
+                    combinedRecords.Add(entryString);
+                    entryString = ipAddress;
+                    entryLength = ipAddress.Length();
+                }
+            }
+            //Take care of the remaining record if one still exists
+            if (entryLength > ipAddress.Length())
+            {
+                combinedRecords.Add(entryString());
+            }
+            return combinedRecords.ToArray();
+        }
+
+        public void CombineFragmentsToFile()
+        {
+            //Take care of the ip mapping (list where there are no collisions)
+            StreamWriter writer = new StreamWriter(this._fileName);
+            foreach (KeyValuePair<string, List<string>> pair in this.ipToHostMapping)
+            {
+                string[] records = this.CombineDNSRecord(pair.Key(), pair.Value());
+                foreach(string line in records)
+                {
+                    writer.Write(line + "\r\n");
+                }
+            }
+            //TODO: Prompt user will collision cases
 
         }
     }
