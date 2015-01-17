@@ -27,6 +27,7 @@ namespace VigilantCupcake {
         }
 
         private void save_Click(object sender, EventArgs e) {
+            updateHostsFileView();
             hostsFileView.SaveFile(OS_Utils.HostsFileUtil.CurrentHostsFile, RichTextBoxStreamType.PlainText); //TODO: frag
             if (fragmentGrid.SelectedRows.Count > 0)
                 currentFragmentView.SaveFile(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem).Name), RichTextBoxStreamType.PlainText);
@@ -115,6 +116,10 @@ namespace VigilantCupcake {
                 var newValue = e.FormattedValue.ToString();
                 File.Move(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, oldValue), Path.Combine(OS_Utils.LocalFiles.BaseDirectory, newValue));
             }
+        }
+
+        private void currentFragmentView_TextChanged(object sender, EventArgs e) {
+            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) return;
         }
     }
 }
