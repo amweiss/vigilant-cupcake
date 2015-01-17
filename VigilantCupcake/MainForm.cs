@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
+using VigilantCupcake.SubForms;
 
 
 namespace VigilantCupcake {
@@ -61,6 +62,8 @@ namespace VigilantCupcake {
         }
 
         private void loadFragments() {
+            if (!File.Exists(OS_Utils.LocalFiles.BaseDirectory)) 
+                Directory.CreateDirectory(OS_Utils.LocalFiles.BaseDirectory);
             var files = Directory.GetFiles(OS_Utils.LocalFiles.BaseDirectory);
             if (files.Count() > 0) {
                 var names = from file in files
@@ -153,6 +156,10 @@ namespace VigilantCupcake {
                 updateCurrentFragmentView();
                 e.Handled = true;
             }
+        }
+
+        private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
+            new ActualHostsFile().ShowDialog();
         }
     }
 }

@@ -10,7 +10,11 @@ namespace VigilantCupcake.OS_Utils {
 
         public static string CurrentHostsFile {
             get {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\drivers\etc\hosts");
+                switch (OS_Utils.PlatformCheck.RunningPlatform()) {
+                    case PlatformCheck.Platform.Windows: return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), Properties.Settings.Default.WindowsHostsFilePath);
+                    default: return Properties.Settings.Default.LinuxHostsFilePath;
+                }
+                
             }
         }
     }

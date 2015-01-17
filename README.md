@@ -19,6 +19,8 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Automatically identify conflicts
 * Improved UI
 * Filter the merged hosts file to exclude entries you don't want
+* Install from [Chocolatey](http://chocolatey.org/)
+* OSX and Linux support via [Mono](http://www.mono-project.com/)
 
 -----
 Created by [Adam Weiss](https://github.com/amweiss) and [Matt Gaczewski](https://github.com/mgaczewski)

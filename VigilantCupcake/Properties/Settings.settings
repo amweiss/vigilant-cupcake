@@ -8,5 +8,29 @@
     <Setting Name="RemoteLocationSyntax" Type="System.String" Scope="Application">
       <Value Profile="(Default)">#Remote:</Value>
     </Setting>
+    <Setting Name="DnsFlushCommand" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ipconfig</Value>
+    </Setting>
+    <Setting Name="DnsFlushArguments" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/flushdns</Value>
+    </Setting>
+    <Setting Name="DnsFlushCommandMac" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">killall</Value>
+    </Setting>
+    <Setting Name="DnsFlushArgumentsMac" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">-HUP mDNSResponder</Value>
+    </Setting>
+    <Setting Name="DnsFlushCommandLinux" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">nscd</Value>
+    </Setting>
+    <Setting Name="DnsFlushArgumentsLinux" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">-I hosts</Value>
+    </Setting>
+    <Setting Name="WindowsHostsFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">System32\drivers\etc\hosts</Value>
+    </Setting>
+    <Setting Name="LinuxHostsFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/etc/hosts</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
