@@ -171,8 +171,9 @@ namespace Fragment
             }
             foreach(KeyValuePair<string, List<string>> pair in this.collisions)
             {
-                //TODO: Prompt user will collision cases
+                //TODO: Prompt user to resolve collision cases
             }
+            writer.Close();
         }
     }
 }
