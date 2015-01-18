@@ -1,7 +1,7 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Get it [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.0.1/VigilantCupcake/bin/Release/VigilantCupcake.exe)
+##Get it [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.2.0/VigilantCupcake/bin/Release/VigilantCupcake.exe)
 
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
@@ -31,7 +31,6 @@ Check the box to make the fragment active.
 The file windows support the following hotkeys:
 Main tools:
 * **Ctrl+S** - save and flush DNS
-* **Ctrl+Shift+S** - set option to save and flush DNS on program load
 * **Ctrl+D** - flush dns
 * **Ctrl+O** - show current hosts file
 
