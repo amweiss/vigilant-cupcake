@@ -17,12 +17,10 @@ namespace VigilantCupcake {
         private Fragment _selectedFragment = null;
 
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
+        private int _pendingDownloads = 0;
 
         public MainForm() {
             InitializeComponent();
-
-            //TODO: Make save on start work with background loading.
-            saveOnProgramStartToolStripMenuItem.Visible = false;
 
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
@@ -85,15 +83,19 @@ namespace VigilantCupcake {
                             };
 
                 _loadedFragments = names.ToList();
+                _loadedFragments.ForEach(x => { x.ContentsDownloaded += fragment_ContentsDownloaded; x.DownloadStarting += fragment_DownloadStarting; });
             } else {
                 _loadedFragments = new List<Fragment>();
             }
             fragmentBindingSource1.DataSource = _loadedFragments;
+        }
 
-            _loadedFragments.ForEach(x => x.ContentsDownloaded += fragment_ContentsDownloaded);
+        private void fragment_DownloadStarting(object sender, EventArgs e) {
+            _pendingDownloads++;
         }
 
         private void fragment_ContentsDownloaded(object sender, EventArgs e) {
+            _pendingDownloads--;
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment) {
                 remoteUrlView.Text = _selectedFragment.RemoteLocation;
@@ -140,6 +142,7 @@ namespace VigilantCupcake {
                     if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
                         using (File.Create(_loadedFragments.Last().FullPath)) {
                             _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
+                            _loadedFragments.Last().DownloadStarting += fragment_DownloadStarting;
                         }
                     }
                     break;
@@ -199,7 +202,25 @@ namespace VigilantCupcake {
         }
 
         private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
-            File.Delete(_loadedFragments[e.Row.Index].FullPath);
+            var fragmentToDelete = _loadedFragments[e.Row.Index];
+            if (confirmAndDelete(fragmentToDelete) == DialogResult.No)
+                e.Cancel = true;
+        }
+
+        private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
+            if (confirmAndDelete(_selectedFragment) == DialogResult.Yes) {
+                _loadedFragments.Remove(_selectedFragment);
+                fragmentGrid.Update();
+                _selectedFragment = null;
+            }
+        }
+
+        private DialogResult confirmAndDelete(Fragment fragment) {
+            DialogResult result = MessageBox.Show("Delete " + fragment.Name + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                File.Delete(fragment.FullPath);
+
+            return result;
         }
 
         private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
@@ -211,6 +232,23 @@ namespace VigilantCupcake {
             Properties.Settings.Default.MergeHostsEntries = mergeHostsEntriesToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
             updateHostsFileView();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (_pendingDownloads > 0) {
+                DialogResult result = MessageBox.Show("There are still downloads pending, do you really want to exit?", "Downloads Pending", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                    e.Cancel = true;
+            }
+        }
+
+        private void fragmentGrid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
+            if (e.Button == MouseButtons.Right && e.RowIndex != -1 && e.RowIndex != _loadedFragments.Count && fragmentGrid.SelectedRows.Contains(fragmentGrid.Rows[e.RowIndex])) {
+                fragmentGrid.ContextMenuStrip = fragmentListContextMenu;
+            } else {
+                fragmentGrid.ContextMenuStrip = null;
+            }
         }
     }
 }

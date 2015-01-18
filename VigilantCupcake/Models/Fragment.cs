@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -8,6 +9,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
+
+    class FragmentList : BindingList<Fragment> {
+    }
+
     class Fragment {
 
         private bool _loaded = false;
@@ -77,6 +82,7 @@ namespace VigilantCupcake.Models {
 
         private async void downloadFile() {
             _currentContents = "127.0.0.1 Loading...";
+            OnDownloadStarting(EventArgs.Empty);
             var sb = new StringBuilder();
             try {
                 using (var client = new HttpClient()) {
@@ -94,6 +100,12 @@ namespace VigilantCupcake.Models {
             return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
         }
 
+        protected virtual void OnDownloadStarting(EventArgs e) {
+            EventHandler handler = DownloadStarting;
+            if (handler != null) {
+                handler(this, e);
+            }
+        }
 
         protected virtual void OnContentsDownloaded(EventArgs e) {
             EventHandler handler = ContentsDownloaded;
@@ -102,6 +114,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
+        public event EventHandler DownloadStarting;
         public event EventHandler ContentsDownloaded;
     }
 
