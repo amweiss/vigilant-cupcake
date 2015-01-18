@@ -28,7 +28,10 @@
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.fragmentGrid = new System.Windows.Forms.DataGridView();
+            this.fragmentListView = new System.Windows.Forms.DataGridView();
+            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -54,10 +57,6 @@
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
-            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fragmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -66,7 +65,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -78,8 +78,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.fragmentListContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -121,7 +119,7 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.fragmentGrid, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.fragmentListView, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
@@ -132,31 +130,50 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
-            // fragmentGrid
+            // fragmentListView
             // 
-            this.fragmentGrid.AllowUserToResizeColumns = false;
-            this.fragmentGrid.AllowUserToResizeRows = false;
-            this.fragmentGrid.AutoGenerateColumns = false;
-            this.fragmentGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.fragmentGrid.ColumnHeadersVisible = false;
-            this.fragmentGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fragmentListView.AllowUserToResizeColumns = false;
+            this.fragmentListView.AllowUserToResizeRows = false;
+            this.fragmentListView.AutoGenerateColumns = false;
+            this.fragmentListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.fragmentListView.ColumnHeadersVisible = false;
+            this.fragmentListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.enabledDataGridViewCheckBoxColumn,
             this.nameDataGridViewTextBoxColumn});
-            this.fragmentGrid.DataSource = this.fragmentBindingSource1;
-            this.fragmentGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fragmentGrid.Location = new System.Drawing.Point(3, 23);
-            this.fragmentGrid.MultiSelect = false;
-            this.fragmentGrid.Name = "fragmentGrid";
-            this.fragmentGrid.RowHeadersVisible = false;
-            this.fragmentGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fragmentGrid.Size = new System.Drawing.Size(214, 766);
-            this.fragmentGrid.TabIndex = 1;
-            this.fragmentGrid.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.fragmentGrid_CellMouseDown);
-            this.fragmentGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.fragmentGrid_CellValidating);
-            this.fragmentGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentGrid_CellValueChanged);
-            this.fragmentGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentGrid_CurrentCellDirtyStateChanged);
-            this.fragmentGrid.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentGrid_RowStateChanged);
-            this.fragmentGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentGrid_UserDeletingRow);
+            this.fragmentListView.DataSource = this.fragmentListBindingSource;
+            this.fragmentListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fragmentListView.Location = new System.Drawing.Point(3, 23);
+            this.fragmentListView.MultiSelect = false;
+            this.fragmentListView.Name = "fragmentListView";
+            this.fragmentListView.RowHeadersVisible = false;
+            this.fragmentListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.fragmentListView.Size = new System.Drawing.Size(214, 766);
+            this.fragmentListView.TabIndex = 1;
+            this.fragmentListView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.fragmentListView_CellMouseDown);
+            this.fragmentListView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.fragmentListView_CellValidating);
+            this.fragmentListView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentListView_CellValueChanged);
+            this.fragmentListView.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentListView_CurrentCellDirtyStateChanged);
+            this.fragmentListView.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentListView_RowStateChanged);
+            this.fragmentListView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentListView_UserDeletingRow);
+            // 
+            // enabledDataGridViewCheckBoxColumn
+            // 
+            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
+            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
+            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.enabledDataGridViewCheckBoxColumn.Width = 20;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // fragmentListBindingSource
+            // 
+            this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
             // 
             // label4
             // 
@@ -457,30 +474,6 @@
             this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
             this.fragmentListContextMenuRename.Text = "Rename";
             // 
-            // enabledDataGridViewCheckBoxColumn
-            // 
-            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
-            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
-            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
-            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.enabledDataGridViewCheckBoxColumn.Width = 20;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // fragmentListBindingSource
-            // 
-            this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
-            // 
-            // fragmentBindingSource1
-            // 
-            this.fragmentBindingSource1.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            this.fragmentBindingSource1.Sort = "Name";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -505,7 +498,8 @@
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -521,8 +515,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.fragmentListContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -541,8 +533,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView fragmentGrid;
-        private System.Windows.Forms.BindingSource fragmentBindingSource1;
+        private System.Windows.Forms.DataGridView fragmentListView;
         private System.Windows.Forms.DataGridViewCheckBoxColumn enabledDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;

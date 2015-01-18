@@ -13,7 +13,7 @@ using VigilantCupcake.SubForms;
 namespace VigilantCupcake {
     public partial class MainForm : Form {
 
-        private List<Fragment> _loadedFragments = null;
+        private FragmentList _loadedFragments = new FragmentList();
         private Fragment _selectedFragment = null;
 
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
@@ -37,7 +37,7 @@ namespace VigilantCupcake {
         }
 
         private void saveAll() {
-            if (fragmentGrid.SelectedRows.Count > 0) {
+            if (fragmentListView.SelectedRows.Count > 0) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
                 if (!currentFragmentView.ReadOnly)
                     _selectedFragment.FileContents = currentFragmentView.Text;
@@ -67,7 +67,8 @@ namespace VigilantCupcake {
 
         private void savePreferences() {
             Properties.Settings.Default.SelectedFiles = new StringCollection();
-            Properties.Settings.Default.SelectedFiles.AddRange(_loadedFragments.Where(x => x.Enabled).Select(x => x.Name).ToArray());
+            if (_loadedFragments != null && _loadedFragments.Count > 0)
+                Properties.Settings.Default.SelectedFiles.AddRange(_loadedFragments.Where(x => x.Enabled).Select(x => x.Name).ToArray());
             Properties.Settings.Default.Save();
         }
 
@@ -82,12 +83,12 @@ namespace VigilantCupcake {
                                 Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(new FileInfo(file).Name)
                             };
 
-                _loadedFragments = names.ToList();
-                _loadedFragments.ForEach(x => { x.ContentsDownloaded += fragment_ContentsDownloaded; x.DownloadStarting += fragment_DownloadStarting; });
+                names.ToList().ForEach(x => _loadedFragments.Add(x));
+                _loadedFragments.ToList().ForEach(x => { x.ContentsDownloaded += fragment_ContentsDownloaded; x.DownloadStarting += fragment_DownloadStarting; });
             } else {
-                _loadedFragments = new List<Fragment>();
+                _loadedFragments = new FragmentList();
             }
-            fragmentBindingSource1.DataSource = _loadedFragments;
+            fragmentListBindingSource.DataSource = _loadedFragments;
         }
 
         private void fragment_DownloadStarting(object sender, EventArgs e) {
@@ -133,13 +134,13 @@ namespace VigilantCupcake {
             OS_Utils.DnsUtil.FlushDns();
         }
 
-        private void fragmentGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+        private void fragmentListView_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             switch (e.ColumnIndex) {
                 case 0:
                     updateHostsFileView();
                     break;
                 case 1:
-                    if (_loadedFragments != null && e.RowIndex == _loadedFragments.Count - 1) {
+                    if (_loadedFragments != null && _loadedFragments.Count > 0 && e.RowIndex == _loadedFragments.Count - 1) {
                         using (File.Create(_loadedFragments.Last().FullPath)) {
                             _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
                             _loadedFragments.Last().DownloadStarting += fragment_DownloadStarting;
@@ -151,24 +152,24 @@ namespace VigilantCupcake {
             }
         }
 
-        private void fragmentGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e) {
-            if (fragmentGrid.CurrentCell is DataGridViewCheckBoxCell) {
-                fragmentGrid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        private void fragmentListView_CurrentCellDirtyStateChanged(object sender, EventArgs e) {
+            if (fragmentListView.CurrentCell is DataGridViewCheckBoxCell) {
+                fragmentListView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
 
-        private void fragmentGrid_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
+        private void fragmentListView_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
             if (e.StateChanged != DataGridViewElementStates.Selected) return;
-            if (fragmentGrid.SelectedRows.Count == 0 || fragmentGrid.SelectedRows[0].DataBoundItem == null) {
+            if (fragmentListView.SelectedRows.Count == 0 || fragmentListView.SelectedRows[0].DataBoundItem == null) {
                 _selectedFragment = null;
                 return;
             }
-            _selectedFragment = ((Fragment)fragmentGrid.SelectedRows[0].DataBoundItem);
+            _selectedFragment = ((Fragment)fragmentListView.SelectedRows[0].DataBoundItem);
             remoteUrlView.Text = _selectedFragment.RemoteLocation;
             updateCurrentFragmentView();
         }
 
-        private void fragmentGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
+        private void fragmentListView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
             if (e.ColumnIndex == 1 && e.RowIndex < _loadedFragments.Count - 1) {
                 var oldValue = _loadedFragments[e.RowIndex].Name;
                 var newValue = e.FormattedValue.ToString();
@@ -201,7 +202,7 @@ namespace VigilantCupcake {
             _currentHostsForm.ShowDialog();
         }
 
-        private void fragmentGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
+        private void fragmentListView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
             var fragmentToDelete = _loadedFragments[e.Row.Index];
             if (confirmAndDelete(fragmentToDelete) == DialogResult.No)
                 e.Cancel = true;
@@ -210,8 +211,6 @@ namespace VigilantCupcake {
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
             if (confirmAndDelete(_selectedFragment) == DialogResult.Yes) {
                 _loadedFragments.Remove(_selectedFragment);
-                fragmentGrid.Update();
-                _selectedFragment = null;
             }
         }
 
@@ -243,11 +242,11 @@ namespace VigilantCupcake {
             }
         }
 
-        private void fragmentGrid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
-            if (e.Button == MouseButtons.Right && e.RowIndex != -1 && e.RowIndex != _loadedFragments.Count && fragmentGrid.SelectedRows.Contains(fragmentGrid.Rows[e.RowIndex])) {
-                fragmentGrid.ContextMenuStrip = fragmentListContextMenu;
+        private void fragmentListView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
+            if (e.Button == MouseButtons.Right && e.RowIndex != -1 && e.RowIndex != _loadedFragments.Count && fragmentListView.SelectedRows.Contains(fragmentListView.Rows[e.RowIndex])) {
+                fragmentListView.ContextMenuStrip = fragmentListContextMenu;
             } else {
-                fragmentGrid.ContextMenuStrip = null;
+                fragmentListView.ContextMenuStrip = null;
             }
         }
     }
