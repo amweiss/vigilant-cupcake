@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
 
-    class FragmentList : BindingList<Fragment> {
-    }
+    class FragmentList : BindingList<Fragment> { }
 
     class Fragment {
 
