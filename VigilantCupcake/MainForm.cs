@@ -22,6 +22,8 @@ namespace VigilantCupcake {
         public MainForm() {
             InitializeComponent();
 
+            mergeHostsEntriesToolStripMenuItem.Visible = false;
+
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
             currentFragmentView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
@@ -117,7 +119,7 @@ namespace VigilantCupcake {
 
                 //TODO: More efficient????
                 var newHosts = string.Empty;
-                if (Properties.Settings.Default.MergeHostsEntries) {
+                if (false && Properties.Settings.Default.MergeHostsEntries) { //TODO: MAKE MERGING WORK AND NAME IT BETTER
                     var combiner = new FragmentCombiner();
                     var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                     var result = combiner.generateOutput(blob.Split(Environment.NewLine.ToArray()));
