@@ -18,6 +18,7 @@ namespace VigilantCupcake {
 
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private int _pendingDownloads = 0;
+        private int _newFragmentCount = 0;
 
         public MainForm() {
             InitializeComponent();
@@ -139,18 +140,27 @@ namespace VigilantCupcake {
         private void fragmentListView_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             switch (e.ColumnIndex) {
                 case 0:
+                    if (_loadedFragments != null && _loadedFragments.Count > 0 && e.RowIndex == _loadedFragments.Count - 1) {
+                        _loadedFragments.Last().Name = "New Fragment" + ((_newFragmentCount > 0)? (" "+_newFragmentCount) : string.Empty);
+                        _newFragmentCount++;
+                        createNewFragment();
+                    }
                     updateHostsFileView();
                     break;
                 case 1:
                     if (_loadedFragments != null && _loadedFragments.Count > 0 && e.RowIndex == _loadedFragments.Count - 1) {
-                        using (File.Create(_loadedFragments.Last().FullPath)) {
-                            _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
-                            _loadedFragments.Last().DownloadStarting += fragment_DownloadStarting;
-                        }
+                        createNewFragment();
                     }
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void createNewFragment() {
+            using (File.Create(_loadedFragments.Last().FullPath)) {
+                _loadedFragments.Last().ContentsDownloaded += fragment_ContentsDownloaded;
+                _loadedFragments.Last().DownloadStarting += fragment_DownloadStarting;
             }
         }
 
