@@ -85,7 +85,7 @@ Logo created by [Todd Burnett](toddjburnett@gmail.com)
 
 Domain donated by [Tim Finucane](https://github.com/speljamr)
 
-Name donated by Greg Houston
+Name donated by [Greg Houston](https://github.com/ghoustonjr)
 
 ------
 Uses [FastColoredTextBox](https://github.com/PavelTorgashov/FastColoredTextBox)
