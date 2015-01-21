@@ -4,38 +4,85 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
 
-    class FragmentList : BindingList<Fragment> { }
+    class FragmentList : BindingList<Fragment> {
+        public void loadFromDirectory(string path) {
+            if (!File.Exists(path))
+                Directory.CreateDirectory(OS_Utils.LocalFiles.BaseDirectory);
+            var files = Directory.GetFiles(OS_Utils.LocalFiles.BaseDirectory);
+            if (files.Count() > 0) {
+                var names = from file in files
+                            select new Fragment() {
+                                Name = new FileInfo(file).Name,
+                                Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(new FileInfo(file).Name)
+                            };
+                names.ToList().ForEach(x => Add(x));
+            }
+        }
+    }
 
-    class Fragment {
+    class Fragment : INotifyPropertyChanged {
 
         private bool _loaded = false;
         private string _currentContents = null;
         private string _remoteLocation = null;
+        private string _name = null;
 
+        private static int _newFragmentCount = 0;
+
+        public bool Dirty { get; protected set; }
         public bool Enabled { get; set; }
-        public string Name { get; set; }
+        public bool IsHostsFile { get; set; }
+
+        public string Name {
+            get {
+                if (!IsHostsFile) {
+                    if (string.IsNullOrWhiteSpace(_name)) {
+                        do {
+                            _name = "New Fragment" + ((_newFragmentCount > 0) ? (" " + _newFragmentCount) : string.Empty);
+                            _newFragmentCount++;
+                        } while (File.Exists(FullPath));
+                        using (File.Create(FullPath)) { }
+                    }
+                    return _name;
+                } else {
+                    return "hosts";
+                }
+            }
+            set {
+                if (string.IsNullOrWhiteSpace(value)) { throw new Exception("Invalid value for Name"); }
+                var oldVal = _name;
+                _name = value;
+                if (oldVal != null && !oldVal.Equals(_name)) {
+                    File.Move(Path.Combine(OS_Utils.LocalFiles.BaseDirectory, oldVal), FullPath);
+                }
+                NotifyPropertyChanged();
+            }
+        }
 
         public string RemoteLocation {
             get {
-                return _remoteLocation;
+                return (IsHostsFile)? string.Empty : _remoteLocation;
             }
             set {
                 if (_remoteLocation != null && _remoteLocation.Equals(value)) return;
                 _remoteLocation = value;
                 if (!string.IsNullOrWhiteSpace(RemoteLocation))
                     downloadFile();
+                Dirty = true;
+                NotifyPropertyChanged();
             }
         }
 
         public string FullPath {
             get {
-                return Path.Combine(OS_Utils.LocalFiles.BaseDirectory, Name);
+                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : Path.Combine(OS_Utils.LocalFiles.BaseDirectory, Name);
             }
         }
 
@@ -48,29 +95,47 @@ namespace VigilantCupcake.Models {
                         _currentContents = Regex.Replace(File.ReadAllText(FullPath), @"\r\n|\n\r|\n|\r", "\r\n");
                         checkForRemoteLocation();
                     }
+                    _loaded = true;
+                    Dirty = false;
                 }
-                _loaded = true;
                 return _currentContents;
             }
             set {
                 _currentContents = Regex.Replace(value, @"\r\n|\n\r|\n|\r", "\r\n"); ;
                 checkForRemoteLocation();
+                Dirty = true;
+                NotifyPropertyChanged();
             }
         }
 
         public void save() {
-            var sb = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
-                sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
-                sb.AppendLine(RemoteLocation);
-            }
-            sb.Append(FileContents);
+            if (Dirty) {
+                var sb = new StringBuilder();
+                if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
+                    sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
+                    sb.AppendLine(RemoteLocation);
+                }
+                sb.Append(FileContents);
 
-            File.WriteAllText(FullPath, sb.ToString());
+                saveTextAs(FullPath, sb.ToString());
+                Dirty = false;
+            }
+        }
+
+        protected void saveTextAs(string filename, string text) {
+            var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(filename);
+            if (fileHandleFree)
+                File.WriteAllText(filename, text);
+            else
+                throw new Exception("There was an error saving the hosts file");
+        }
+
+        public void delete() {
+            File.Delete(FullPath);
         }
 
         private void checkForRemoteLocation() {
-            var length = (_currentContents.IndexOf(Environment.NewLine) > 0)? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
+            var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
             if (length >= 0) {
                 var firstLine = _currentContents.Substring(0, length);
                 if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
@@ -89,9 +154,9 @@ namespace VigilantCupcake.Models {
                     sb.Append(Regex.Replace(result, @"\r\n|\n\r|\n|\r", "\r\n"));
                 }
             } catch (Exception e) {
-                sb.Append(e.InnerException.Message);
+                sb.Append((e.InnerException != null)? e.InnerException.Message : e.Message);
             }
-            _currentContents = sb.ToString();
+            FileContents = sb.ToString();
             OnContentsDownloaded(EventArgs.Empty);
         }
 
@@ -113,8 +178,17 @@ namespace VigilantCupcake.Models {
             }
         }
 
+
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
+            if (PropertyChanged != null) {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         public event EventHandler DownloadStarting;
         public event EventHandler ContentsDownloaded;
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 
 }

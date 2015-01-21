@@ -1,7 +1,7 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Get it [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.2.0/VigilantCupcake/bin/Release/VigilantCupcake.exe)
+##Get it [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.3.0/VigilantCupcake/bin/Release/VigilantCupcake.exe)
 
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
@@ -16,20 +16,23 @@ Vigilant Cupcake is a tool to manage your hosts file.
 ##Usage
 The fragment list on the left is a collection of all the possible hosts file fragments you can use.
 
-Double click the new row at the bottom to create a new fragment.
+Go to `File` > `New` to create a new fragment.
 
 Select a row to view it.
 
 While viewing a row, you can add a Remote URL where the fragment will always sync from.
 If you do this, you will not be able to edit the fragment manually.
 
-Double click an existing row to rename it.
+Double click or right click an existing row to rename it.
 
 Check the box to make the fragment active.
+
+Right click a row and select delete to delete the fragment.
 
 ###Hotkeys
 The file windows support the following hotkeys:
 Main tools:
+* **Ctrl+N** - create a new fragment
 * **Ctrl+S** - save and flush DNS
 * **Ctrl+D** - flush dns
 * **Ctrl+O** - show current hosts file
