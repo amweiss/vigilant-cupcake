@@ -301,7 +301,8 @@ namespace VigilantCupcake {
         }
 
         private void fragmentListContextMenuRename_Click(object sender, EventArgs e) {
-
+            fragmentListView.CurrentCell = fragmentListView.SelectedRows[0].Cells[1];
+            fragmentListView.BeginEdit(true);
         }
     }
 }

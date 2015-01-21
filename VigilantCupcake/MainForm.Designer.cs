@@ -56,6 +56,8 @@
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.fragmentListContextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
             this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -453,6 +455,7 @@
             // 
             // flushDNSToolStripMenuItem
             // 
+            this.flushDNSToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("flushDNSToolStripMenuItem.Image")));
             this.flushDNSToolStripMenuItem.Name = "flushDNSToolStripMenuItem";
             this.flushDNSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
@@ -470,24 +473,40 @@
             // fragmentListContextMenu
             // 
             this.fragmentListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fragmentListContextMenuNew,
+            this.toolStripSeparator1,
             this.fragmentListContextMenuDelete,
             this.fragmentListContextMenuRename});
             this.fragmentListContextMenu.Name = "fragmentListContextMenu";
-            this.fragmentListContextMenu.Size = new System.Drawing.Size(153, 70);
+            this.fragmentListContextMenu.Size = new System.Drawing.Size(118, 76);
             // 
             // fragmentListContextMenuDelete
             // 
+            this.fragmentListContextMenuDelete.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuDelete.Image")));
             this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
-            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(152, 22);
+            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(117, 22);
             this.fragmentListContextMenuDelete.Text = "Delete";
             this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
             // 
             // fragmentListContextMenuRename
             // 
             this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
-            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(152, 22);
+            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
             this.fragmentListContextMenuRename.Text = "Rename";
             this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(114, 6);
+            // 
+            // fragmentListContextMenuNew
+            // 
+            this.fragmentListContextMenuNew.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuNew.Image")));
+            this.fragmentListContextMenuNew.Name = "fragmentListContextMenuNew";
+            this.fragmentListContextMenuNew.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuNew.Text = "New";
+            this.fragmentListContextMenuNew.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // enabledDataGridViewCheckBoxColumn
             // 
@@ -601,6 +620,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Dirty;
         private System.Windows.Forms.BindingSource selectedFragmentBindingSource;
         private System.Windows.Forms.BindingSource hostsFileBindingSource;
+        private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuNew;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 
     }
 }
