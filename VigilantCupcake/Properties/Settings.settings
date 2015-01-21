@@ -38,5 +38,11 @@
     <Setting Name="MergeHostsEntries" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="MinutesBetweenDownloads" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3600000</Value>
+    </Setting>
+    <Setting Name="DownloadInBackground" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

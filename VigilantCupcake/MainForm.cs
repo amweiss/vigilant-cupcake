@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
@@ -21,6 +22,8 @@ namespace VigilantCupcake {
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private int _pendingDownloads = 0;
 
+        private List<ToolStripMenuItem> _syncDurationMenuItems;
+
         public MainForm() {
             InitializeComponent();
 
@@ -30,6 +33,12 @@ namespace VigilantCupcake {
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
             currentFragmentView.TextChanged += View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged;
             hostsFileView.TextChanged += View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged;
+
+            _syncDurationMenuItems = new List<ToolStripMenuItem>() {
+                syncFiveMinutes, syncFifteenMinutes, syncThirtyMinutes, syncSixtyMinutes
+            };
+
+            enabledToolStripMenuItem_CheckedChanged(null, null);
         }
 
         private void exit_Click(object sender, EventArgs e) {
@@ -280,7 +289,6 @@ namespace VigilantCupcake {
 
         private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == (char)Keys.Return) {
-                //_selectedFragment.RemoteLocation = remoteUrlView.Text;
                 updateCurrentFragmentView();
                 e.Handled = true;
             }
@@ -303,6 +311,29 @@ namespace VigilantCupcake {
         private void fragmentListContextMenuRename_Click(object sender, EventArgs e) {
             fragmentListView.CurrentCell = fragmentListView.SelectedRows[0].Cells[1];
             fragmentListView.BeginEdit(true);
+        }
+
+        private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
+            _loadedFragments.Where(x => x.Enabled).ToList().ForEach(y => y.downloadFile());
+            saveAll();
+        }
+
+        private void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
+            backgroundDownloadTimer.Enabled = Properties.Settings.Default.DownloadInBackground;  //TODO: Property binding not working??
+            _syncDurationMenuItems.ForEach(x => {
+                x.Enabled = syncEnabledToolStripMenuItem.Checked;
+                x.Checked = (int.Parse(x.Tag.ToString()) == Properties.Settings.Default.MinutesBetweenDownloads);
+            });
+        }
+
+        private void syncDuration_CheckedChanged(object sender, EventArgs e) {
+            var item = (ToolStripMenuItem)sender;
+            if (item.Checked) {
+                Properties.Settings.Default.MinutesBetweenDownloads = int.Parse(item.Tag.ToString());
+                backgroundDownloadTimer.Interval = Properties.Settings.Default.MinutesBetweenDownloads; //TODO: Property binding not working??
+                enabledToolStripMenuItem_CheckedChanged(null, null);
+            }
         }
     }
 }

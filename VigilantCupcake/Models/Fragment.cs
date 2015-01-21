@@ -134,17 +134,9 @@ namespace VigilantCupcake.Models {
             File.Delete(FullPath);
         }
 
-        private void checkForRemoteLocation() {
-            var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
-            if (length >= 0) {
-                var firstLine = _currentContents.Substring(0, length);
-                if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
-                    RemoteLocation = firstLine.Substring(Properties.Settings.Default.RemoteLocationSyntax.Length);
-                }
-            }
-        }
+        public async void downloadFile() { //TODO: make this private with something wrapping it? force refresh?
+            if (string.IsNullOrWhiteSpace(RemoteLocation)) return;
 
-        private async void downloadFile() {
             _currentContents = "127.0.0.1 Loading...";
             OnDownloadStarting(EventArgs.Empty);
             var sb = new StringBuilder();
@@ -154,10 +146,20 @@ namespace VigilantCupcake.Models {
                     sb.Append(Regex.Replace(result, @"\r\n|\n\r|\n|\r", "\r\n"));
                 }
             } catch (Exception e) {
-                sb.Append((e.InnerException != null)? e.InnerException.Message : e.Message);
+                sb.Append((e.InnerException != null) ? e.InnerException.Message : e.Message);
             }
             FileContents = sb.ToString();
             OnContentsDownloaded(EventArgs.Empty);
+        }
+
+        private void checkForRemoteLocation() {
+            var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
+            if (length >= 0) {
+                var firstLine = _currentContents.Substring(0, length);
+                if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
+                    RemoteLocation = firstLine.Substring(Properties.Settings.Default.RemoteLocationSyntax.Length);
+                }
+            }
         }
 
         public static bool IsARemoteUrlString(string value) {

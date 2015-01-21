@@ -138,5 +138,29 @@ namespace VigilantCupcake.Properties {
                 this["MergeHostsEntries"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3600000")]
+        public int MinutesBetweenDownloads {
+            get {
+                return ((int)(this["MinutesBetweenDownloads"]));
+            }
+            set {
+                this["MinutesBetweenDownloads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DownloadInBackground {
+            get {
+                return ((bool)(this["DownloadInBackground"]));
+            }
+            set {
+                this["DownloadInBackground"] = value;
+            }
+        }
     }
 }
