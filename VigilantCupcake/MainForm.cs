@@ -358,13 +358,13 @@ namespace VigilantCupcake {
             }
         }
 
-        private void notifyIcon1_DoubleClick(object sender, EventArgs e) {
-            Show();
-        }
-
         private void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Properties.Settings.Default.CloseToTray = closeToTrayToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void showMainForm(object sender, EventArgs e) {
+            ShowWindow();
         }
     }
 }

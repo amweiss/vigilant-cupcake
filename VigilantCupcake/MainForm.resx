@@ -190,12 +190,15 @@
   <metadata name="notifyIconMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1426, 17</value>
   </metadata>
-  <data name="notifyIconSaveAndFlush.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolStripMenuItem2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABRSURBVDhPY6AK+Pbt239S8NevX+dDtUIASJAheA4cf3j/
-        EY6RxUB0zIR9mIaQYgAIwwyBaifdABAm2gBkjKyGtgYQg0cNGJQGkIOh2ikBDAwAR/4LjdUkCHIAAAAA
-        SUVORK5CYII=
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAECSURBVDhPpZOxEYMwDEUZISNkhIyQo2ctWo6eHSiYgp4B
+        6CnccFASP50UDFFIEd39C5b0v79sJzvHPM+PZVlCxHZCoKZtfhi5LMstz3MB3/+SDe26rk9tP4ZHTlEU
+        hYiN44hQpbQ9VECaPAEDQsMwfIpgbZomsZqK1HW99X2/NU0jZBPByWGcSGwhgrOI5djZRDTXKl0E3sWu
+        64TgASfmgrWQQwg37NuOWPZOmxw167sU8O7cE4i5uxRZ2AjYjOt9Pg1y7ggERTs4inpV8nD0itvLQ6SR
+        q7EGftkNy+DnNRJRsUp38UDNfUgWFFDHYirEN7mvTzkNrDFfhBxUAufPlGUv97kDqT8/DnwAAAAASUVO
+        RK5CYII=
 </value>
   </data>
   <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
