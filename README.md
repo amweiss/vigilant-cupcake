@@ -2,6 +2,7 @@
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
 ##Get v0.3.1 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.3.1/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+###NOTE: Most browsers will warn you about the download or execution due to it modifying your hosts file.
 
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
