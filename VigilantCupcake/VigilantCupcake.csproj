@@ -70,6 +70,7 @@
     <Compile Include="OS Utils\DnsUtil.cs" />
     <Compile Include="OS Utils\HostsFileUtil.cs" />
     <Compile Include="OS Utils\LocalFiles.cs" />
+    <Compile Include="OS Utils\NativeMethods.cs" />
     <Compile Include="OS Utils\PlatformCheck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
