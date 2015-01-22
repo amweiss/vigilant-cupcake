@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
+using VigilantCupcake.OS_Utils;
 using VigilantCupcake.SubForms;
 
 
@@ -21,6 +22,7 @@ namespace VigilantCupcake {
 
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private int _pendingDownloads = 0;
+        private bool _reallyClose = false;
 
         private List<ToolStripMenuItem> _syncDurationMenuItems;
 
@@ -41,26 +43,20 @@ namespace VigilantCupcake {
             enabledToolStripMenuItem_CheckedChanged(null, null);
         }
 
-        protected override void WndProc(ref Message m) {
-            if (m.Msg == VigilantCupcake.OS_Utils.NativeMethods.WM_SHOWME) {
-                ShowMe();
+        protected override void WndProc(ref Message message) {
+            if (message.Msg == SingleInstance.WM_SHOWFIRSTINSTANCE) {
+                ShowWindow();
             }
-            base.WndProc(ref m);
+            base.WndProc(ref message);
         }
 
-        private void ShowMe() {
-            if (WindowState == FormWindowState.Minimized) {
-                WindowState = FormWindowState.Normal;
-            }
-            // get our current "TopMost" value (ours will always be false though)
-            bool top = TopMost;
-            // make our form jump to the top of everything
-            TopMost = true;
-            // set it back to whatever it was
-            TopMost = top;
+        private void ShowWindow() {
+            notifyIcon1.Visible = false;
+            NativeMethods.ShowToFront(this.Handle);
         }
 
         private void exit_Click(object sender, EventArgs e) {
+            _reallyClose = true;
             Close();
         }
 
@@ -267,6 +263,13 @@ namespace VigilantCupcake {
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (Properties.Settings.Default.CloseToTray && !_reallyClose) {
+                notifyIcon1.Visible = true;
+                Hide();
+                e.Cancel = true;
+                return;
+            }
+
             if (_pendingDownloads > 0) {
                 DialogResult result = MessageBox.Show("There are still downloads pending, do you really want to exit?", "Downloads Pending", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
@@ -353,6 +356,15 @@ namespace VigilantCupcake {
                 backgroundDownloadTimer.Interval = Properties.Settings.Default.MinutesBetweenDownloads; //TODO: Property binding not working??
                 enabledToolStripMenuItem_CheckedChanged(null, null);
             }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e) {
+            Show();
+        }
+
+        private void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.CloseToTray = closeToTrayToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

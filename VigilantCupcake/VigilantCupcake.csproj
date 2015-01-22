@@ -72,6 +72,7 @@
     <Compile Include="OS Utils\LocalFiles.cs" />
     <Compile Include="OS Utils\NativeMethods.cs" />
     <Compile Include="OS Utils\PlatformCheck.cs" />
+    <Compile Include="OS Utils\SingleInstance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubForms\ActualHostsFile.cs">

@@ -55,9 +55,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mergeHostsEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncronizeFragmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncEnabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -66,6 +68,9 @@
             this.syncThirtyMinutes = new System.Windows.Forms.ToolStripMenuItem();
             this.syncSixtyMinutes = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
+            this.notifyIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.notifyIconSaveAndFlush = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -91,6 +96,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.fragmentListContextMenu.SuspendLayout();
+            this.notifyIconMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
@@ -486,6 +492,13 @@
             this.fragmentListContextMenuRename.Text = "Rename";
             this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.notifyIconMenu;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Vigilant Cupcake";
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
@@ -493,6 +506,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveOnProgramStartToolStripMenuItem,
             this.mergeHostsEntriesToolStripMenuItem,
+            this.closeToTrayToolStripMenuItem,
             this.syncronizeFragmentsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -517,6 +531,15 @@
             this.mergeHostsEntriesToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.mergeHostsEntriesToolStripMenuItem.Text = "&Merge Hosts Entries";
             this.mergeHostsEntriesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.mergeHostsEntriesToolStripMenuItem_CheckedChanged);
+            // 
+            // closeToTrayToolStripMenuItem
+            // 
+            this.closeToTrayToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.CloseToTray;
+            this.closeToTrayToolStripMenuItem.CheckOnClick = true;
+            this.closeToTrayToolStripMenuItem.Name = "closeToTrayToolStripMenuItem";
+            this.closeToTrayToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.closeToTrayToolStripMenuItem.Text = "Close to &Tray";
+            this.closeToTrayToolStripMenuItem.CheckedChanged += new System.EventHandler(this.closeToTrayToolStripMenuItem_CheckedChanged);
             // 
             // syncronizeFragmentsToolStripMenuItem
             // 
@@ -590,6 +613,31 @@
             this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
+            // notifyIconMenu
+            // 
+            this.notifyIconMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notifyIconSaveAndFlush,
+            this.toolStripMenuItem1});
+            this.notifyIconMenu.Name = "notifyIconMenu";
+            this.notifyIconMenu.Size = new System.Drawing.Size(219, 70);
+            // 
+            // notifyIconSaveAndFlush
+            // 
+            this.notifyIconSaveAndFlush.Image = ((System.Drawing.Image)(resources.GetObject("notifyIconSaveAndFlush.Image")));
+            this.notifyIconSaveAndFlush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.notifyIconSaveAndFlush.Name = "notifyIconSaveAndFlush";
+            this.notifyIconSaveAndFlush.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.notifyIconSaveAndFlush.Size = new System.Drawing.Size(218, 22);
+            this.notifyIconSaveAndFlush.Text = "&Save and Flush DNS";
+            this.notifyIconSaveAndFlush.Click += new System.EventHandler(this.save_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(218, 22);
+            this.toolStripMenuItem1.Text = "E&xit";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.exit_Click);
+            // 
             // enabledDataGridViewCheckBoxColumn
             // 
             this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
@@ -657,6 +705,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.fragmentListContextMenu.ResumeLayout(false);
+            this.notifyIconMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
@@ -712,6 +761,11 @@
         private System.Windows.Forms.ToolStripMenuItem syncFifteenMinutes;
         private System.Windows.Forms.ToolStripMenuItem syncThirtyMinutes;
         private System.Windows.Forms.ToolStripMenuItem syncSixtyMinutes;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem closeToTrayToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip notifyIconMenu;
+        private System.Windows.Forms.ToolStripMenuItem notifyIconSaveAndFlush;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 
     }
 }
