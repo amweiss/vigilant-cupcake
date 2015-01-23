@@ -336,7 +336,7 @@ namespace VigilantCupcake {
         }
 
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
-            _loadedFragments.Where(x => x.Enabled).ToList().ForEach(y => y.downloadFile());
+            _loadedFragments.Where(x => x.Enabled).AsParallel().ForAll(y => y.downloadFile());
             saveAll();
         }
 
