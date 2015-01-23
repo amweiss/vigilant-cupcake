@@ -29,10 +29,20 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.fragmentListView = new System.Windows.Forms.DataGridView();
+            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dirty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fragmentListContextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.fragmentListContextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,6 +50,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,11 +71,6 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentHostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.fragmentListContextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,12 +78,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
-            this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Dirty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -87,21 +87,21 @@
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).BeginInit();
+            this.fragmentListContextMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
-            this.menuStrip1.SuspendLayout();
-            this.fragmentListContextMenu.SuspendLayout();
-            this.notifyIconMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.notifyIconMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -165,6 +165,7 @@
             this.enabledDataGridViewCheckBoxColumn,
             this.nameDataGridViewTextBoxColumn,
             this.Dirty});
+            this.fragmentListView.ContextMenuStrip = this.fragmentListContextMenu;
             this.fragmentListView.DataSource = this.fragmentListBindingSource;
             this.fragmentListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentListView.Location = new System.Drawing.Point(3, 23);
@@ -175,12 +176,82 @@
             this.fragmentListView.Size = new System.Drawing.Size(214, 766);
             this.fragmentListView.TabIndex = 1;
             this.fragmentListView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.fragmentListView_CellFormatting);
-            this.fragmentListView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.fragmentListView_CellMouseDown);
             this.fragmentListView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.fragmentListView_CellValidating);
             this.fragmentListView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentListView_CellValueChanged);
             this.fragmentListView.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentListView_CurrentCellDirtyStateChanged);
             this.fragmentListView.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentListView_RowStateChanged);
             this.fragmentListView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentListView_UserDeletingRow);
+            this.fragmentListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.fragmentListView_MouseDown);
+            // 
+            // enabledDataGridViewCheckBoxColumn
+            // 
+            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
+            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
+            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.enabledDataGridViewCheckBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.enabledDataGridViewCheckBoxColumn.ToolTipText = "Fragment Enabled";
+            this.enabledDataGridViewCheckBoxColumn.Width = 20;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // Dirty
+            // 
+            this.Dirty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Dirty.DataPropertyName = "Dirty";
+            this.Dirty.HeaderText = "";
+            this.Dirty.Name = "Dirty";
+            this.Dirty.ReadOnly = true;
+            this.Dirty.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Dirty.ToolTipText = "Unsaved Changes";
+            this.Dirty.Width = 20;
+            // 
+            // fragmentListContextMenu
+            // 
+            this.fragmentListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fragmentListContextMenuNew,
+            this.fragmentListContextMenuSeparator1,
+            this.fragmentListContextMenuDelete,
+            this.fragmentListContextMenuRename});
+            this.fragmentListContextMenu.Name = "fragmentListContextMenu";
+            this.fragmentListContextMenu.Size = new System.Drawing.Size(118, 76);
+            // 
+            // fragmentListContextMenuNew
+            // 
+            this.fragmentListContextMenuNew.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuNew.Image")));
+            this.fragmentListContextMenuNew.Name = "fragmentListContextMenuNew";
+            this.fragmentListContextMenuNew.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuNew.Text = "New";
+            this.fragmentListContextMenuNew.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // fragmentListContextMenuSeparator1
+            // 
+            this.fragmentListContextMenuSeparator1.Name = "fragmentListContextMenuSeparator1";
+            this.fragmentListContextMenuSeparator1.Size = new System.Drawing.Size(114, 6);
+            // 
+            // fragmentListContextMenuDelete
+            // 
+            this.fragmentListContextMenuDelete.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuDelete.Image")));
+            this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
+            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuDelete.Text = "Delete";
+            this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
+            // 
+            // fragmentListContextMenuRename
+            // 
+            this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
+            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuRename.Text = "Rename";
+            this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
+            // 
+            // fragmentListBindingSource
+            // 
+            this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
             // 
             // label4
             // 
@@ -257,6 +328,10 @@
             this.currentFragmentView.Size = new System.Drawing.Size(594, 740);
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // selectedFragmentLabel
             // 
@@ -362,6 +437,10 @@
             this.hostsFileView.Size = new System.Drawing.Size(594, 740);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
+            // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // menuStrip1
             // 
@@ -553,44 +632,6 @@
             this.viewCurrentHostsToolStripMenuItem.Text = "&View Current Hosts";
             this.viewCurrentHostsToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentHostsToolStripMenuItem_Click);
             // 
-            // fragmentListContextMenu
-            // 
-            this.fragmentListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fragmentListContextMenuNew,
-            this.toolStripSeparator1,
-            this.fragmentListContextMenuDelete,
-            this.fragmentListContextMenuRename});
-            this.fragmentListContextMenu.Name = "fragmentListContextMenu";
-            this.fragmentListContextMenu.Size = new System.Drawing.Size(118, 76);
-            // 
-            // fragmentListContextMenuNew
-            // 
-            this.fragmentListContextMenuNew.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuNew.Image")));
-            this.fragmentListContextMenuNew.Name = "fragmentListContextMenuNew";
-            this.fragmentListContextMenuNew.Size = new System.Drawing.Size(117, 22);
-            this.fragmentListContextMenuNew.Text = "New";
-            this.fragmentListContextMenuNew.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(114, 6);
-            // 
-            // fragmentListContextMenuDelete
-            // 
-            this.fragmentListContextMenuDelete.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuDelete.Image")));
-            this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
-            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(117, 22);
-            this.fragmentListContextMenuDelete.Text = "Delete";
-            this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
-            // 
-            // fragmentListContextMenuRename
-            // 
-            this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
-            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
-            this.fragmentListContextMenuRename.Text = "Rename";
-            this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.ContextMenuStrip = this.notifyIconMenu;
@@ -641,46 +682,6 @@
             this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
-            // fragmentListBindingSource
-            // 
-            this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
-            // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
-            // hostsFileBindingSource
-            // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
-            // enabledDataGridViewCheckBoxColumn
-            // 
-            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
-            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
-            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
-            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.enabledDataGridViewCheckBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.enabledDataGridViewCheckBoxColumn.ToolTipText = "Fragment Enabled";
-            this.enabledDataGridViewCheckBoxColumn.Width = 20;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // Dirty
-            // 
-            this.Dirty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Dirty.DataPropertyName = "Dirty";
-            this.Dirty.HeaderText = "";
-            this.Dirty.Name = "Dirty";
-            this.Dirty.ReadOnly = true;
-            this.Dirty.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dirty.ToolTipText = "Unsaved Changes";
-            this.Dirty.Width = 20;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -706,6 +707,8 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).EndInit();
+            this.fragmentListContextMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -713,18 +716,16 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.fragmentListContextMenu.ResumeLayout(false);
             this.notifyIconMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -765,7 +766,7 @@
         private System.Windows.Forms.BindingSource selectedFragmentBindingSource;
         private System.Windows.Forms.BindingSource hostsFileBindingSource;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuNew;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator fragmentListContextMenuSeparator1;
         private System.Windows.Forms.Timer backgroundDownloadTimer;
         private System.Windows.Forms.ToolStripMenuItem syncronizeFragmentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem syncEnabledToolStripMenuItem;

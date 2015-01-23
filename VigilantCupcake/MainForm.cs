@@ -297,21 +297,6 @@ namespace VigilantCupcake {
             }
         }
 
-        private void fragmentListView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                int currentMouseOverRow = fragmentListView.HitTest(e.X, e.Y).RowIndex;
-
-                if (currentMouseOverRow >= 0) {
-                    fragmentListView.ContextMenuStrip = fragmentListContextMenu;
-                }
-
-                fragmentListContextMenu.Show(fragmentListView.PointToScreen(e.Location));
-
-            } else {
-                fragmentListView.ContextMenuStrip = null;
-            }
-        }
-
         private void newToolStripMenuItem_Click(object sender, EventArgs e) {
             createNewFragment();
         }
@@ -379,6 +364,12 @@ namespace VigilantCupcake {
 
         private void showMainForm(object sender, EventArgs e) {
             ShowWindow();
+        }
+
+        private void fragmentListView_MouseDown(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                fragmentListView.Rows[fragmentListView.HitTest(e.X, e.Y).RowIndex].Selected = true;
+            }
         }
     }
 }
