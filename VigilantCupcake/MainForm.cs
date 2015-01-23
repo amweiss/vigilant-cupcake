@@ -298,8 +298,15 @@ namespace VigilantCupcake {
         }
 
         private void fragmentListView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
-            if (e.Button == MouseButtons.Right && e.RowIndex != -1 && e.RowIndex != _loadedFragments.Count && fragmentListView.SelectedRows.Contains(fragmentListView.Rows[e.RowIndex])) {
-                fragmentListView.ContextMenuStrip = fragmentListContextMenu;
+            if (e.Button == MouseButtons.Right) {
+                int currentMouseOverRow = fragmentListView.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0) {
+                    fragmentListView.ContextMenuStrip = fragmentListContextMenu;
+                }
+
+                fragmentListContextMenu.Show(fragmentListView.PointToScreen(e.Location));
+
             } else {
                 fragmentListView.ContextMenuStrip = null;
             }
