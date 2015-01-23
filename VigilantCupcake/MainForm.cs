@@ -80,7 +80,7 @@ namespace VigilantCupcake {
         private void doSaveAll() {
             if (fragmentListView.SelectedRows.Count > 0) {
                 try {
-                    _loadedFragments.ToList().ForEach(x => x.save());
+                    _loadedFragments.AsParallel().ForAll(x => x.save());
                 } catch (Exception e) {
                     MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
