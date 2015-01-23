@@ -125,13 +125,19 @@ namespace VigilantCupcake {
         private void savePreferences() {
             Properties.Settings.Default.SelectedFiles = new StringCollection();
             if (_loadedFragments != null && _loadedFragments.Count > 0)
-                Properties.Settings.Default.SelectedFiles.AddRange(_loadedFragments.Where(x => x.Enabled).Select(x => x.Name).ToArray());
+                Properties.Settings.Default.SelectedFiles.AddRange(_loadedFragments.Where(x => x.Enabled).Select(x => x.FullPath).ToArray());
             Properties.Settings.Default.Save();
         }
 
         private void loadFragments() {
             _loadedFragments.loadFromDirectory(OS_Utils.LocalFiles.BaseDirectory);
-            if (_loadedFragments.Count == 0) _loadedFragments.Add(new Fragment());
+            if (_loadedFragments.Count == 0) {
+                var currentHosts = new Fragment() { Name = "Current Hosts", Enabled = true };
+                currentHosts.FileContents = _newHostsFile.FileContents;
+                currentHosts.save();
+                _loadedFragments.Add(currentHosts);
+                _selectedFragment = currentHosts;
+            }
             _loadedFragments.ToList().ForEach(x => { x.ContentsDownloaded += fragment_ContentsDownloaded; x.DownloadStarting += fragment_DownloadStarting; x.PropertyChanged += fragmentPropertyChanged; });
             hostsFileBindingSource.DataSource = _newHostsFile;
             fragmentListBindingSource.DataSource = _loadedFragments;

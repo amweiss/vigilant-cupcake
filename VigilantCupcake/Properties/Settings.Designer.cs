@@ -174,5 +174,14 @@ namespace VigilantCupcake.Properties {
                 this["CloseToTray"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".txt")]
+        public string FragmentFileExtension {
+            get {
+                return ((string)(this["FragmentFileExtension"]));
+            }
+        }
     }
 }

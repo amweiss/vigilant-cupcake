@@ -47,5 +47,8 @@
     <Setting Name="CloseToTray" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="FragmentFileExtension" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.txt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
