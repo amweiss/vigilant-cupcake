@@ -123,7 +123,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
-    $(SolutionDir)\packages\ilmerge.2.14.1208\tools\ilmerge.exe $(TargetPath) $(TargetDir)\FastColoredTextBox.dll /out:$(TargetPath) /target:winexe /ndebug
+    $(SolutionDir)\packages\ilmerge.2.14.1208\tools\ilmerge.exe $(TargetPath) $(TargetDir)\FastColoredTextBox.dll $(TargetDir)\Equin.ApplicationFramework.BindingListView.dll /out:$(TargetPath) /target:winexe /ndebug
     $(SolutionDir)\packages\7-Zip.CommandLine.9.20.0\tools\7za.exe a vigilantcupcake.zip $(TargetPath)
 )</PostBuildEvent>
   </PropertyGroup>
