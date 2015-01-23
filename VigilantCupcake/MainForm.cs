@@ -132,7 +132,7 @@ namespace VigilantCupcake {
         private void loadFragments() {
             _loadedFragments.loadFromDirectory(OS_Utils.LocalFiles.BaseDirectory);
             if (_loadedFragments.Count == 0) {
-                var currentHosts = new Fragment() { Name = "Current Hosts", Enabled = true };
+                var currentHosts = new Fragment() { Name = "Existing Hosts", Enabled = true };
                 currentHosts.FileContents = _newHostsFile.FileContents;
                 currentHosts.save();
                 _loadedFragments.Add(currentHosts);
