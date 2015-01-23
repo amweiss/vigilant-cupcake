@@ -1,4 +1,5 @@
-﻿using Fragments;
+﻿using Equin.ApplicationFramework;
+using Fragments;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -140,7 +141,7 @@ namespace VigilantCupcake {
             }
             _loadedFragments.ToList().ForEach(x => { x.ContentsDownloaded += fragment_ContentsDownloaded; x.DownloadStarting += fragment_DownloadStarting; x.PropertyChanged += fragmentPropertyChanged; });
             hostsFileBindingSource.DataSource = _newHostsFile;
-            fragmentListBindingSource.DataSource = _loadedFragments;
+            fragmentListBindingSource.DataSource = new BindingListView<Fragment>(_loadedFragments);
         }
 
         private void fragment_DownloadStarting(object sender, EventArgs e) {
@@ -216,7 +217,7 @@ namespace VigilantCupcake {
                     _selectedFragment = null;
                     return;
                 }
-                _selectedFragment = ((Fragment)fragmentListView.SelectedRows[0].DataBoundItem);
+                _selectedFragment = (((ObjectView<Fragment>)fragmentListView.SelectedRows[0].DataBoundItem)).Object;
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
                 updateCurrentFragmentView();
             }
