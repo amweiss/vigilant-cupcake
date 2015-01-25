@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -121,6 +122,7 @@ namespace VigilantCupcake {
         private void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             if (Properties.Settings.Default.AutoSaveOnStartup) saveAll();
+            triStateTreeView1.Nodes.Add(CreateDirectoryNode(new DirectoryInfo(OS_Utils.LocalFiles.BaseDirectory)));
         }
 
         private void savePreferences() {
@@ -371,5 +373,15 @@ namespace VigilantCupcake {
                 fragmentListView.Rows[fragmentListView.HitTest(e.X, e.Y).RowIndex].Selected = true;
             }
         }
+
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo) {
+            var directoryNode = new TreeNode(directoryInfo.Name);
+            foreach (var directory in directoryInfo.GetDirectories())
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+            foreach (var file in directoryInfo.GetFiles())
+                directoryNode.Nodes.Add(new TreeNode(file.Name));
+            return directoryNode;
+        }
+
     }
 }

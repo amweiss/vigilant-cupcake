@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\TriStateTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Fragments\FragmentCombiner.cs" />
     <Compile Include="Fragments\HostfileRecord.cs" />
     <Compile Include="Fragments\HostnameFilter.cs" />
@@ -120,6 +123,7 @@
   <ItemGroup>
     <Content Include="VC2-nobg-whitecake.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (

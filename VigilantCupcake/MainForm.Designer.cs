@@ -76,6 +76,7 @@
             this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.triStateTreeView1 = new RikTheVeggie.TriStateTreeView();
             this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
@@ -145,12 +146,14 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.fragmentListView, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.triStateTreeView1, 0, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
@@ -167,13 +170,12 @@
             this.Dirty});
             this.fragmentListView.ContextMenuStrip = this.fragmentListContextMenu;
             this.fragmentListView.DataSource = this.fragmentListBindingSource;
-            this.fragmentListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentListView.Location = new System.Drawing.Point(3, 23);
             this.fragmentListView.MultiSelect = false;
             this.fragmentListView.Name = "fragmentListView";
             this.fragmentListView.RowHeadersVisible = false;
             this.fragmentListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fragmentListView.Size = new System.Drawing.Size(214, 766);
+            this.fragmentListView.Size = new System.Drawing.Size(214, 204);
             this.fragmentListView.TabIndex = 1;
             this.fragmentListView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.fragmentListView_CellFormatting);
             this.fragmentListView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.fragmentListView_CellValidating);
@@ -677,6 +679,14 @@
             // 
             this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
             // 
+            // triStateTreeView1
+            // 
+            this.triStateTreeView1.Location = new System.Drawing.Point(3, 233);
+            this.triStateTreeView1.Name = "triStateTreeView1";
+            this.triStateTreeView1.Size = new System.Drawing.Size(214, 271);
+            this.triStateTreeView1.TabIndex = 3;
+            this.triStateTreeView1.TriStateStyleProperty = RikTheVeggie.TriStateTreeView.TriStateStyles.Standard;
+            // 
             // selectedFragmentBindingSource
             // 
             this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
@@ -788,6 +798,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn enabledDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dirty;
+        private RikTheVeggie.TriStateTreeView triStateTreeView1;
 
     }
 }
