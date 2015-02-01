@@ -28,17 +28,20 @@
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.fragmentListView = new System.Windows.Forms.DataGridView();
-            this.Dirty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.triStateTreeView1 = new Aga.Controls.Tree.TreeViewAdv();
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fragmentListContextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
-            this.label4 = new System.Windows.Forms.Label();
+            this.nodeCheckBox1 = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
+            this.nodeStateIcon1 = new Aga.Controls.Tree.NodeControls.NodeStateIcon();
+            this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,6 +49,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,12 +77,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
-            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fragmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.triStateTreeView1 = new RikTheVeggie.TriStateTreeView();
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -87,7 +85,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).BeginInit();
             this.fragmentListContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -95,14 +92,13 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -144,57 +140,45 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.fragmentListView, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.triStateTreeView1, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.triStateTreeView1, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
-            // fragmentListView
+            // label4
             // 
-            this.fragmentListView.AllowUserToAddRows = false;
-            this.fragmentListView.AllowUserToResizeColumns = false;
-            this.fragmentListView.AllowUserToResizeRows = false;
-            this.fragmentListView.AutoGenerateColumns = false;
-            this.fragmentListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.fragmentListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.enabledDataGridViewCheckBoxColumn,
-            this.nameDataGridViewTextBoxColumn,
-            this.Dirty});
-            this.fragmentListView.ContextMenuStrip = this.fragmentListContextMenu;
-            this.fragmentListView.DataSource = this.fragmentListBindingSource;
-            this.fragmentListView.Location = new System.Drawing.Point(3, 23);
-            this.fragmentListView.MultiSelect = false;
-            this.fragmentListView.Name = "fragmentListView";
-            this.fragmentListView.RowHeadersVisible = false;
-            this.fragmentListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fragmentListView.Size = new System.Drawing.Size(214, 204);
-            this.fragmentListView.TabIndex = 1;
-            this.fragmentListView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.fragmentListView_CellFormatting);
-            this.fragmentListView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.fragmentListView_CellValidating);
-            this.fragmentListView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.fragmentListView_CellValueChanged);
-            this.fragmentListView.CurrentCellDirtyStateChanged += new System.EventHandler(this.fragmentListView_CurrentCellDirtyStateChanged);
-            this.fragmentListView.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.fragmentListView_RowStateChanged);
-            this.fragmentListView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.fragmentListView_UserDeletingRow);
-            this.fragmentListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.fragmentListView_MouseDown);
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(214, 20);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Fragment List";
             // 
-            // Dirty
+            // triStateTreeView1
             // 
-            this.Dirty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Dirty.DataPropertyName = "Dirty";
-            this.Dirty.HeaderText = "";
-            this.Dirty.Name = "Dirty";
-            this.Dirty.ReadOnly = true;
-            this.Dirty.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dirty.ToolTipText = "Unsaved Changes";
-            this.Dirty.Width = 20;
+            this.triStateTreeView1.BackColor = System.Drawing.SystemColors.Window;
+            this.triStateTreeView1.ContextMenuStrip = this.fragmentListContextMenu;
+            this.triStateTreeView1.DefaultToolTipProvider = null;
+            this.triStateTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.triStateTreeView1.DragDropMarkColor = System.Drawing.Color.Black;
+            this.triStateTreeView1.LineColor = System.Drawing.SystemColors.ControlDark;
+            this.triStateTreeView1.Location = new System.Drawing.Point(3, 23);
+            this.triStateTreeView1.Model = null;
+            this.triStateTreeView1.Name = "triStateTreeView1";
+            this.triStateTreeView1.NodeControls.Add(this.nodeCheckBox1);
+            this.triStateTreeView1.NodeControls.Add(this.nodeStateIcon1);
+            this.triStateTreeView1.NodeControls.Add(this.nodeTextBox1);
+            this.triStateTreeView1.SelectedNode = null;
+            this.triStateTreeView1.Size = new System.Drawing.Size(214, 766);
+            this.triStateTreeView1.TabIndex = 3;
             // 
             // fragmentListContextMenu
             // 
@@ -232,17 +216,28 @@
             this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
             this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
             this.fragmentListContextMenuRename.Text = "Rename";
-            this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
             // 
-            // label4
+            // nodeCheckBox1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(214, 20);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Fragment List";
+            this.nodeCheckBox1.DataPropertyName = "CheckState";
+            this.nodeCheckBox1.EditEnabled = true;
+            this.nodeCheckBox1.LeftMargin = 0;
+            this.nodeCheckBox1.ParentColumn = null;
+            this.nodeCheckBox1.ThreeState = true;
+            // 
+            // nodeStateIcon1
+            // 
+            this.nodeStateIcon1.LeftMargin = 1;
+            this.nodeStateIcon1.ParentColumn = null;
+            this.nodeStateIcon1.ScaleMode = Aga.Controls.Tree.ImageScaleMode.Clip;
+            // 
+            // nodeTextBox1
+            // 
+            this.nodeTextBox1.DataPropertyName = "Text";
+            this.nodeTextBox1.EditEnabled = true;
+            this.nodeTextBox1.IncrementalSearchEnabled = true;
+            this.nodeTextBox1.LeftMargin = 3;
+            this.nodeTextBox1.ParentColumn = null;
             // 
             // splitContainer2
             // 
@@ -309,6 +304,10 @@
             this.currentFragmentView.Size = new System.Drawing.Size(594, 740);
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // selectedFragmentLabel
             // 
@@ -417,6 +416,10 @@
             this.hostsFileView.Size = new System.Drawing.Size(594, 740);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
+            // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // menuStrip1
             // 
@@ -658,43 +661,6 @@
             this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
-            // enabledDataGridViewCheckBoxColumn
-            // 
-            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
-            this.enabledDataGridViewCheckBoxColumn.HeaderText = "";
-            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
-            this.enabledDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.enabledDataGridViewCheckBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.enabledDataGridViewCheckBoxColumn.ToolTipText = "Fragment Enabled";
-            this.enabledDataGridViewCheckBoxColumn.Width = 20;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // fragmentListBindingSource
-            // 
-            this.fragmentListBindingSource.DataSource = typeof(VigilantCupcake.Models.FragmentList);
-            // 
-            // triStateTreeView1
-            // 
-            this.triStateTreeView1.Location = new System.Drawing.Point(3, 233);
-            this.triStateTreeView1.Name = "triStateTreeView1";
-            this.triStateTreeView1.Size = new System.Drawing.Size(214, 271);
-            this.triStateTreeView1.TabIndex = 3;
-            this.triStateTreeView1.TriStateStyleProperty = RikTheVeggie.TriStateTreeView.TriStateStyles.Standard;
-            // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
-            // hostsFileBindingSource
-            // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -719,7 +685,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListView)).EndInit();
             this.fragmentListContextMenu.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -728,17 +693,16 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fragmentListBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -757,7 +721,6 @@
         private System.Windows.Forms.Label selectedFragmentLabel;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView fragmentListView;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem flushDNSToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -774,10 +737,8 @@
         private System.Windows.Forms.ContextMenuStrip fragmentListContextMenu;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuDelete;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuRename;
-        private System.Windows.Forms.BindingSource fragmentListBindingSource;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.BindingSource selectedFragmentBindingSource;
-        private System.Windows.Forms.BindingSource hostsFileBindingSource;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuNew;
         private System.Windows.Forms.ToolStripSeparator fragmentListContextMenuSeparator1;
         private System.Windows.Forms.Timer backgroundDownloadTimer;
@@ -795,10 +756,11 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn enabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Dirty;
-        private RikTheVeggie.TriStateTreeView triStateTreeView1;
+        private Aga.Controls.Tree.TreeViewAdv triStateTreeView1;
+        private System.Windows.Forms.BindingSource hostsFileBindingSource;
+        private Aga.Controls.Tree.NodeControls.NodeCheckBox nodeCheckBox1;
+        private Aga.Controls.Tree.NodeControls.NodeStateIcon nodeStateIcon1;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
 
     }
 }
