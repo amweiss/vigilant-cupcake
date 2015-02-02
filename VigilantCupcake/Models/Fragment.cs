@@ -16,11 +16,31 @@ namespace VigilantCupcake.Models {
         private static int _newFragmentCount = 0;
         private string _oldFullPath = null;
 
-        public bool Dirty { get; protected set; }
-        public bool Enabled { get; set; }
         public bool IsHostsFile { get; set; }
 
         //TODO: Don't touch files until saves or initial loads.
+
+        private bool _dirty = false;
+        public bool Dirty {
+            get { return _dirty; }
+            set {
+                if (_dirty != value) {
+                    _dirty = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _enabled = false;
+        public bool Enabled {
+            get { return _enabled; }
+            set {
+                if (_enabled != value) {
+                    _enabled = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         private string _name = null;
         public string Name {
@@ -83,7 +103,7 @@ namespace VigilantCupcake.Models {
         private string _remoteLocation = null;
         public string RemoteLocation {
             get {
-                return (IsHostsFile)? string.Empty : _remoteLocation;
+                return (IsHostsFile) ? string.Empty : _remoteLocation;
             }
             set {
                 if (_remoteLocation != null && _remoteLocation.Equals(value)) return;
@@ -111,11 +131,14 @@ namespace VigilantCupcake.Models {
                 return _currentContents;
             }
             set {
-                _currentContents = Regex.Replace(value, Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
-                _loaded = true;
-                Dirty = true;
-                checkForRemoteLocation();
-                NotifyPropertyChanged();
+                var newContents = Regex.Replace(value, Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
+                if (_currentContents == null || !_currentContents.Equals(newContents)) {
+                    _currentContents = newContents;
+                    _loaded = true;
+                    Dirty = true;
+                    checkForRemoteLocation();
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -130,7 +153,7 @@ namespace VigilantCupcake.Models {
                 }
 
                 var sb = new StringBuilder();
-                if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
+                if (!IsHostsFile && !string.IsNullOrWhiteSpace(RemoteLocation)) {
                     sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
                     sb.AppendLine(RemoteLocation);
                 }

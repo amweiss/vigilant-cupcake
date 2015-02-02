@@ -8,28 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
-    class FragmentBrowserModel : ITreeModel {
+    class FragmentBrowserModel : TreeModel {
         public int PendingDownloads { get; protected set; }
 
-        public IEnumerable<FragmentNode> Nodes {
+        public IEnumerable<FragmentNode> FragmentNodes {
             get {
-                return getAllNodesRecursively(Root);
+                return getAllNodesRecursively(Root).Select(x => x as FragmentNode);
             }
         }
 
         public IEnumerable<Fragment> Fragments {
             get {
-                return Nodes.Where(x => x.Fragment != null).Select(y => y.Fragment);
+                return FragmentNodes.Where(x => x != null && x.Fragment != null).Select(y => y.Fragment);
             }
         }
 
-        private string RootPath { get; set; }
-
-        private FragmentNode Root { get; set; }
-
         public FragmentBrowserModel(string path) {
             PendingDownloads = 0;
-            RootPath = path;
+            Nodes.Add(createDirectoryNode(new DirectoryInfo(OS_Utils.LocalFiles.BaseDirectory)));
         }
 
         public void saveAll() {
@@ -51,38 +47,17 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public bool IsLeaf(TreePath treePath) {
-            return treePath.LastNode != null && ((FragmentNode)treePath.LastNode).IsLeaf;
-        }
-
-        public IEnumerable GetChildren(TreePath treePath) {
-            if (treePath.IsEmpty()) {
-                if (Root == null) {
-                    Root = createDirectoryNode(new DirectoryInfo(RootPath));
-                }
-                yield return Root;
-            } else {
-                var parent = treePath.LastNode as FragmentNode;
-                if (parent != null) {
-                    foreach (var node in getAllNodesRecursively(parent).Where(x => x != parent))
-                        yield return node;
-                } else {
-                    yield break;
-                }
-            }
-        }
-
-        private IEnumerable<FragmentNode> getAllNodesRecursively(FragmentNode subnode) {
+        private IEnumerable<Node> getAllNodesRecursively(Node subnode) {
             yield return subnode;
 
             foreach (var node in subnode.Nodes) {
-                foreach (var n in getAllNodesRecursively((FragmentNode)node)) {
+                foreach (var n in getAllNodesRecursively((Node)node)) {
                     yield return n;
                 }
             }
         }
 
-        private FragmentNode createDirectoryNode(DirectoryInfo directoryInfo) {
+        private Node createDirectoryNode(DirectoryInfo directoryInfo) {
             var directoryNode = new FragmentNode(directoryInfo.Name);
             foreach (var directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(createDirectoryNode(directory));
@@ -94,10 +69,10 @@ namespace VigilantCupcake.Models {
                     FullPath = file.FullName,
                     Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(file.FullName)
                 };
-                treeNode.Fragment = fragment;
+                directoryNode.Nodes.Add(treeNode);
+                treeNode.Fragment = fragment; //Assign fragment after adding to tree so hierarchy is in place
                 fragment.ContentsDownloaded += fragment_ContentsDownloaded;
                 fragment.DownloadStarting += fragment_DownloadStarting;
-                directoryNode.Nodes.Add(treeNode);
             }
             return directoryNode;
         }
@@ -111,12 +86,7 @@ namespace VigilantCupcake.Models {
         }
 
         private void doSaveAll() {
-            getAllNodesRecursively(Root).AsParallel().Where(y => y.Fragment != null).ForAll(x => x.Fragment.save());
+            getAllNodesRecursively(Root).Where(y => y as FragmentNode != null && ((FragmentNode)y).Fragment != null).ToList().ForEach(x => ((FragmentNode)x).Fragment.save());
         }
-
-        public event EventHandler<TreeModelEventArgs> NodesChanged;
-        public event EventHandler<TreeModelEventArgs> NodesInserted;
-        public event EventHandler<TreeModelEventArgs> NodesRemoved;
-        public event EventHandler<TreePathEventArgs> StructureChanged;
     }
 }
