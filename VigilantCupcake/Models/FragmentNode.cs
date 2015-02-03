@@ -7,6 +7,7 @@ namespace VigilantCupcake.Models {
 
     internal class FragmentNode : Node {
         private bool _firstUpdate = true;
+        private int _updatingNodes = 0;
 
         private Fragment _fragment = null;
 
@@ -74,7 +75,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private void updateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false, bool updateChildren = true) {
+        private void updateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false) {
             if (fromProperty && newValue == System.Windows.Forms.CheckState.Indeterminate) {
                 newValue = System.Windows.Forms.CheckState.Unchecked;
             }
@@ -83,29 +84,31 @@ namespace VigilantCupcake.Models {
                 newValue = System.Windows.Forms.CheckState.Unchecked;
             }
 
-            if (_checkState != newValue || _firstUpdate) {
+            if (_updatingNodes == 0 && (_checkState != newValue || _firstUpdate)) {
                 _firstUpdate = false;
                 _checkState = newValue;
                 if (Fragment != null) {
                     Fragment.Enabled = (_checkState == System.Windows.Forms.CheckState.Checked || _checkState == System.Windows.Forms.CheckState.Indeterminate);
                 }
 
+                _updatingNodes++;
                 if (Parent != null && Parent is FragmentNode) {
                     updateParent(_checkState);
                 }
 
-                if (updateChildren && Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
+                if (Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
                     Nodes.ToList().ForEach(n => ((FragmentNode)n).updateCheckState(_checkState));
                 }
+                _updatingNodes--;
                 NotifyModel();
             }
         }
 
         private void updateParent(System.Windows.Forms.CheckState checkstate) {
             if (Parent.Nodes.All(n => n.CheckState == checkstate))
-                ((FragmentNode)Parent).updateCheckState(newValue: checkstate, updateChildren: false);
+                ((FragmentNode)Parent).updateCheckState(newValue: checkstate);
             else
-                ((FragmentNode)Parent).updateCheckState(newValue: System.Windows.Forms.CheckState.Indeterminate, updateChildren: false);
+                ((FragmentNode)Parent).updateCheckState(newValue: System.Windows.Forms.CheckState.Indeterminate);
         }
     }
 }
