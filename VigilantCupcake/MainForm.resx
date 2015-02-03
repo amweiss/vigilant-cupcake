@@ -121,12 +121,20 @@
     <value>515, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="fragmentListContextMenuNew.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolStripMenuItem3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAACUSURBVDhP7ZDLDYAgEESpwyqsgb680paJVdiCJ/XCFR1k1+UjEs9u8kRk5mlUcqy1jgiPquNc
         iMniNHR8D65EeSIBFdP1SpTHCxACyzz6EoE9nYV8NiyQxdJesJ70oR9/AXgqaq09xhjsWdL0D7Z1Z1JJ
         JCDSt6cCKWEBjSwiKMsSnCGTCWh+wS2o8SpowQtw+Y5TB6G4VRofEd30AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="fragmentListContextMenuNewFolder.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAB9SURBVDhPY0AG3759+w/DUCHiALLGQ7VScDYIQ5XgB8ga0WmoEtwApAiEX97YD9YEwyA+TA6q
+        FDsAKUDWiI2PD2P4H5vGO9uqsGKQHIorsNFPTi///+H9RwyMYQAME2s7CIPkwQaAALImQhphGMMAbIrw
+        4VEDaGEA6fjbfwAIeZgfrfHBswAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="fragmentListContextMenuDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -157,6 +165,14 @@
         /22orQpeDTxqNS8aToxxVeTVu7A4dM35DKRyHxbzUyr1oASmsd8lBXf9JtVyUGCxdCd8CKEV9QgXaqK1
         dsc5h3t5RKX8nP1yUh1BUcn/ng/wiOgpLKLIMoNv6Ih2zT+QBu54HHiD1L/EmA2wn/hWQ4oVCwAAAABJ
         RU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripMenuItem4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAB9SURBVDhPY0AG3759+w/DUCHiALLGQ7VScDYIQ5XgB8ga0WmoEtwApAiEX97YD9YEwyA+TA6q
+        FDsAKUDWiI2PD2P4H5vGO9uqsGKQHIorsNFPTi///+H9RwyMYQAME2s7CIPkwQaAALImQhphGMMAbIrw
+        4VEDaGEA6fjbfwAIeZgfrfHBswAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="saveToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

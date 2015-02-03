@@ -63,18 +63,15 @@ namespace VigilantCupcake {
         }
 
         void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
-            // TODO: Make the null assignment less silly
-            if (triStateTreeView1.SelectedNode != null) {
+            if (triStateTreeView1.SelectedNode == null || !(triStateTreeView1.SelectedNode.Tag is FragmentNode)) {
+                _selectedFragment = null;
+            } else if (triStateTreeView1.SelectedNode != null) {
                 var node = triStateTreeView1.SelectedNode.Tag as FragmentNode;
                 if (node != null && node.Fragment != null) {
                     currentFragmentView.Enabled = true;
                     remoteUrlView.Enabled = true;
                     _selectedFragment = node.Fragment;
-                } else {
-                    _selectedFragment = null;
                 }
-            } else {
-                _selectedFragment = null;
             }
 
             if (_selectedFragment == null) {
@@ -83,9 +80,7 @@ namespace VigilantCupcake {
                 currentFragmentView.Text = string.Empty;
                 remoteUrlView.Text = string.Empty;
                 remoteUrlView.Enabled = false;
-            }
-
-            if (_selectedFragment != null) {
+            } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
             }
             
@@ -108,7 +103,6 @@ namespace VigilantCupcake {
             try {
                 _treeModel.saveAll();
                 _newHostsFile.save();
-                //updateHostsFileView();
                 OS_Utils.DnsUtil.FlushDns();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -143,15 +137,17 @@ namespace VigilantCupcake {
         }
 
         private void loadFragments() {
-            //TODO: Existing hosts file
-            //_loadedFragments.loadFromDirectory(OS_Utils.LocalFiles.BaseDirectory);
-            //if (_loadedFragments.Count == 0) {
-            //    var currentHosts = new Fragment() { Name = "Existing Hosts", Enabled = true };
-            //    currentHosts.FileContents = _newHostsFile.FileContents;
-            //    currentHosts.save();
-            //    _loadedFragments.Add(currentHosts);
-            //    _selectedFragment = currentHosts;
-            //}
+            if (_treeModel.Fragments.Count() == 0) {
+                var treeNode = new FragmentNode("Existing Hosts");
+                var currentHosts = new Fragment() { Name = treeNode.Text, Enabled = true };
+                treeNode.Fragment = currentHosts;
+                _treeModel.FragmentNodes.First(x => x != null).Nodes.Add(treeNode);
+                currentHosts.FileContents = _newHostsFile.FileContents;
+                currentHosts.save();
+                _selectedFragment = currentHosts;
+                _selectedFragment.PropertyChanged += fragmentPropertyChanged;
+            }
+
             hostsFileBindingSource.DataSource = _newHostsFile;
             updateCurrentFragmentView();
             _treeModel.Fragments.AsParallel().ForAll(x => x.PropertyChanged += fragmentPropertyChanged);
@@ -183,28 +179,33 @@ namespace VigilantCupcake {
             OS_Utils.DnsUtil.FlushDns();
         }
 
-        private void createNewFragment() { //TODO: Creation working
-            //var directoryNode = (((Fragment)triStateTreeView1.SelectedNode.Tag) != null) ? triStateTreeView1.SelectedNode.Parent : triStateTreeView1.SelectedNode;
+        private void createNewFragment() {
+            createNewNode(true);
+        }
 
-            //var fragment = new Fragment() {
-            //    RootPath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath),
-            //    FileContents = string.Empty
-            //};
+        private void createNewDirectory() {
+            createNewNode(false);
+        }
 
-            //fragment.ContentsDownloaded += fragment_ContentsDownloaded;
-            //fragment.DownloadStarting += fragment_DownloadStarting;
-            //fragment.PropertyChanged += fragmentPropertyChanged;
+        private void createNewNode(bool isFragment) {
+            if (triStateTreeView1.SelectedNode != null) {
+                var selectedNode = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
+                var directoryNode = selectedNode.IsLeaf ? (FragmentNode)selectedNode.Parent : selectedNode;
+                var treeNode = new FragmentNode((isFragment)? "New Fragment" : "New Folder");
 
-            //_loadedFragments.Add(fragment);
+                if (isFragment) {
+                    var fragment = new Fragment() {
+                        RootPath = Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath),
+                        FileContents = string.Empty
+                    };
+                    fragment.PropertyChanged += fragmentPropertyChanged;
+                    treeNode.Fragment = fragment;
+                }
 
-            //var treeNode = new TreeNode();
-            //treeNode.Tag = fragment;
-
-            //directoryNode.Nodes.Add(treeNode);
-            //treeNode.Checked = true;
-            //treeNode.Checked = false;
-            //triStateTreeView1.SelectedNode = treeNode;
-            //treeNode.BeginEdit();
+                treeNode.Parent = directoryNode;
+                triStateTreeView1.SelectedNode = triStateTreeView1.FindNodeByTag(treeNode);
+                nodeTextBox1.BeginEdit();
+            }
         }
 
         private void remoteUrlView_Validated(object sender, EventArgs e) {
@@ -226,17 +227,17 @@ namespace VigilantCupcake {
         }
 
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
-            if (confirmAndDelete(_selectedFragment) == DialogResult.Yes) {
+            if (confirmAndDelete(triStateTreeView1.SelectedNode.Tag as FragmentNode) == DialogResult.Yes) {
                 if (triStateTreeView1.SelectedNode != null)
                     _treeModel.remove(triStateTreeView1.SelectedNode.Tag as FragmentNode);
             }
         }
 
-        private DialogResult confirmAndDelete(Fragment fragment) {
-            DialogResult result = MessageBox.Show("Delete " + fragment.Name + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        private DialogResult confirmAndDelete(FragmentNode node) {
+
+            DialogResult result = MessageBox.Show("Delete " + node.Text + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
-                fragment.delete();
-                var node = _treeModel.FragmentNodes.FirstOrDefault(x => x.Fragment == fragment);
+                node.Fragment.delete();
                 _treeModel.remove(node);
             }
 
@@ -282,7 +283,7 @@ namespace VigilantCupcake {
             }
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void menuNewFragment_Click(object sender, EventArgs e) {
             createNewFragment();
         }
 
@@ -325,24 +326,8 @@ namespace VigilantCupcake {
             ShowWindow();
         }
 
-
-
-        //private void triStateTreeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e) {
-        //    if (string.IsNullOrWhiteSpace(e.Label)) {
-        //        if (e.Label != null) MessageBox.Show("Fragment name cannot be blank", "Name error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        e.CancelEdit = true;
-        //    } else if (e.Node.Tag != null) {
-        //        ((Fragment)e.Node.Tag).Name = e.Label;
-        //    }
-        //    e.Node.Text = e.Label;
-        //}
-
-        //private void triStateTreeView1_AfterCheck(object sender, TreeViewEventArgs e) {
-        //    var fragment = (e.Node.Tag as Fragment);
-        //    if (fragment != null) {
-        //        fragment.Enabled = e.Node.Checked;
-        //        updateHostsFileView();
-        //    }
-        //}
+        private void menuNewFolder_Click(object sender, EventArgs e) {
+            createNewDirectory();
+        }
     }
 }

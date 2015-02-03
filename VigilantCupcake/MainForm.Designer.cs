@@ -31,7 +31,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.triStateTreeView1 = new Aga.Controls.Tree.TreeViewAdv();
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.fragmentListContextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fragmentListContextMenuNewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +42,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,9 +50,12 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,8 +80,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -92,13 +95,13 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -183,38 +186,47 @@
             // fragmentListContextMenu
             // 
             this.fragmentListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fragmentListContextMenuNew,
+            this.toolStripMenuItem3,
+            this.fragmentListContextMenuNewFolder,
             this.fragmentListContextMenuSeparator1,
             this.fragmentListContextMenuDelete,
             this.fragmentListContextMenuRename});
             this.fragmentListContextMenu.Name = "fragmentListContextMenu";
-            this.fragmentListContextMenu.Size = new System.Drawing.Size(118, 76);
+            this.fragmentListContextMenu.Size = new System.Drawing.Size(153, 120);
             // 
-            // fragmentListContextMenuNew
+            // toolStripMenuItem3
             // 
-            this.fragmentListContextMenuNew.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuNew.Image")));
-            this.fragmentListContextMenuNew.Name = "fragmentListContextMenuNew";
-            this.fragmentListContextMenuNew.Size = new System.Drawing.Size(117, 22);
-            this.fragmentListContextMenuNew.Text = "New";
-            this.fragmentListContextMenuNew.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.toolStripMenuItem3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem3.Image")));
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "New Fragment";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.menuNewFragment_Click);
+            // 
+            // fragmentListContextMenuNewFolder
+            // 
+            this.fragmentListContextMenuNewFolder.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuNewFolder.Image")));
+            this.fragmentListContextMenuNewFolder.Name = "fragmentListContextMenuNewFolder";
+            this.fragmentListContextMenuNewFolder.Size = new System.Drawing.Size(152, 22);
+            this.fragmentListContextMenuNewFolder.Text = "New Folder";
+            this.fragmentListContextMenuNewFolder.Click += new System.EventHandler(this.menuNewFolder_Click);
             // 
             // fragmentListContextMenuSeparator1
             // 
             this.fragmentListContextMenuSeparator1.Name = "fragmentListContextMenuSeparator1";
-            this.fragmentListContextMenuSeparator1.Size = new System.Drawing.Size(114, 6);
+            this.fragmentListContextMenuSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // fragmentListContextMenuDelete
             // 
             this.fragmentListContextMenuDelete.Image = ((System.Drawing.Image)(resources.GetObject("fragmentListContextMenuDelete.Image")));
             this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
-            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(152, 22);
             this.fragmentListContextMenuDelete.Text = "Delete";
             this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
             // 
             // fragmentListContextMenuRename
             // 
             this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
-            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(117, 22);
+            this.fragmentListContextMenuRename.Size = new System.Drawing.Size(152, 22);
             this.fragmentListContextMenuRename.Text = "Rename";
             // 
             // nodeCheckBox1
@@ -304,6 +316,10 @@
             this.currentFragmentView.Size = new System.Drawing.Size(594, 740);
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // selectedFragmentLabel
             // 
@@ -413,6 +429,10 @@
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
             // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -430,6 +450,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator1,
             this.saveToolStripMenuItem,
             this.toolStripSeparator4,
             this.exitToolStripMenuItem});
@@ -444,8 +466,23 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.newToolStripMenuItem.Text = "&New Fragment";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.menuNewFragment_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem4.Image")));
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.N)));
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(218, 22);
+            this.toolStripMenuItem4.Text = "New Folder";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.menuNewFolder_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(215, 6);
             // 
             // saveToolStripMenuItem
             // 
@@ -653,14 +690,6 @@
             this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
-            // hostsFileBindingSource
-            // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -693,16 +722,16 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -739,7 +768,7 @@
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuRename;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.BindingSource selectedFragmentBindingSource;
-        private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuNew;
+        private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuNewFolder;
         private System.Windows.Forms.ToolStripSeparator fragmentListContextMenuSeparator1;
         private System.Windows.Forms.Timer backgroundDownloadTimer;
         private System.Windows.Forms.ToolStripMenuItem syncronizeFragmentsToolStripMenuItem;
@@ -761,6 +790,9 @@
         private Aga.Controls.Tree.NodeControls.NodeCheckBox nodeCheckBox1;
         private Aga.Controls.Tree.NodeControls.NodeStateIcon nodeStateIcon1;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 
     }
 }

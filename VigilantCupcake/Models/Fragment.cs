@@ -145,12 +145,14 @@ namespace VigilantCupcake.Models {
         public void save() {
             if (Dirty) {
 
-                if (!File.Exists(FullPath)) using (File.Create(FullPath)) { }
+                Directory.CreateDirectory(Path.GetDirectoryName(FullPath)); //Make sure all directories exist
 
                 if (_oldFullPath != null && File.Exists(_oldFullPath)) {
                     if (File.Exists(FullPath)) File.Delete(FullPath);
                     File.Move(_oldFullPath, FullPath);
                 }
+
+                if (!File.Exists(FullPath)) using (File.Create(FullPath)) { }
 
                 var sb = new StringBuilder();
                 if (!IsHostsFile && !string.IsNullOrWhiteSpace(RemoteLocation)) {
@@ -169,11 +171,15 @@ namespace VigilantCupcake.Models {
             if (fileHandleFree)
                 File.WriteAllText(filename, text);
             else
-                throw new Exception("There was an error saving the hosts file");
+                throw new Exception("There was an error saving the fragment");
         }
 
         public void delete() {
-            File.Delete(FullPath);
+            var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(FullPath);
+            if (fileHandleFree)
+                File.Delete(FullPath);
+            else
+                throw new Exception("There was an error deleting the fragment");
         }
 
         public async void downloadFile() { //TODO: Wrap in public member and make this protected
