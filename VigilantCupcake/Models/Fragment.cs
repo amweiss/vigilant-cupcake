@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
-    class Fragment : INotifyPropertyChanged {
 
+    internal class Fragment : INotifyPropertyChanged {
         private bool _loaded = false;
         private static int _newFragmentCount = 0;
         private string _oldFullPath = null;
 
         public bool IsHostsFile { get; set; }
 
-        //TODO: Don't touch files until saves or initial loads.
-
         private bool _dirty = false;
+
         public bool Dirty {
             get { return _dirty; }
             set {
@@ -32,6 +28,7 @@ namespace VigilantCupcake.Models {
         }
 
         private bool _enabled = false;
+
         public bool Enabled {
             get { return _enabled; }
             set {
@@ -43,6 +40,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _name = null;
+
         public string Name {
             get {
                 if (!IsHostsFile) {
@@ -67,6 +65,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _rootPath = null;
+
         public string RootPath {
             get {
                 if (_rootPath == null)
@@ -84,6 +83,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _fullPath = null;
+
         public string FullPath {
             get {
                 _fullPath = Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
@@ -101,6 +101,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _remoteLocation = null;
+
         public string RemoteLocation {
             get {
                 return (IsHostsFile) ? string.Empty : _remoteLocation;
@@ -116,6 +117,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _currentContents = null;
+
         public string FileContents {
             get {
                 if (!_loaded) {
@@ -144,7 +146,6 @@ namespace VigilantCupcake.Models {
 
         public void save() {
             if (Dirty) {
-
                 Directory.CreateDirectory(Path.GetDirectoryName(FullPath)); //Make sure all directories exist
 
                 if (_oldFullPath != null && File.Exists(_oldFullPath)) {
@@ -235,8 +236,9 @@ namespace VigilantCupcake.Models {
         }
 
         public event EventHandler DownloadStarting;
+
         public event EventHandler ContentsDownloaded;
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
-
 }

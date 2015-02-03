@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Fragments {
+
     public class HostfileRecord {
+
         public IEnumerable<string> CombineHostfileRecord(string ipAddress, List<string> hostnames) {
             int maxLength = 80; //We want to wrap into a second entry if the length of the line will be greater than 1020
             var ipFormat = Regex.IsMatch(ipAddress, @"\.") ? "{0,-16}" : "{0,-40}"; //IPv4 vs. IPv6

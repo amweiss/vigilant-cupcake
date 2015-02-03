@@ -1,18 +1,15 @@
 ﻿using Aga.Controls.Tree;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VigilantCupcake.Models {
-    class FragmentNode : Node {
 
+    internal class FragmentNode : Node {
         private bool _firstUpdate = true;
 
         private Fragment _fragment = null;
+
         public Fragment Fragment {
             get { return _fragment; }
             set {
@@ -36,9 +33,9 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public FragmentNode(string text):
+        public FragmentNode(string text) :
             base(text) {
-                Text = text;
+            Text = text;
         }
 
         override public bool IsLeaf {
@@ -46,6 +43,7 @@ namespace VigilantCupcake.Models {
         }
 
         private System.Windows.Forms.CheckState _checkState = System.Windows.Forms.CheckState.Unchecked;
+
         override public CheckState CheckState {
             get { return _checkState; }
             set {
@@ -54,6 +52,7 @@ namespace VigilantCupcake.Models {
         }
 
         private string _text;
+
         override public string Text {
             get { return _text; }
             set {
@@ -75,11 +74,11 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private void updateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false) {
+        private void updateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false, bool updateChildren = true) {
             if (fromProperty && newValue == System.Windows.Forms.CheckState.Indeterminate) {
                 newValue = System.Windows.Forms.CheckState.Unchecked;
             }
-            
+
             if (Fragment != null && newValue == System.Windows.Forms.CheckState.Indeterminate) {
                 newValue = System.Windows.Forms.CheckState.Unchecked;
             }
@@ -95,7 +94,7 @@ namespace VigilantCupcake.Models {
                     updateParent(_checkState);
                 }
 
-                if (Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
+                if (updateChildren && Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
                     Nodes.ToList().ForEach(n => ((FragmentNode)n).updateCheckState(_checkState));
                 }
                 NotifyModel();
@@ -104,9 +103,9 @@ namespace VigilantCupcake.Models {
 
         private void updateParent(System.Windows.Forms.CheckState checkstate) {
             if (Parent.Nodes.All(n => n.CheckState == checkstate))
-                ((FragmentNode)Parent).updateCheckState(checkstate);
+                ((FragmentNode)Parent).updateCheckState(newValue: checkstate, updateChildren: false);
             else
-                ((FragmentNode)Parent).updateCheckState(System.Windows.Forms.CheckState.Indeterminate);
+                ((FragmentNode)Parent).updateCheckState(newValue: System.Windows.Forms.CheckState.Indeterminate, updateChildren: false);
         }
     }
 }

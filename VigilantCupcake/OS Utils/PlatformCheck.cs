@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VigilantCupcake.OS_Utils {
+
     //From: http://stackoverflow.com/questions/10138040/how-to-detect-properly-windows-linux-mac-operating-systems
     public static class PlatformCheck {
+
         public enum Platform {
             Windows,
             Linux,

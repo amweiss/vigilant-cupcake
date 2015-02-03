@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VigilantCupcake.OS_Utils {
 
     //From: http://www.codeproject.com/Articles/32908/C-Single-Instance-App-With-the-Ability-To-Restore
     static internal class NativeMethods {
+
         [DllImport("user32")]
         public static extern int RegisterWindowMessage(string message);
 

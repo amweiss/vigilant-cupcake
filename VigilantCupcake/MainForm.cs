@@ -1,5 +1,4 @@
-﻿using Aga.Controls.Tree;
-using Fragments;
+﻿using Fragments;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -7,18 +6,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
 using VigilantCupcake.OS_Utils;
 using VigilantCupcake.SubForms;
 using VigilantCupcake.View_Utils;
 
-
 namespace VigilantCupcake {
-    public partial class MainForm : Form {
 
+    public partial class MainForm : Form {
         private FragmentBrowserModel _treeModel = new FragmentBrowserModel(OS_Utils.LocalFiles.BaseDirectory);
         private Fragment _selectedFragment = null;
         private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
@@ -62,7 +58,7 @@ namespace VigilantCupcake {
             }
         }
 
-        void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
+        private void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
             if (triStateTreeView1.SelectedNode == null || !(triStateTreeView1.SelectedNode.Tag is FragmentNode)) {
                 _selectedFragment = null;
             } else if (triStateTreeView1.SelectedNode != null) {
@@ -83,7 +79,7 @@ namespace VigilantCupcake {
             } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
             }
-            
+
             updateCurrentFragmentView();
         }
 
@@ -191,7 +187,7 @@ namespace VigilantCupcake {
             if (triStateTreeView1.SelectedNode != null) {
                 var selectedNode = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
                 var directoryNode = selectedNode.IsLeaf ? (FragmentNode)selectedNode.Parent : selectedNode;
-                var treeNode = new FragmentNode((isFragment)? "New Fragment" : "New Folder");
+                var treeNode = new FragmentNode((isFragment) ? "New Fragment" : "New Folder");
 
                 if (isFragment) {
                     var fragment = new Fragment() {
@@ -234,7 +230,6 @@ namespace VigilantCupcake {
         }
 
         private DialogResult confirmAndDelete(FragmentNode node) {
-
             DialogResult result = MessageBox.Show("Delete " + node.Text + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
                 node.Fragment.delete();
@@ -274,8 +269,10 @@ namespace VigilantCupcake {
                     case DialogResult.Yes:
                         saveAll();
                         break;
+
                     case DialogResult.No:
                         break;
+
                     case DialogResult.Cancel:
                         e.Cancel = true;
                         break;

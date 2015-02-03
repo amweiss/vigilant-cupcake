@@ -1,14 +1,14 @@
 ﻿using Aga.Controls.Tree;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
-    class FragmentBrowserModel : TreeModel {
+
+    internal class FragmentBrowserModel : TreeModel {
+
         public int PendingDownloads { get; protected set; }
 
         public IEnumerable<FragmentNode> FragmentNodes {
