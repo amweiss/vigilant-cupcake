@@ -30,8 +30,8 @@ namespace VigilantCupcake {
 
             mergeHostsEntriesToolStripMenuItem.Visible = false;
 
-            saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup; //TODO: this is bound, should not be needed
-            mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries; //TODO: this is bound, should not be needed
+            saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup;
+            mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
             currentFragmentView.TextChanged += View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged;
             hostsFileView.TextChanged += View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged;
 
@@ -298,7 +298,7 @@ namespace VigilantCupcake {
 
         private void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Properties.Settings.Default.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
-            backgroundDownloadTimer.Enabled = Properties.Settings.Default.DownloadInBackground;  //TODO: Property binding not working??
+            backgroundDownloadTimer.Enabled = Properties.Settings.Default.DownloadInBackground;
             _syncDurationMenuItems.ForEach(x => {
                 x.Enabled = syncEnabledToolStripMenuItem.Checked;
                 x.Checked = (int.Parse(x.Tag.ToString()) == Properties.Settings.Default.MinutesBetweenDownloads);
@@ -309,7 +309,7 @@ namespace VigilantCupcake {
             var item = (ToolStripMenuItem)sender;
             if (item.Checked) {
                 Properties.Settings.Default.MinutesBetweenDownloads = int.Parse(item.Tag.ToString());
-                backgroundDownloadTimer.Interval = Properties.Settings.Default.MinutesBetweenDownloads; //TODO: Property binding not working??
+                backgroundDownloadTimer.Interval = Properties.Settings.Default.MinutesBetweenDownloads;
                 enabledToolStripMenuItem_CheckedChanged(null, null);
             }
         }

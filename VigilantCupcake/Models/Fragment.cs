@@ -183,7 +183,7 @@ namespace VigilantCupcake.Models {
                 throw new Exception("There was an error deleting the fragment");
         }
 
-        public async void downloadFile() { //TODO: Wrap in public member and make this protected
+        public async void downloadFile() {
             if (string.IsNullOrWhiteSpace(RemoteLocation)) return;
 
             _currentContents = "127.0.0.1 Loading...";
