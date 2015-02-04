@@ -176,6 +176,7 @@ namespace VigilantCupcake.Models {
         }
 
         public void delete() {
+            if (!File.Exists(FullPath)) return;
             var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(FullPath);
             if (fileHandleFree)
                 File.Delete(FullPath);

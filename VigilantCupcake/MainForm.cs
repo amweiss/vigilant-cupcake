@@ -231,7 +231,7 @@ namespace VigilantCupcake {
         private DialogResult confirmAndDelete(FragmentNode node) {
             DialogResult result = MessageBox.Show("Delete " + node.Text + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
-                node.Fragment.delete();
+                node.delete();
                 _treeModel.remove(node);
             }
 

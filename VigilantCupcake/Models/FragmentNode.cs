@@ -34,6 +34,12 @@ namespace VigilantCupcake.Models {
             }
         }
 
+        private string FilePath {
+            get {
+                return Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, FullPath);
+            }
+        }
+
         public FragmentNode(string text) :
             base(text) {
             Text = text;
@@ -66,14 +72,13 @@ namespace VigilantCupcake.Models {
         }
 
         public void delete() {
-            Nodes.Where(n => n is FragmentNode).ToList().ForEach(f => ((FragmentNode)f).delete());
+            if (Nodes != null && Nodes.Count > 0)
+                Nodes.Where(n => n is FragmentNode).ToList().ForEach(f => ((FragmentNode)f).delete());
 
             if (Fragment != null) {
                 Fragment.delete();
-            } else {
-                var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(FullPath);
-                if (fileHandleFree)
-                    Directory.Delete(FullPath, true);
+            } else if (Directory.Exists(FilePath)) {
+                Directory.Delete(FilePath, true);
             }
         }
 
