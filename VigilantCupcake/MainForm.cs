@@ -188,7 +188,7 @@ namespace VigilantCupcake {
             if (triStateTreeView1.SelectedNode != null) {
                 var selectedNode = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
                 var directoryNode = selectedNode.IsLeaf ? (FragmentNode)selectedNode.Parent : selectedNode;
-                var treeNode = new FragmentNode() { Text = (isFragment) ? "New Fragment" : "New Folder" };
+                var treeNode = new FragmentNode();
 
                 if (isFragment) {
                     var fragment = new Fragment() {
@@ -199,6 +199,7 @@ namespace VigilantCupcake {
                     treeNode.Fragment = fragment;
                 }
 
+                treeNode.Text = (isFragment) ? "New Fragment" : "New Folder";
                 treeNode.Parent = directoryNode;
                 triStateTreeView1.SelectedNode = triStateTreeView1.FindNodeByTag(treeNode);
                 nodeTextBox1.BeginEdit();

@@ -40,10 +40,6 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        //public FragmentNode(string text) :
-        //    base(text) {
-        //}
-
         override public bool IsLeaf {
             get { return (Fragment != null); }
         }
