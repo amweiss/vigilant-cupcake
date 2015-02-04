@@ -59,17 +59,13 @@ namespace VigilantCupcake {
         }
 
         private void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
-            //TODO: Make this a bit more sane with setting _selectedFragment
-            if (triStateTreeView1.SelectedNode == null || !(triStateTreeView1.SelectedNode.Tag is FragmentNode)) {
-                _selectedFragment = null;
-            } else if (triStateTreeView1.SelectedNode != null) {
-                var node = triStateTreeView1.SelectedNode.Tag as FragmentNode;
+            _selectedFragment = null;
+            if (triStateTreeView1.SelectedNode != null && triStateTreeView1.SelectedNode.Tag is FragmentNode) {
+                var node = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
                 if (node != null && node.Fragment != null) {
                     currentFragmentView.Enabled = true;
                     remoteUrlView.Enabled = true;
                     _selectedFragment = node.Fragment;
-                } else {
-                    _selectedFragment = null;
                 }
             }
 
