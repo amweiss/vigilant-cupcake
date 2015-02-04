@@ -199,7 +199,15 @@ namespace VigilantCupcake {
                     treeNode.Fragment = fragment;
                 }
 
-                treeNode.Text = (isFragment) ? "New Fragment" : "New Folder";
+                var name = (isFragment) ? "New Fragment" : "New Folder";
+                treeNode.Text = name;
+                var fileNumber = 1;
+                while (directoryNode.Nodes.Any(x => x.Text.Equals(treeNode.Text))) {
+                    var newName = string.Format("{0} {1}", name, fileNumber);
+                    treeNode.Text = newName;
+                    fileNumber++;
+                }
+
                 treeNode.Parent = directoryNode;
                 triStateTreeView1.SelectedNode = triStateTreeView1.FindNodeByTag(treeNode);
                 nodeTextBox1.BeginEdit();
