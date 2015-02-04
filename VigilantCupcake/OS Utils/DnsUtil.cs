@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace VigilantCupcake.OS_Utils {
+
     public static class DnsUtil {
+
         public static bool FlushDns() {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();

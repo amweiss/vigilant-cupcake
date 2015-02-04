@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Fragments {
+
     public class FragmentCombiner {
         private HostfileRecord _hnRecord = new HostfileRecord();
         private Dictionary<string, List<string>> _hostToIPMapping = new Dictionary<string, List<string>>();
@@ -23,7 +23,6 @@ namespace Fragments {
         }
 
         private void generateMappingsFromMerged(string[] merged) {
-
             foreach (string entry in merged) {
                 string trimmedEntry = entry.Trim();
                 if (!Regex.IsMatch(trimmedEntry, @"^\d+")) //skip this one if it is not an entry.. has to start with a digit
@@ -39,7 +38,7 @@ namespace Fragments {
                 foreach (string host in hostnames) {
                     //if (this.hostToIPMapping.ContainsKey(host) && !hostToIPMapping[host].Contains(ipAddress)) // There was a collision
                     //{
-                    //    /* 
+                    //    /*
                     //     *  check to see if the key exists in the collision array
                     //     *  if it does, then append the ip address to the list already there
                     //     *  if it does not, then add it in with the 2 colliding IP Addresses
