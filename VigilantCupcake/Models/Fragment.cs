@@ -10,7 +10,6 @@ namespace VigilantCupcake.Models {
 
     internal class Fragment : INotifyPropertyChanged {
         private bool _loaded = false;
-        private static int _newFragmentCount = 0;
         private string _oldFullPath = null;
 
         public bool IsHostsFile { get; set; }
@@ -45,8 +44,7 @@ namespace VigilantCupcake.Models {
             get {
                 if (!IsHostsFile) {
                     if (string.IsNullOrWhiteSpace(_name)) {
-                        _name = "New Fragment" + ((_newFragmentCount > 0) ? (" " + _newFragmentCount) : string.Empty);
-                        _newFragmentCount++;
+                        _name = "New Fragment";
                     }
                     return _name;
                 } else {
@@ -55,11 +53,9 @@ namespace VigilantCupcake.Models {
             }
             set {
                 if (string.IsNullOrWhiteSpace(value)) { throw new Exception("Invalid value for Name"); }
-                if (_oldFullPath == null) {
-                    _oldFullPath = _fullPath;
-                    Dirty = true;
-                }
+                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
                 _name = value;
+                Dirty = true;
                 NotifyPropertyChanged();
             }
         }
@@ -73,29 +69,22 @@ namespace VigilantCupcake.Models {
                 return _rootPath;
             }
             set {
-                if (_oldFullPath == null) {
-                    _oldFullPath = _fullPath;
-                    Dirty = true;
-                }
+                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
                 _rootPath = value;
+                Dirty = true;
                 NotifyPropertyChanged();
             }
         }
 
-        private string _fullPath = null;
-
         public string FullPath {
             get {
-                _fullPath = Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
-                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : _fullPath;
+                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
             }
             set {
-                if (_oldFullPath == null) {
-                    _oldFullPath = _fullPath;
-                    Dirty = true;
-                }
+                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
                 RootPath = Path.GetDirectoryName(value);
-                _fullPath = value;
+                Name = Path.GetFileNameWithoutExtension(value);
+                Dirty = true;
                 NotifyPropertyChanged();
             }
         }
@@ -148,7 +137,7 @@ namespace VigilantCupcake.Models {
             if (Dirty) {
                 Directory.CreateDirectory(Path.GetDirectoryName(FullPath)); //Make sure all directories exist
 
-                if (_oldFullPath != null && File.Exists(_oldFullPath)) {
+                if (_oldFullPath != null && !FullPath.Equals(_oldFullPath) && File.Exists(_oldFullPath)) {
                     if (File.Exists(FullPath)) File.Delete(FullPath);
                     File.Move(_oldFullPath, FullPath);
                 }
@@ -206,13 +195,13 @@ namespace VigilantCupcake.Models {
             var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
             if (length >= 0) {
                 var firstLine = _currentContents.Substring(0, length);
-                if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {
+                if (_currentContents.Length > 0 && isARemoteUrlString(firstLine)) {
                     RemoteLocation = firstLine.Substring(Properties.Settings.Default.RemoteLocationSyntax.Length);
                 }
             }
         }
 
-        protected static bool IsARemoteUrlString(string value) {
+        protected static bool isARemoteUrlString(string value) {
             return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
         }
 

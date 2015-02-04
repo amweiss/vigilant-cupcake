@@ -1,4 +1,5 @@
-﻿using Fragments;
+﻿using Aga.Controls.Tree;
+using Fragments;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -134,9 +135,10 @@ namespace VigilantCupcake {
         private void loadFragments() {
             if (_treeModel.Fragments.Count() == 0) {
                 var treeNode = new FragmentNode() { Text = "Existing Hosts" };
-                var currentHosts = new Fragment() { Name = treeNode.Text, Enabled = true };
+                var currentHosts = new Fragment() { Name = treeNode.Text };
                 treeNode.Fragment = currentHosts;
                 _treeModel.FragmentNodes.First(x => x != null).Nodes.Add(treeNode);
+                treeNode.CheckState = CheckState.Checked;
                 currentHosts.FileContents = _newHostsFile.FileContents;
                 currentHosts.save();
                 _selectedFragment = currentHosts;
@@ -330,13 +332,45 @@ namespace VigilantCupcake {
             nodeTextBox1.BeginEdit();
         }
 
-        private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
+        private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
+            DoDragDrop(triStateTreeView1.SelectedNode, DragDropEffects.Move);
         }
 
         private void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(typeof(TreeNodeAdv))
+                && triStateTreeView1.DropPosition.Node != null
+                && triStateTreeView1.DropPosition.Node.Tag is FragmentNode
+                && (((FragmentNode)triStateTreeView1.DropPosition.Node.Tag).Parent is FragmentNode)
+                    || triStateTreeView1.DropPosition.Position != NodePosition.Before)
+                e.Effect = e.AllowedEffect;
+            else
+                e.Effect = DragDropEffects.None;
         }
 
-        private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
+        private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
+            var nodeBeingDragged = (TreeNodeAdv)e.Data.GetData(typeof(TreeNodeAdv));
+            var fragmentNode = nodeBeingDragged.Tag as FragmentNode;
+            Node dropNode = triStateTreeView1.DropPosition.Node.Tag as Node;
+            if (triStateTreeView1.DropPosition.Position == NodePosition.Inside) {
+                fragmentNode.Parent = dropNode;
+                triStateTreeView1.DropPosition.Node.IsExpanded = true;
+            } else {
+                Node parent = dropNode.Parent;
+                Node nextItem = dropNode;
+                if (triStateTreeView1.DropPosition.Position == NodePosition.After)
+                    nextItem = dropNode.NextNode;
+
+                fragmentNode.Parent = null;
+
+                var index = parent.Nodes.IndexOf(nextItem);
+                if (index == -1)
+                    parent.Nodes.Add(fragmentNode);
+                else {
+                    parent.Nodes.Insert(index, fragmentNode);
+                }
+            }
+
+            if (fragmentNode.Fragment != null) fragmentNode.Fragment.RootPath = ((FragmentNode)fragmentNode.Parent).FilePath;
         }
     }
 }
