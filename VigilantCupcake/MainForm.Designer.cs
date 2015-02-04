@@ -196,7 +196,7 @@
             this.fragmentListContextMenuDelete,
             this.fragmentListContextMenuRename});
             this.fragmentListContextMenu.Name = "fragmentListContextMenu";
-            this.fragmentListContextMenu.Size = new System.Drawing.Size(153, 98);
+            this.fragmentListContextMenu.Size = new System.Drawing.Size(153, 120);
             // 
             // toolStripMenuItem3
             // 
@@ -232,6 +232,7 @@
             this.fragmentListContextMenuRename.Name = "fragmentListContextMenuRename";
             this.fragmentListContextMenuRename.Size = new System.Drawing.Size(152, 22);
             this.fragmentListContextMenuRename.Text = "Rename";
+            this.fragmentListContextMenuRename.Click += new System.EventHandler(this.fragmentListContextMenuRename_Click);
             // 
             // nodeCheckBox1
             // 

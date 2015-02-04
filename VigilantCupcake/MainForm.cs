@@ -326,6 +326,10 @@ namespace VigilantCupcake {
             createNewDirectory();
         }
 
+        private void fragmentListContextMenuRename_Click(object sender, EventArgs e) {
+            nodeTextBox1.BeginEdit();
+        }
+
         private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
 
         }
