@@ -66,6 +66,8 @@ namespace VigilantCupcake.Models {
         }
 
         public void delete() {
+            Nodes.Where(n => n is FragmentNode).ToList().ForEach(f => ((FragmentNode)f).delete());
+
             if (Fragment != null) {
                 Fragment.delete();
             } else {

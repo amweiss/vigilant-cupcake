@@ -325,5 +325,17 @@ namespace VigilantCupcake {
         private void menuNewFolder_Click(object sender, EventArgs e) {
             createNewDirectory();
         }
+
+        private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
+
+        }
+
+        private void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
+
+        }
+
+        private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
+
+        }
     }
 }
