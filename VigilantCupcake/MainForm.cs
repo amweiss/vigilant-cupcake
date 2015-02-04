@@ -133,7 +133,7 @@ namespace VigilantCupcake {
 
         private void loadFragments() {
             if (_treeModel.Fragments.Count() == 0) {
-                var treeNode = new FragmentNode("Existing Hosts");
+                var treeNode = new FragmentNode() { Text = "Existing Hosts" };
                 var currentHosts = new Fragment() { Name = treeNode.Text, Enabled = true };
                 treeNode.Fragment = currentHosts;
                 _treeModel.FragmentNodes.First(x => x != null).Nodes.Add(treeNode);
@@ -186,7 +186,7 @@ namespace VigilantCupcake {
             if (triStateTreeView1.SelectedNode != null) {
                 var selectedNode = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
                 var directoryNode = selectedNode.IsLeaf ? (FragmentNode)selectedNode.Parent : selectedNode;
-                var treeNode = new FragmentNode((isFragment) ? "New Fragment" : "New Folder");
+                var treeNode = new FragmentNode() { Text = (isFragment) ? "New Fragment" : "New Folder" };
 
                 if (isFragment) {
                     var fragment = new Fragment() {
@@ -331,15 +331,12 @@ namespace VigilantCupcake {
         }
 
         private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
-
         }
 
         private void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
-
         }
 
         private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
-
         }
     }
 }

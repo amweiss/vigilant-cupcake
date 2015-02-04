@@ -6,7 +6,7 @@ namespace VigilantCupcake.OS_Utils {
     //From: http://www.codeproject.com/Articles/32908/C-Single-Instance-App-With-the-Ability-To-Restore
     static internal class NativeMethods {
 
-        [DllImport("user32")]
+        [DllImport("user32", CharSet = CharSet.Unicode)]
         public static extern int RegisterWindowMessage(string message);
 
         public static int RegisterWindowMessage(string format, params object[] args) {

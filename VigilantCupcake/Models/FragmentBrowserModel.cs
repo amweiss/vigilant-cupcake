@@ -58,12 +58,12 @@ namespace VigilantCupcake.Models {
         }
 
         private Node createDirectoryNode(DirectoryInfo directoryInfo) {
-            var directoryNode = new FragmentNode(directoryInfo.Name);
+            var directoryNode = new FragmentNode() { Text = directoryInfo.Name };
             foreach (var directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(createDirectoryNode(directory));
             foreach (var file in directoryInfo.GetFiles()) {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
-                var treeNode = new FragmentNode(name);
+                var treeNode = new FragmentNode() { Text = name };
                 var fragment = new Fragment() {
                     Name = name,
                     FullPath = file.FullName,
