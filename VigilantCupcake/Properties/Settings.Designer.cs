@@ -183,5 +183,23 @@ namespace VigilantCupcake.Properties {
                 return ((string)(this["FragmentFileExtension"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\r\\n|\\n\\r|\\n|\\r")]
+        public string LineCleaningRegex {
+            get {
+                return ((string)(this["LineCleaningRegex"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\r\\n")]
+        public string LineCleaningReplacement {
+            get {
+                return ((string)(this["LineCleaningReplacement"]));
+            }
+        }
     }
 }

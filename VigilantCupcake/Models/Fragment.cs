@@ -1,65 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
 
-    class FragmentList : BindingList<Fragment> {
-        public void loadFromDirectory(string path) {
-            if (!File.Exists(path))
-                Directory.CreateDirectory(OS_Utils.LocalFiles.BaseDirectory);
+    internal class Fragment : INotifyPropertyChanged {
+        private bool _loaded = false;
+        private static int _newFragmentCount = 0;
+        private string _oldFullPath = null;
 
-            // Move all files with no extension to the version with an extension.
-            Directory.EnumerateFiles(OS_Utils.LocalFiles.BaseDirectory, "*", SearchOption.AllDirectories)
-                .Where(x => !Path.GetExtension(x).Equals(Properties.Settings.Default.FragmentFileExtension))
-                .AsParallel()
-                .ForAll(y => {
-                    var newName = y + Properties.Settings.Default.FragmentFileExtension;
-                    if (File.Exists(newName)) File.Delete(newName);
-                    File.Move(y, newName);
-                });
+        public bool IsHostsFile { get; set; }
 
-            var files = Directory.EnumerateFiles(OS_Utils.LocalFiles.BaseDirectory, "*.txt");
-            if (files.Count() > 0) {
-                var names = from file in files
-                            select new Fragment() {
-                                Name = Path.GetFileNameWithoutExtension(file),
-                                Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(file)
-                            };
-                names.ToList().ForEach(x => Add(x));
+        private bool _dirty = false;
+
+        public bool Dirty {
+            get { return _dirty; }
+            set {
+                if (_dirty != value) {
+                    _dirty = value;
+                    NotifyPropertyChanged();
+                }
             }
         }
-    }
 
-    class Fragment : INotifyPropertyChanged {
+        private bool _enabled = false;
 
-        private bool _loaded = false;
-        private string _currentContents = null;
-        private string _remoteLocation = null;
+        public bool Enabled {
+            get { return _enabled; }
+            set {
+                if (_enabled != value) {
+                    _enabled = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private string _name = null;
-
-        private static int _newFragmentCount = 0;
-
-        public bool Dirty { get; protected set; }
-        public bool Enabled { get; set; }
-        public bool IsHostsFile { get; set; }
 
         public string Name {
             get {
                 if (!IsHostsFile) {
                     if (string.IsNullOrWhiteSpace(_name)) {
-                        do {
-                            _name = "New Fragment" + ((_newFragmentCount > 0) ? (" " + _newFragmentCount) : string.Empty);
-                            _newFragmentCount++;
-                        } while (File.Exists(FullPath));
-                        using (File.Create(FullPath)) { }
+                        _name = "New Fragment" + ((_newFragmentCount > 0) ? (" " + _newFragmentCount) : string.Empty);
+                        _newFragmentCount++;
                     }
                     return _name;
                 } else {
@@ -68,19 +55,56 @@ namespace VigilantCupcake.Models {
             }
             set {
                 if (string.IsNullOrWhiteSpace(value)) { throw new Exception("Invalid value for Name"); }
-                var oldVal = _name;
-                var oldFullPath = Path.Combine(OS_Utils.LocalFiles.BaseDirectory, oldVal + Properties.Settings.Default.FragmentFileExtension);
-                _name = value;
-                if (oldVal != null && !oldVal.Equals(_name)) {
-                    File.Move(oldFullPath, FullPath);
+                if (_oldFullPath == null) {
+                    _oldFullPath = _fullPath;
+                    Dirty = true;
                 }
+                _name = value;
                 NotifyPropertyChanged();
             }
         }
 
+        private string _rootPath = null;
+
+        public string RootPath {
+            get {
+                if (_rootPath == null)
+                    _rootPath = OS_Utils.LocalFiles.BaseDirectory;
+                return _rootPath;
+            }
+            set {
+                if (_oldFullPath == null) {
+                    _oldFullPath = _fullPath;
+                    Dirty = true;
+                }
+                _rootPath = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _fullPath = null;
+
+        public string FullPath {
+            get {
+                _fullPath = Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
+                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : _fullPath;
+            }
+            set {
+                if (_oldFullPath == null) {
+                    _oldFullPath = _fullPath;
+                    Dirty = true;
+                }
+                RootPath = Path.GetDirectoryName(value);
+                _fullPath = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _remoteLocation = null;
+
         public string RemoteLocation {
             get {
-                return (IsHostsFile)? string.Empty : _remoteLocation;
+                return (IsHostsFile) ? string.Empty : _remoteLocation;
             }
             set {
                 if (_remoteLocation != null && _remoteLocation.Equals(value)) return;
@@ -92,11 +116,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public string FullPath {
-            get {
-                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : Path.Combine(OS_Utils.LocalFiles.BaseDirectory, Name + Properties.Settings.Default.FragmentFileExtension);
-            }
-        }
+        private string _currentContents = null;
 
         public string FileContents {
             get {
@@ -104,7 +124,7 @@ namespace VigilantCupcake.Models {
                     if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
                         downloadFile();
                     } else {
-                        _currentContents = Regex.Replace(File.ReadAllText(FullPath), @"\r\n|\n\r|\n|\r", "\r\n");
+                        _currentContents = Regex.Replace(File.ReadAllText(FullPath), Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
                         checkForRemoteLocation();
                     }
                     _loaded = true;
@@ -113,21 +133,30 @@ namespace VigilantCupcake.Models {
                 return _currentContents;
             }
             set {
-                _currentContents = Regex.Replace(value, @"\r\n|\n\r|\n|\r", "\r\n");
-                if (!File.Exists(FullPath)) {
-                    using (File.Create(FullPath)) { }
+                var newContents = Regex.Replace(value, Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
+                if (_currentContents == null || !_currentContents.Equals(newContents)) {
+                    _currentContents = newContents;
+                    _loaded = true;
+                    Dirty = true;
+                    checkForRemoteLocation();
+                    NotifyPropertyChanged();
                 }
-                _loaded = true;
-                checkForRemoteLocation();
-                Dirty = true;
-                NotifyPropertyChanged();
             }
         }
 
         public void save() {
             if (Dirty) {
+                Directory.CreateDirectory(Path.GetDirectoryName(FullPath)); //Make sure all directories exist
+
+                if (_oldFullPath != null && File.Exists(_oldFullPath)) {
+                    if (File.Exists(FullPath)) File.Delete(FullPath);
+                    File.Move(_oldFullPath, FullPath);
+                }
+
+                if (!File.Exists(FullPath)) using (File.Create(FullPath)) { }
+
                 var sb = new StringBuilder();
-                if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
+                if (!IsHostsFile && !string.IsNullOrWhiteSpace(RemoteLocation)) {
                     sb.Append(Properties.Settings.Default.RemoteLocationSyntax);
                     sb.AppendLine(RemoteLocation);
                 }
@@ -143,14 +172,19 @@ namespace VigilantCupcake.Models {
             if (fileHandleFree)
                 File.WriteAllText(filename, text);
             else
-                throw new Exception("There was an error saving the hosts file");
+                throw new Exception("There was an error saving the fragment");
         }
 
         public void delete() {
-            File.Delete(FullPath);
+            if (!File.Exists(FullPath)) return;
+            var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(FullPath);
+            if (fileHandleFree)
+                File.Delete(FullPath);
+            else
+                throw new Exception("There was an error deleting the fragment");
         }
 
-        public async void downloadFile() { //TODO: make this private with something wrapping it? force refresh?
+        public async void downloadFile() {
             if (string.IsNullOrWhiteSpace(RemoteLocation)) return;
 
             _currentContents = "127.0.0.1 Loading...";
@@ -159,7 +193,7 @@ namespace VigilantCupcake.Models {
             try {
                 using (var client = new HttpClient()) {
                     var result = await client.GetStringAsync(RemoteLocation);
-                    sb.Append(Regex.Replace(result, @"\r\n|\n\r|\n|\r", "\r\n"));
+                    sb.Append(Regex.Replace(result, Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement)));
                 }
             } catch (Exception e) {
                 sb.Append((e.InnerException != null) ? e.InnerException.Message : e.Message);
@@ -168,7 +202,7 @@ namespace VigilantCupcake.Models {
             OnContentsDownloaded(EventArgs.Empty);
         }
 
-        private void checkForRemoteLocation() {
+        protected void checkForRemoteLocation() {
             var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
             if (length >= 0) {
                 var firstLine = _currentContents.Substring(0, length);
@@ -178,7 +212,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public static bool IsARemoteUrlString(string value) {
+        protected static bool IsARemoteUrlString(string value) {
             return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
         }
 
@@ -196,17 +230,16 @@ namespace VigilantCupcake.Models {
             }
         }
 
-
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
+        protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
             if (PropertyChanged != null) {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
         public event EventHandler DownloadStarting;
+
         public event EventHandler ContentsDownloaded;
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
-
 }
