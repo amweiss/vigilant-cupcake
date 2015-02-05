@@ -9,9 +9,9 @@ namespace Fragments {
         private HostfileRecord _hnRecord = new HostfileRecord();
         private Dictionary<string, List<string>> _hostToIPMapping = new Dictionary<string, List<string>>();
         private Dictionary<string, List<string>> _ipToHostMapping = new Dictionary<string, List<string>>();
-        private Dictionary<string, List<string>> _collisions = new Dictionary<string, List<string>>();
+        //private Dictionary<string, List<string>> _collisions = new Dictionary<string, List<string>>();
 
-        public IEnumerable<string> generateOutput(IEnumerable<string> mergedFile) {
+        public IEnumerable<string> GenerateOutput(IEnumerable<string> mergedFile) {
             generateMappingsFromMerged(mergedFile.ToArray());
 
             var results = new List<string>();
@@ -32,7 +32,7 @@ namespace Fragments {
 
                 trimmedEntry = Regex.Replace(trimmedEntry, @"#.*", string.Empty);
 
-                Tuple<string, string[]> splittedRecord = _hnRecord.SplitHostfileRecord(trimmedEntry);
+                Tuple<string, string[]> splittedRecord = HostfileRecord.SplitHostfileRecord(trimmedEntry);
                 string ipAddress = splittedRecord.Item1;
                 string[] hostnames = splittedRecord.Item2;
                 foreach (string host in hostnames) {

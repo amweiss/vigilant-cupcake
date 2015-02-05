@@ -9,12 +9,14 @@ namespace Fragments {
 
         public IEnumerable<string> Apply(IEnumerable<string> lines, string filter) {
             List<string> appliedFilter = new List<string>();
+            if (lines == null) return appliedFilter;
+
             foreach (string line in lines) {
                 string writeBackLine = line;
                 if (Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#")) {
                     List<string> matchedFilter = new List<string>();
                     List<string> keepAsIs = new List<string>();
-                    Tuple<string, string[]> splitRecord = _hnRecord.SplitHostfileRecord(writeBackLine);
+                    Tuple<string, string[]> splitRecord = HostfileRecord.SplitHostfileRecord(writeBackLine);
                     foreach (string host in splitRecord.Item2) {
                         if (Regex.IsMatch(host, filter)) {
                             matchedFilter.Add(host);

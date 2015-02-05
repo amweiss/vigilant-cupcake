@@ -25,12 +25,12 @@ namespace VigilantCupcake.Models {
 
         public FragmentBrowserModel(string path) {
             PendingDownloads = 0;
-            Nodes.Add(createDirectoryNode(new DirectoryInfo(OS_Utils.LocalFiles.BaseDirectory)));
+            Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
         }
 
         public void saveAll() {
             if (PendingDownloads > 0) {
-                var backgroundSave = new TaskFactory().StartNew(() => {
+                new TaskFactory().StartNew(() => {
                     while (PendingDownloads > 0) {
                         System.Threading.Thread.Sleep(1000);
                     }
@@ -38,12 +38,6 @@ namespace VigilantCupcake.Models {
                 });
             } else {
                 doSaveAll();
-            }
-        }
-
-        public void remove(FragmentNode node) {
-            if (node != null) {
-                node.Parent = null;
             }
         }
 
@@ -86,7 +80,11 @@ namespace VigilantCupcake.Models {
         }
 
         private void doSaveAll() {
-            getAllNodesRecursively(Root).Where(y => y as FragmentNode != null && ((FragmentNode)y).Fragment != null).ToList().ForEach(x => ((FragmentNode)x).Fragment.save());
+            var fragments = from node in getAllNodesRecursively(Root)
+                        let fragmentNode = node as FragmentNode
+                        where fragmentNode != null && fragmentNode.Fragment != null
+                        select fragmentNode.Fragment;
+            fragments.ToList().ForEach(f => f.save()); //Doing it in parallel seems to deadlock UI on label update
         }
     }
 }

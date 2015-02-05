@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using VigilantCupcake.OS_Utils;
+using VigilantCupcake.OperatingSystemUtilities;
 
 namespace VigilantCupcake {
 

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace VigilantCupcake.OS_Utils {
+namespace VigilantCupcake.OperatingSystemUtilities {
 
     static public class SingleInstance {
         private static string _attribute = ((GuidAttribute)typeof(Program).Assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0]).Value;

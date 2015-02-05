@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace VigilantCupcake.OS_Utils {
+namespace VigilantCupcake.OperatingSystemUtilities {
 
     public static class LocalFiles {
 

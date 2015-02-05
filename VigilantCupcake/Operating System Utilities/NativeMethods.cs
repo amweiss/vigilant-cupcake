@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace VigilantCupcake.OS_Utils {
+namespace VigilantCupcake.OperatingSystemUtilities {
 
     //From: http://www.codeproject.com/Articles/32908/C-Single-Instance-App-With-the-Ability-To-Restore
     static internal class NativeMethods {
@@ -18,12 +18,15 @@ namespace VigilantCupcake.OS_Utils {
         public const int SW_SHOWNORMAL = 1;
 
         [DllImport("user32")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
 
         [DllImportAttribute("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         [DllImportAttribute("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         public static void ShowToFront(IntPtr window) {

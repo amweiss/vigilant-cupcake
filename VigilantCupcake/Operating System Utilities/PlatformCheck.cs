@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace VigilantCupcake.OS_Utils {
+namespace VigilantCupcake.OperatingSystemUtilities {
 
     //From: http://stackoverflow.com/questions/10138040/how-to-detect-properly-windows-linux-mac-operating-systems
     public static class PlatformCheck {

@@ -36,7 +36,7 @@ namespace VigilantCupcake.Models {
 
         public string FilePath {
             get {
-                return Path.Combine(OS_Utils.LocalFiles.BaseDirectoryRoot, FullPath);
+                return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath);
             }
         }
 

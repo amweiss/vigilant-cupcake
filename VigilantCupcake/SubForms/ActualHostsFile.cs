@@ -8,7 +8,7 @@ namespace VigilantCupcake.SubForms {
 
         public ActualHostsFile() {
             InitializeComponent();
-            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(View_Utils.FastColoredTextBoxUtil.hostsView_TextChanged);
+            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
         }
 
         private void ActualHostsFile_Load(object sender, EventArgs e) {

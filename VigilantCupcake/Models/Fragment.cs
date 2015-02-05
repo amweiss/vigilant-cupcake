@@ -52,7 +52,7 @@ namespace VigilantCupcake.Models {
                 }
             }
             set {
-                if (string.IsNullOrWhiteSpace(value)) { throw new Exception("Invalid value for Name"); }
+                if (string.IsNullOrWhiteSpace(value)) { throw new InvalidDataException("Invalid value for Name"); }
                 if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
                 _name = value;
                 Dirty = true;
@@ -65,7 +65,7 @@ namespace VigilantCupcake.Models {
         public string RootPath {
             get {
                 if (_rootPath == null)
-                    _rootPath = OS_Utils.LocalFiles.BaseDirectory;
+                    _rootPath = OperatingSystemUtilities.LocalFiles.BaseDirectory;
                 return _rootPath;
             }
             set {
@@ -78,7 +78,7 @@ namespace VigilantCupcake.Models {
 
         public string FullPath {
             get {
-                return (IsHostsFile) ? OS_Utils.HostsFileUtil.CurrentHostsFile : Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
+                return (IsHostsFile) ? OperatingSystemUtilities.HostsFileUtil.CurrentHostsFile : Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
             }
             set {
                 if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
@@ -156,21 +156,21 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        protected void saveTextAs(string filename, string text) {
-            var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(filename);
+        static protected void saveTextAs(string filename, string text) {
+            var fileHandleFree = OperatingSystemUtilities.LocalFiles.WaitForFile(filename);
             if (fileHandleFree)
                 File.WriteAllText(filename, text);
             else
-                throw new Exception("There was an error saving the fragment");
+                throw new IOException("There was an error saving the fragment");
         }
 
         public void delete() {
             if (!File.Exists(FullPath)) return;
-            var fileHandleFree = OS_Utils.LocalFiles.WaitForFile(FullPath);
+            var fileHandleFree = OperatingSystemUtilities.LocalFiles.WaitForFile(FullPath);
             if (fileHandleFree)
                 File.Delete(FullPath);
             else
-                throw new Exception("There was an error deleting the fragment");
+                throw new IOException("There was an error deleting the fragment");
         }
 
         public async void downloadFile() {
