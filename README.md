@@ -89,4 +89,6 @@ Domain donated by [Tim Finucane](https://github.com/speljamr)
 Name donated by [Greg Houston](https://github.com/ghoustonjr)
 
 ------
-Uses [FastColoredTextBox](https://github.com/PavelTorgashov/FastColoredTextBox)
+###Libraries
+[FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
+[TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
