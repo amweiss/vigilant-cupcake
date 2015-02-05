@@ -90,5 +90,5 @@ Name donated by [Greg Houston](https://github.com/ghoustonjr)
 
 ------
 ###Libraries
-[FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
-[TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
+* [FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
+* [TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
