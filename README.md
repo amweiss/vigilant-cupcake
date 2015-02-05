@@ -1,7 +1,7 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Get v0.6.1 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.6.1/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+##Get v0.6.5 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.6.5/VigilantCupcake/bin/Release/vigilantcupcake.zip)
 ###NOTE: Most browsers will warn you about the download or execution due to it modifying your hosts file.
 
 ##What is it?
