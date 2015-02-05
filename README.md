@@ -4,6 +4,10 @@
 ##Get v0.6.5 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.6.5/VigilantCupcake/bin/Release/vigilantcupcake.zip)
 ###NOTE: Most browsers will warn you about the download or execution due to it modifying your hosts file.
 
+Or install with [chocolatey](https://chocolatey.org/) (currently out of date due to waiting for moderators, but this will become the primary method)
+
+`choco install vigilantcupcake`
+
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
 
@@ -74,10 +78,14 @@ In fragment editors:
 
 ##Coming Soon
 * Automatically identify conflicts
-* Intelligent filtering
+* Intelligent searching of fragments
 * Filter the merged hosts file to exclude entries you don't want
-* Install from [Chocolatey](http://chocolatey.org/)
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
+
+
+##Libraries
+* [FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
+* [TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
 
 -----
 Created by [Adam Weiss](https://github.com/amweiss) and [Matt Gaczewski](https://github.com/mgaczewski)
@@ -89,6 +97,3 @@ Domain donated by [Tim Finucane](https://github.com/speljamr)
 Name donated by [Greg Houston](https://github.com/ghoustonjr)
 
 ------
-###Libraries
-* [FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
-* [TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
