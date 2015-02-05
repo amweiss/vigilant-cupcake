@@ -7,15 +7,15 @@ namespace VigilantCupcake.OperatingSystemUtilities {
 
     public static class LocalFiles {
 
-        public static string BaseDirectoryRoot {
-            get {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            }
-        }
-
         public static string BaseDirectory {
             get {
                 return System.IO.Path.Combine(BaseDirectoryRoot, FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName);
+            }
+        }
+
+        public static string BaseDirectoryRoot {
+            get {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
         }
 

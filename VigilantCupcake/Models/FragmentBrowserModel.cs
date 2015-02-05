@@ -9,7 +9,10 @@ namespace VigilantCupcake.Models {
 
     internal class FragmentBrowserModel : TreeModel {
 
-        public int PendingDownloads { get; protected set; }
+        public FragmentBrowserModel(string path) {
+            PendingDownloads = 0;
+            Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
+        }
 
         public IEnumerable<FragmentNode> FragmentNodes {
             get {
@@ -23,10 +26,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public FragmentBrowserModel(string path) {
-            PendingDownloads = 0;
-            Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
-        }
+        public int PendingDownloads { get; protected set; }
 
         public void saveAll() {
             if (PendingDownloads > 0) {
@@ -38,16 +38,6 @@ namespace VigilantCupcake.Models {
                 });
             } else {
                 doSaveAll();
-            }
-        }
-
-        private IEnumerable<Node> getAllNodesRecursively(Node subnode) {
-            yield return subnode;
-
-            foreach (var node in subnode.Nodes) {
-                foreach (var n in getAllNodesRecursively((Node)node)) {
-                    yield return n;
-                }
             }
         }
 
@@ -71,20 +61,30 @@ namespace VigilantCupcake.Models {
             return directoryNode;
         }
 
-        private void fragment_DownloadStarting(object sender, EventArgs e) {
-            PendingDownloads++;
+        private void doSaveAll() {
+            var fragments = from node in getAllNodesRecursively(Root)
+                            let fragmentNode = node as FragmentNode
+                            where fragmentNode != null && fragmentNode.Fragment != null
+                            select fragmentNode.Fragment;
+            fragments.ToList().ForEach(f => f.save()); //Doing it in parallel seems to deadlock UI on label update
         }
 
         private void fragment_ContentsDownloaded(object sender, EventArgs e) {
             PendingDownloads--;
         }
 
-        private void doSaveAll() {
-            var fragments = from node in getAllNodesRecursively(Root)
-                        let fragmentNode = node as FragmentNode
-                        where fragmentNode != null && fragmentNode.Fragment != null
-                        select fragmentNode.Fragment;
-            fragments.ToList().ForEach(f => f.save()); //Doing it in parallel seems to deadlock UI on label update
+        private void fragment_DownloadStarting(object sender, EventArgs e) {
+            PendingDownloads++;
+        }
+
+        private IEnumerable<Node> getAllNodesRecursively(Node subnode) {
+            yield return subnode;
+
+            foreach (var node in subnode.Nodes) {
+                foreach (var n in getAllNodesRecursively((Node)node)) {
+                    yield return n;
+                }
+            }
         }
     }
 }

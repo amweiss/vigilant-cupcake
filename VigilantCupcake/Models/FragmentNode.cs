@@ -6,10 +6,24 @@ using System.Windows.Forms;
 namespace VigilantCupcake.Models {
 
     internal class FragmentNode : Node {
+        private System.Windows.Forms.CheckState _checkState = System.Windows.Forms.CheckState.Unchecked;
         private bool _firstUpdate = true;
+        private Fragment _fragment = null;
+        private string _text;
         private int _updatingNodes = 0;
 
-        private Fragment _fragment = null;
+        override public CheckState CheckState {
+            get { return _checkState; }
+            set {
+                updateCheckState(value, true);
+            }
+        }
+
+        public string FilePath {
+            get {
+                return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath);
+            }
+        }
 
         public Fragment Fragment {
             get { return _fragment; }
@@ -34,26 +48,9 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public string FilePath {
-            get {
-                return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath);
-            }
-        }
-
         override public bool IsLeaf {
             get { return (Fragment != null); }
         }
-
-        private System.Windows.Forms.CheckState _checkState = System.Windows.Forms.CheckState.Unchecked;
-
-        override public CheckState CheckState {
-            get { return _checkState; }
-            set {
-                updateCheckState(value, true);
-            }
-        }
-
-        private string _text;
 
         override public string Text {
             get { return _text; }

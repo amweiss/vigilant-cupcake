@@ -22,6 +22,7 @@ namespace VigilantCupcake {
         private Fragment _selectedFragment = null;
         private List<ToolStripMenuItem> _syncDurationMenuItems;
         private FragmentBrowserModel _treeModel = new FragmentBrowserModel(OperatingSystemUtilities.LocalFiles.BaseDirectory);
+
         public MainForm() {
             InitializeComponent();
 
@@ -342,6 +343,7 @@ namespace VigilantCupcake {
 
             updateCurrentFragmentView();
         }
+
         private void updateCurrentFragmentView() {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
@@ -372,6 +374,7 @@ namespace VigilantCupcake {
                 newHostsLabel.BeginInvokeIfRequired(() => newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty));
             }
         }
+
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
         }
