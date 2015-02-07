@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace VigilantCupcake.Models {
 
-    internal class Fragment : INotifyPropertyChanged {
+    public class Fragment : INotifyPropertyChanged {
         private string _currentContents = null;
         private bool _dirty = false;
         private bool _enabled = false;
@@ -77,7 +77,7 @@ namespace VigilantCupcake.Models {
                 return (IsHostsFile) ? OperatingSystemUtilities.HostsFileUtil.CurrentHostsFile : Path.Combine(RootPath, Name + Properties.Settings.Default.FragmentFileExtension);
             }
             set {
-                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
+                if (!string.IsNullOrWhiteSpace(_name) && (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath)))) _oldFullPath = FullPath;
                 RootPath = Path.GetDirectoryName(value);
                 Name = Path.GetFileNameWithoutExtension(value);
                 Dirty = true;
@@ -90,9 +90,6 @@ namespace VigilantCupcake.Models {
         public string Name {
             get {
                 if (!IsHostsFile) {
-                    if (string.IsNullOrWhiteSpace(_name)) {
-                        _name = "New Fragment";
-                    }
                     return _name;
                 } else {
                     return "hosts";
@@ -100,7 +97,7 @@ namespace VigilantCupcake.Models {
             }
             set {
                 if (string.IsNullOrWhiteSpace(value)) { throw new InvalidDataException("Invalid value for Name"); }
-                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
+                if (!string.IsNullOrWhiteSpace(_name) && (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath)))) _oldFullPath = FullPath;
                 _name = value;
                 Dirty = true;
                 NotifyPropertyChanged();
@@ -128,7 +125,7 @@ namespace VigilantCupcake.Models {
                 return _rootPath;
             }
             set {
-                if (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath))) _oldFullPath = FullPath;
+                if (!string.IsNullOrWhiteSpace(_name) && (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath)))) _oldFullPath = FullPath;
                 _rootPath = value;
                 Dirty = true;
                 NotifyPropertyChanged();

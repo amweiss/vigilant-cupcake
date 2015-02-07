@@ -29,7 +29,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.triStateTreeView1 = new Aga.Controls.Tree.TreeViewAdv();
+            this.fragmentTreeView = new Aga.Controls.Tree.TreeViewAdv();
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuNewFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +39,9 @@
             this.nodeCheckBox1 = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.nodeStateIcon1 = new Aga.Controls.Tree.NodeControls.NodeStateIcon();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.fragmentFilter = new System.Windows.Forms.RichTextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -89,6 +92,7 @@
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.fragmentListContextMenu.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -144,14 +148,15 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.triStateTreeView1, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.fragmentTreeView, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
@@ -165,27 +170,27 @@
             this.label4.TabIndex = 2;
             this.label4.Text = "Fragment List";
             // 
-            // triStateTreeView1
+            // fragmentTreeView
             // 
-            this.triStateTreeView1.AllowDrop = true;
-            this.triStateTreeView1.BackColor = System.Drawing.SystemColors.Window;
-            this.triStateTreeView1.ContextMenuStrip = this.fragmentListContextMenu;
-            this.triStateTreeView1.DefaultToolTipProvider = null;
-            this.triStateTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.triStateTreeView1.DragDropMarkColor = System.Drawing.Color.Black;
-            this.triStateTreeView1.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.triStateTreeView1.Location = new System.Drawing.Point(3, 23);
-            this.triStateTreeView1.Model = null;
-            this.triStateTreeView1.Name = "triStateTreeView1";
-            this.triStateTreeView1.NodeControls.Add(this.nodeCheckBox1);
-            this.triStateTreeView1.NodeControls.Add(this.nodeStateIcon1);
-            this.triStateTreeView1.NodeControls.Add(this.nodeTextBox1);
-            this.triStateTreeView1.SelectedNode = null;
-            this.triStateTreeView1.Size = new System.Drawing.Size(214, 766);
-            this.triStateTreeView1.TabIndex = 3;
-            this.triStateTreeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.triStateTreeView1_ItemDrag);
-            this.triStateTreeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.triStateTreeView1_DragDrop);
-            this.triStateTreeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.triStateTreeView1_DragOver);
+            this.fragmentTreeView.AllowDrop = true;
+            this.fragmentTreeView.BackColor = System.Drawing.SystemColors.Window;
+            this.fragmentTreeView.ContextMenuStrip = this.fragmentListContextMenu;
+            this.fragmentTreeView.DefaultToolTipProvider = null;
+            this.fragmentTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fragmentTreeView.DragDropMarkColor = System.Drawing.Color.Black;
+            this.fragmentTreeView.LineColor = System.Drawing.SystemColors.ControlDark;
+            this.fragmentTreeView.Location = new System.Drawing.Point(3, 49);
+            this.fragmentTreeView.Model = null;
+            this.fragmentTreeView.Name = "fragmentTreeView";
+            this.fragmentTreeView.NodeControls.Add(this.nodeCheckBox1);
+            this.fragmentTreeView.NodeControls.Add(this.nodeStateIcon1);
+            this.fragmentTreeView.NodeControls.Add(this.nodeTextBox1);
+            this.fragmentTreeView.SelectedNode = null;
+            this.fragmentTreeView.Size = new System.Drawing.Size(214, 746);
+            this.fragmentTreeView.TabIndex = 3;
+            this.fragmentTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.triStateTreeView1_ItemDrag);
+            this.fragmentTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.triStateTreeView1_DragDrop);
+            this.fragmentTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.triStateTreeView1_DragOver);
             // 
             // fragmentListContextMenu
             // 
@@ -255,6 +260,45 @@
             this.nodeTextBox1.IncrementalSearchEnabled = true;
             this.nodeTextBox1.LeftMargin = 3;
             this.nodeTextBox1.ParentColumn = null;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.fragmentFilter, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 23);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(214, 20);
+            this.tableLayoutPanel5.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 26);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Search:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fragmentFilter
+            // 
+            this.fragmentFilter.DetectUrls = false;
+            this.fragmentFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fragmentFilter.Location = new System.Drawing.Point(63, 3);
+            this.fragmentFilter.MaxLength = 0;
+            this.fragmentFilter.Multiline = false;
+            this.fragmentFilter.Name = "fragmentFilter";
+            this.fragmentFilter.Size = new System.Drawing.Size(148, 20);
+            this.fragmentFilter.TabIndex = 1;
+            this.fragmentFilter.Text = "";
+            this.fragmentFilter.TextChanged += new System.EventHandler(this.fragmentSearchTextChanged);
             // 
             // splitContainer2
             // 
@@ -720,6 +764,8 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.fragmentListContextMenu.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -790,7 +836,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private Aga.Controls.Tree.TreeViewAdv triStateTreeView1;
+        private Aga.Controls.Tree.TreeViewAdv fragmentTreeView;
         private System.Windows.Forms.BindingSource hostsFileBindingSource;
         private Aga.Controls.Tree.NodeControls.NodeCheckBox nodeCheckBox1;
         private Aga.Controls.Tree.NodeControls.NodeStateIcon nodeStateIcon1;
@@ -798,6 +844,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox fragmentFilter;
 
     }
 }

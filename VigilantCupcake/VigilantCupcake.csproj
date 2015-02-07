@@ -77,6 +77,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilterableTreeModel.cs" />
     <Compile Include="Models\Fragment.cs" />
     <Compile Include="Models\FragmentBrowserModel.cs" />
     <Compile Include="Models\FragmentNode.cs" />

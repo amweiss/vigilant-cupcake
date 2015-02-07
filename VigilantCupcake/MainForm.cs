@@ -39,8 +39,8 @@ namespace VigilantCupcake {
 
             enabledToolStripMenuItem_CheckedChanged(null, null);
 
-            triStateTreeView1.Model = _treeModel;
-            triStateTreeView1.SelectionChanged += triStateTreeView1_SelectionChanged;
+            fragmentTreeView.Model = _treeModel;
+            fragmentTreeView.SelectionChanged += triStateTreeView1_SelectionChanged;
 
             _newHostsFile.PropertyChanged += fragmentPropertyChanged;
         }
@@ -81,14 +81,15 @@ namespace VigilantCupcake {
         }
 
         private void createNewNode(bool isFragment) {
-            if (triStateTreeView1.SelectedNode != null) {
-                var selectedNode = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
-                var directoryNode = selectedNode.IsLeaf ? (FragmentNode)selectedNode.Parent : selectedNode;
+            if (fragmentTreeView.SelectedNode != null) {
+                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
+                var directoryNode = selectedNode.IsLeaf ? selectedNode.Parent : selectedNode;
                 var treeNode = new FragmentNode();
 
                 if (isFragment) {
+                    var rootPath = Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath);
                     var fragment = new Fragment() {
-                        RootPath = Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath),
+                        RootPath = rootPath,
                         FileContents = string.Empty
                     };
                     fragment.PropertyChanged += fragmentPropertyChanged;
@@ -105,7 +106,7 @@ namespace VigilantCupcake {
                 }
 
                 treeNode.Parent = directoryNode;
-                triStateTreeView1.SelectedNode = triStateTreeView1.FindNodeByTag(treeNode);
+                fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
                 nodeTextBox1.BeginEdit();
             }
         }
@@ -129,9 +130,9 @@ namespace VigilantCupcake {
         }
 
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
-            if (confirmAndDelete(triStateTreeView1.SelectedNode.Tag as FragmentNode) == DialogResult.Yes) {
-                if (triStateTreeView1.SelectedNode != null)
-                    (triStateTreeView1.SelectedNode.Tag as FragmentNode).Parent = null;
+            if (confirmAndDelete(fragmentTreeView.SelectedNode.Tag as FragmentNode) == DialogResult.Yes) {
+                if (fragmentTreeView.SelectedNode != null)
+                    (fragmentTreeView.SelectedNode.Tag as FragmentNode).Parent = null;
             }
         }
 
@@ -148,6 +149,11 @@ namespace VigilantCupcake {
                 case "Dirty": updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 default: break;
             }
+        }
+
+        private void fragmentSearchTextChanged(object sender, EventArgs e) {
+            _treeModel.Filter = fragmentFilter.Text;
+            fragmentTreeView.ExpandAll();
         }
 
         private void loadFragments() {
@@ -254,7 +260,7 @@ namespace VigilantCupcake {
 
         private void savePreferences() {
             Properties.Settings.Default.SelectedFiles = new StringCollection();
-            if (_treeModel != null && _treeModel.Nodes.Count() > 0) {
+            if (_treeModel != null && _treeModel.Root.Nodes.Count() > 0) {
                 var paths = _treeModel.Fragments.Where(x => x.Enabled).Select(x => x.FullPath).ToArray();
                 Properties.Settings.Default.SelectedFiles.AddRange(paths);
             }
@@ -282,14 +288,14 @@ namespace VigilantCupcake {
         private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
             var nodeBeingDragged = (TreeNodeAdv)e.Data.GetData(typeof(TreeNodeAdv));
             var fragmentNode = nodeBeingDragged.Tag as FragmentNode;
-            Node dropNode = triStateTreeView1.DropPosition.Node.Tag as Node;
-            if (triStateTreeView1.DropPosition.Position == NodePosition.Inside) {
+            FragmentNode dropNode = fragmentTreeView.DropPosition.Node.Tag as FragmentNode;
+            if (fragmentTreeView.DropPosition.Position == NodePosition.Inside) {
                 fragmentNode.Parent = dropNode;
-                triStateTreeView1.DropPosition.Node.IsExpanded = true;
+                fragmentTreeView.DropPosition.Node.IsExpanded = true;
             } else {
-                Node parent = dropNode.Parent;
-                Node nextItem = dropNode;
-                if (triStateTreeView1.DropPosition.Position == NodePosition.After)
+                FragmentNode parent = dropNode.Parent;
+                FragmentNode nextItem = dropNode;
+                if (fragmentTreeView.DropPosition.Position == NodePosition.After)
                     nextItem = dropNode.NextNode;
 
                 fragmentNode.Parent = null;
@@ -302,28 +308,28 @@ namespace VigilantCupcake {
                 }
             }
 
-            if (fragmentNode.Fragment != null) fragmentNode.Fragment.RootPath = ((FragmentNode)fragmentNode.Parent).FilePath;
+            if (fragmentNode.Fragment != null) fragmentNode.Fragment.RootPath = (fragmentNode.Parent).FilePath;
         }
 
         private void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(typeof(TreeNodeAdv))
-                && triStateTreeView1.DropPosition.Node != null
-                && triStateTreeView1.DropPosition.Node.Tag is FragmentNode
-                && (((FragmentNode)triStateTreeView1.DropPosition.Node.Tag).Parent is FragmentNode)
-                    || triStateTreeView1.DropPosition.Position != NodePosition.Before)
+                && fragmentTreeView.DropPosition.Node != null
+                && fragmentTreeView.DropPosition.Node.Tag is FragmentNode
+                && fragmentTreeView.DropPosition.Position != NodePosition.Before) {
                 e.Effect = e.AllowedEffect;
-            else
+            } else {
                 e.Effect = DragDropEffects.None;
+            }
         }
 
         private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
-            DoDragDrop(triStateTreeView1.SelectedNode, DragDropEffects.Move);
+            DoDragDrop(fragmentTreeView.SelectedNode, DragDropEffects.Move);
         }
 
         private void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
             _selectedFragment = null;
-            if (triStateTreeView1.SelectedNode != null && triStateTreeView1.SelectedNode.Tag is FragmentNode) {
-                var node = (FragmentNode)triStateTreeView1.SelectedNode.Tag;
+            if (fragmentTreeView.SelectedNode != null && fragmentTreeView.SelectedNode.Tag is FragmentNode) {
+                var node = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
                 if (node != null && node.Fragment != null) {
                     currentFragmentView.Enabled = true;
                     remoteUrlView.Enabled = true;

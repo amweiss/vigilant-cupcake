@@ -1,5 +1,4 @@
-﻿using Aga.Controls.Tree;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace VigilantCupcake.Models {
 
-    internal class FragmentBrowserModel : TreeModel {
+    public class FragmentBrowserModel : FilterableTreeModel {
 
         public FragmentBrowserModel(string path) {
             PendingDownloads = 0;
-            Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
+            Root.Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
         }
 
         public IEnumerable<FragmentNode> FragmentNodes {
@@ -41,7 +40,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private Node createDirectoryNode(DirectoryInfo directoryInfo) {
+        private FragmentNode createDirectoryNode(DirectoryInfo directoryInfo) {
             var directoryNode = new FragmentNode() { Text = directoryInfo.Name };
             foreach (var directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(createDirectoryNode(directory));
@@ -63,9 +62,8 @@ namespace VigilantCupcake.Models {
 
         private void doSaveAll() {
             var fragments = from node in getAllNodesRecursively(Root)
-                            let fragmentNode = node as FragmentNode
-                            where fragmentNode != null && fragmentNode.Fragment != null
-                            select fragmentNode.Fragment;
+                            where node != null && node.Fragment != null
+                            select node.Fragment;
             fragments.ToList().ForEach(f => f.save()); //Doing it in parallel seems to deadlock UI on label update
         }
 
@@ -77,11 +75,11 @@ namespace VigilantCupcake.Models {
             PendingDownloads++;
         }
 
-        private IEnumerable<Node> getAllNodesRecursively(Node subnode) {
+        private IEnumerable<FragmentNode> getAllNodesRecursively(FragmentNode subnode) {
             yield return subnode;
 
             foreach (var node in subnode.Nodes) {
-                foreach (var n in getAllNodesRecursively((Node)node)) {
+                foreach (var n in getAllNodesRecursively(node)) {
                     yield return n;
                 }
             }
