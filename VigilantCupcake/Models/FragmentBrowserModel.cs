@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,10 +36,6 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private void DoSaveAll() {
-            Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
-        }
-
         private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo) {
             var directoryNode = new FragmentNode() { Text = directoryInfo.Name };
             foreach (var directory in directoryInfo.GetDirectories())
@@ -58,6 +53,10 @@ namespace VigilantCupcake.Models {
                 treeNode.Fragment = fragment; //Assign fragment after adding to tree so hierarchy is in place
             }
             return directoryNode;
+        }
+
+        private void DoSaveAll() {
+            Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
         }
 
         private IEnumerable<FragmentNode> GetAllNodesRecursively(FragmentNode subnode) {

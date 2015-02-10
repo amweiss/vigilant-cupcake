@@ -22,7 +22,7 @@ namespace VigilantCupcake {
         private Fragment _selectedFragment = null;
         private List<ToolStripMenuItem> _syncDurationMenuItems;
         private FragmentBrowserModel _treeModel = new FragmentBrowserModel(OperatingSystemUtilities.LocalFiles.BaseDirectory);
-        
+
         private Label loadingLabel = new Label() {
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleCenter,

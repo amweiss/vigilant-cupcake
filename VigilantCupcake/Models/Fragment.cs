@@ -11,9 +11,9 @@ namespace VigilantCupcake.Models {
     public class Fragment : INotifyPropertyChanged {
         private string _currentContents = null;
         private bool _dirty = false;
+        private bool _downloadPending = false;
         private bool _enabled = false;
         private bool _loaded = false;
-        private bool _downloadPending = false;
         private string _name = null;
         private string _oldFullPath = null;
 
@@ -27,21 +27,21 @@ namespace VigilantCupcake.Models {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool DownloadPending {
-            get { return _downloadPending; }
-            private set {
-                if (_downloadPending != value) {
-                    _downloadPending = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
         public bool Dirty {
             get { return _dirty; }
             set {
                 if (_dirty != value) {
                     _dirty = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public bool DownloadPending {
+            get { return _downloadPending; }
+            private set {
+                if (_downloadPending != value) {
+                    _downloadPending = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -71,19 +71,6 @@ namespace VigilantCupcake.Models {
                     CheckForRemoteLocation();
                     NotifyPropertyChanged();
                 }
-            }
-        }
-
-        public void ForceLoad() {
-            if (!_loaded) {
-                if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
-                    DownloadFile();
-                } else {
-                    _currentContents = Regex.Replace(File.ReadAllText(FullPath), Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
-                    CheckForRemoteLocation();
-                }
-                _loaded = true;
-                Dirty = false;
             }
         }
 
@@ -180,6 +167,19 @@ namespace VigilantCupcake.Models {
             FileContents = sb.ToString();
             DownloadPending = false;
             OnContentsDownloaded(EventArgs.Empty);
+        }
+
+        public void ForceLoad() {
+            if (!_loaded) {
+                if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
+                    DownloadFile();
+                } else {
+                    _currentContents = Regex.Replace(File.ReadAllText(FullPath), Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
+                    CheckForRemoteLocation();
+                }
+                _loaded = true;
+                Dirty = false;
+            }
         }
 
         public void Save() {
