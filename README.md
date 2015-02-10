@@ -78,7 +78,6 @@ In fragment editors:
 
 ##Coming Soon
 * Automatically identify conflicts
-* Intelligent searching of fragments
 * Filter the merged hosts file to exclude entries you don't want
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
 
