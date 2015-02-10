@@ -1,7 +1,7 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Get v0.6.5 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.6.5/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+##Get v0.7.0 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.7.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
 ###NOTE: Most browsers will warn you about the download or execution due to it modifying your hosts file.
 
 Or install with [chocolatey](https://chocolatey.org/) (currently out of date due to waiting for moderators, but this will become the primary method)
