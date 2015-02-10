@@ -319,13 +319,13 @@ namespace VigilantCupcake {
         private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
             var nodeBeingDragged = (TreeNodeAdv)e.Data.GetData(typeof(TreeNodeAdv));
             var fragmentNode = nodeBeingDragged.Tag as FragmentNode;
-            FragmentNode dropNode = fragmentTreeView.DropPosition.Node.Tag as FragmentNode;
-            if (fragmentTreeView.DropPosition.Position == NodePosition.Inside) {
+            var dropNode = fragmentTreeView.DropPosition.Node.Tag as FragmentNode;
+            if (!dropNode.IsLeaf) {
                 fragmentNode.Parent = dropNode;
                 fragmentTreeView.DropPosition.Node.IsExpanded = true;
             } else {
-                FragmentNode parent = dropNode.Parent;
-                FragmentNode nextItem = dropNode;
+                var parent = dropNode.Parent;
+                var nextItem = dropNode;
                 if (fragmentTreeView.DropPosition.Position == NodePosition.After)
                     nextItem = dropNode.NextNode;
 
