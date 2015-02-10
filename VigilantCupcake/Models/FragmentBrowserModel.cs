@@ -9,13 +9,12 @@ namespace VigilantCupcake.Models {
     public class FragmentBrowserModel : FilterableTreeModel {
 
         public FragmentBrowserModel(string path) {
-            PendingDownloads = 0;
-            Root.Nodes.Add(createDirectoryNode(new DirectoryInfo(path)));
+            Root.Nodes.Add(CreateDirectoryNode(new DirectoryInfo(path)));
         }
 
         public IEnumerable<FragmentNode> FragmentNodes {
             get {
-                return getAllNodesRecursively(Root).Select(x => x as FragmentNode);
+                return GetAllNodesRecursively(Root).Select(x => x as FragmentNode);
             }
         }
 
@@ -25,25 +24,27 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        public int PendingDownloads { get; protected set; }
-
-        public void saveAll() {
-            if (PendingDownloads > 0) {
+        public void SaveAll() {
+            if (Fragments.Any(f => f.DownloadPending)) {
                 new TaskFactory().StartNew(() => {
-                    while (PendingDownloads > 0) {
+                    while (Fragments.Any(f => f.DownloadPending)) {
                         System.Threading.Thread.Sleep(1000);
                     }
-                    doSaveAll();
+                    DoSaveAll();
                 });
             } else {
-                doSaveAll();
+                DoSaveAll();
             }
         }
 
-        private FragmentNode createDirectoryNode(DirectoryInfo directoryInfo) {
+        private void DoSaveAll() {
+            Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
+        }
+
+        private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo) {
             var directoryNode = new FragmentNode() { Text = directoryInfo.Name };
             foreach (var directory in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(createDirectoryNode(directory));
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
             foreach (var file in directoryInfo.GetFiles()) {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 var treeNode = new FragmentNode() { Text = name };
@@ -52,34 +53,18 @@ namespace VigilantCupcake.Models {
                     FullPath = file.FullName,
                     Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(file.FullName)
                 };
+                fragment.ForceLoad();
                 directoryNode.Nodes.Add(treeNode);
                 treeNode.Fragment = fragment; //Assign fragment after adding to tree so hierarchy is in place
-                fragment.ContentsDownloaded += fragment_ContentsDownloaded;
-                fragment.DownloadStarting += fragment_DownloadStarting;
             }
             return directoryNode;
         }
 
-        private void doSaveAll() {
-            var fragments = from node in getAllNodesRecursively(Root)
-                            where node != null && node.Fragment != null
-                            select node.Fragment;
-            fragments.ToList().ForEach(f => f.save()); //Doing it in parallel seems to deadlock UI on label update
-        }
-
-        private void fragment_ContentsDownloaded(object sender, EventArgs e) {
-            PendingDownloads--;
-        }
-
-        private void fragment_DownloadStarting(object sender, EventArgs e) {
-            PendingDownloads++;
-        }
-
-        private IEnumerable<FragmentNode> getAllNodesRecursively(FragmentNode subnode) {
+        private IEnumerable<FragmentNode> GetAllNodesRecursively(FragmentNode subnode) {
             yield return subnode;
 
             foreach (var node in subnode.Nodes) {
-                foreach (var n in getAllNodesRecursively(node)) {
+                foreach (var n in GetAllNodesRecursively(node)) {
                     yield return n;
                 }
             }

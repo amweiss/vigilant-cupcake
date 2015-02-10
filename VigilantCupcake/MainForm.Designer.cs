@@ -28,7 +28,6 @@
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
             this.fragmentTreeView = new Aga.Controls.Tree.TreeViewAdv();
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,13 +44,15 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.remoteUrlView = new System.Windows.Forms.RichTextBox();
+            this.remoteUrlView = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,8 +82,9 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -99,13 +101,15 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.remoteUrlView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -147,28 +151,18 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.fragmentTreeView, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
             this.tableLayoutPanel4.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(214, 20);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Fragment List";
             // 
             // fragmentTreeView
             // 
@@ -179,7 +173,7 @@
             this.fragmentTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentTreeView.DragDropMarkColor = System.Drawing.Color.Black;
             this.fragmentTreeView.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.fragmentTreeView.Location = new System.Drawing.Point(3, 49);
+            this.fragmentTreeView.Location = new System.Drawing.Point(3, 53);
             this.fragmentTreeView.Model = null;
             this.fragmentTreeView.Name = "fragmentTreeView";
             this.fragmentTreeView.NodeControls.Add(this.nodeCheckBox1);
@@ -273,12 +267,11 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(214, 20);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(214, 24);
             this.tableLayoutPanel5.TabIndex = 4;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
@@ -291,6 +284,7 @@
             // 
             this.fragmentFilter.DetectUrls = false;
             this.fragmentFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fragmentFilter.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fragmentFilter.Location = new System.Drawing.Point(63, 3);
             this.fragmentFilter.MaxLength = 0;
             this.fragmentFilter.Multiline = false;
@@ -329,7 +323,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.Size = new System.Drawing.Size(600, 792);
             this.tableLayoutPanel3.TabIndex = 3;
@@ -358,7 +352,7 @@
             this.currentFragmentView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.currentFragmentView.IsReplaceMode = false;
-            this.currentFragmentView.Location = new System.Drawing.Point(3, 49);
+            this.currentFragmentView.Location = new System.Drawing.Point(3, 53);
             this.currentFragmentView.Name = "currentFragmentView";
             this.currentFragmentView.Paddings = new System.Windows.Forms.Padding(0);
             this.currentFragmentView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
@@ -366,20 +360,24 @@
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
             // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
             // selectedFragmentLabel
             // 
-            this.selectedFragmentLabel.AutoSize = true;
+            this.selectedFragmentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.selectedFragmentLabel.Location = new System.Drawing.Point(3, 0);
             this.selectedFragmentLabel.Name = "selectedFragmentLabel";
-            this.selectedFragmentLabel.Size = new System.Drawing.Size(96, 13);
+            this.selectedFragmentLabel.Size = new System.Drawing.Size(594, 20);
             this.selectedFragmentLabel.TabIndex = 0;
             this.selectedFragmentLabel.Text = "Selected Fragment";
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.17962F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.82037F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.30976F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.69024F));
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.remoteUrlView, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -387,32 +385,53 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(594, 20);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(594, 24);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 26);
+            this.label3.Size = new System.Drawing.Size(78, 26);
             this.label3.TabIndex = 0;
             this.label3.Text = "Remote URL:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // remoteUrlView
             // 
+            this.remoteUrlView.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.remoteUrlView.AutoScrollMinSize = new System.Drawing.Size(2, 12);
+            this.remoteUrlView.BackBrush = null;
+            this.remoteUrlView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.remoteUrlView.CharHeight = 12;
+            this.remoteUrlView.CharWidth = 7;
+            this.remoteUrlView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.remoteUrlView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.selectedFragmentBindingSource, "RemoteLocation", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.remoteUrlView.DetectUrls = false;
+            this.remoteUrlView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.remoteUrlView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.remoteUrlView.Location = new System.Drawing.Point(128, 3);
-            this.remoteUrlView.MaxLength = 0;
+            this.remoteUrlView.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.remoteUrlView.IsReplaceMode = false;
+            this.remoteUrlView.Location = new System.Drawing.Point(87, 3);
             this.remoteUrlView.Multiline = false;
             this.remoteUrlView.Name = "remoteUrlView";
-            this.remoteUrlView.Size = new System.Drawing.Size(463, 20);
+            this.remoteUrlView.Paddings = new System.Windows.Forms.Padding(0);
+            this.remoteUrlView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.remoteUrlView.ShowLineNumbers = false;
+            this.remoteUrlView.ShowScrollBars = false;
+            this.remoteUrlView.Size = new System.Drawing.Size(504, 20);
             this.remoteUrlView.TabIndex = 1;
-            this.remoteUrlView.Text = "";
+            this.remoteUrlView.Zoom = 100;
             this.remoteUrlView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.remoteUrlView_KeyPress);
             this.remoteUrlView.Validated += new System.EventHandler(this.remoteUrlView_Validated);
             // 
@@ -426,17 +445,17 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(600, 792);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // newHostsLabel
             // 
-            this.newHostsLabel.AutoSize = true;
+            this.newHostsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.newHostsLabel.Location = new System.Drawing.Point(3, 0);
             this.newHostsLabel.Name = "newHostsLabel";
-            this.newHostsLabel.Size = new System.Drawing.Size(59, 13);
+            this.newHostsLabel.Size = new System.Drawing.Size(594, 50);
             this.newHostsLabel.TabIndex = 1;
             this.newHostsLabel.Text = "New Hosts";
             // 
@@ -465,7 +484,7 @@
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hostsFileView.IsReplaceMode = false;
-            this.hostsFileView.Location = new System.Drawing.Point(3, 49);
+            this.hostsFileView.Location = new System.Drawing.Point(3, 53);
             this.hostsFileView.Name = "hostsFileView";
             this.hostsFileView.Paddings = new System.Windows.Forms.Padding(0);
             this.hostsFileView.ReadOnly = true;
@@ -473,6 +492,10 @@
             this.hostsFileView.Size = new System.Drawing.Size(594, 740);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
+            // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // menuStrip1
             // 
@@ -731,13 +754,39 @@
             this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
-            // selectedFragmentBindingSource
+            // tableLayoutPanel6
             // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(214, 14);
+            this.tableLayoutPanel6.TabIndex = 5;
             // 
-            // hostsFileBindingSource
+            // label4
             // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 14);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Fragment List";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(110, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 14);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Downloading...";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label2.Visible = false;
             // 
             // MainForm
             // 
@@ -762,27 +811,24 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.fragmentListContextMenu.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.remoteUrlView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
+            this.tableLayoutPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -805,14 +851,13 @@
         private System.Windows.Forms.ToolStripMenuItem flushDNSToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RichTextBox remoteUrlView;
+        private FastColoredTextBoxNS.FastColoredTextBox remoteUrlView;
         private System.Windows.Forms.ToolStripMenuItem viewCurrentHostsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveOnProgramStartToolStripMenuItem;
         private FastColoredTextBoxNS.FastColoredTextBox currentFragmentView;
         private FastColoredTextBoxNS.FastColoredTextBox hostsFileView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem mergeHostsEntriesToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip fragmentListContextMenu;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuDelete;
@@ -847,6 +892,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox fragmentFilter;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
 
     }
 }

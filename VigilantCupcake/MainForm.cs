@@ -22,6 +22,14 @@ namespace VigilantCupcake {
         private Fragment _selectedFragment = null;
         private List<ToolStripMenuItem> _syncDurationMenuItems;
         private FragmentBrowserModel _treeModel = new FragmentBrowserModel(OperatingSystemUtilities.LocalFiles.BaseDirectory);
+        
+        private Label loadingLabel = new Label() {
+            AutoSize = false,
+            TextAlign = ContentAlignment.MiddleCenter,
+            Dock = DockStyle.Fill,
+            Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+            Text = "Loading..."
+        };
 
         public MainForm() {
             InitializeComponent();
@@ -55,7 +63,7 @@ namespace VigilantCupcake {
         static private DialogResult confirmAndDelete(FragmentNode node) {
             DialogResult result = MessageBox.Show("Delete " + node.Text + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
-                node.delete();
+                node.Delete();
                 node.Parent = null;
             }
 
@@ -63,7 +71,7 @@ namespace VigilantCupcake {
         }
 
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
-            _treeModel.Fragments.Where(x => x.Enabled).AsParallel().ForAll(y => y.downloadFile());
+            _treeModel.Fragments.Where(x => x.Enabled).AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
         }
 
@@ -93,6 +101,8 @@ namespace VigilantCupcake {
                         FileContents = string.Empty
                     };
                     fragment.PropertyChanged += fragmentPropertyChanged;
+                    fragment.DownloadStarting += fragmentDownloadStarting;
+                    fragment.ContentsDownloaded += fragmentDownloadEnding;
                     treeNode.Fragment = fragment;
                 }
 
@@ -127,6 +137,24 @@ namespace VigilantCupcake {
 
         private void flushDns_Click(object sender, EventArgs e) {
             OperatingSystemUtilities.DnsUtility.FlushDns();
+        }
+
+        private void fragmentDownloadEnding(object sender, EventArgs e) {
+            var fragment = (Fragment)sender;
+            if (fragment == _selectedFragment && !fragment.DownloadPending) {
+                tableLayoutPanel3.Controls.Remove(loadingLabel);
+                tableLayoutPanel3.Controls.Add(currentFragmentView, 0, 2);
+            }
+            label2.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending));
+        }
+
+        private void fragmentDownloadStarting(object sender, EventArgs e) {
+            var fragment = (Fragment)sender;
+            if (fragment == _selectedFragment && fragment.DownloadPending) {
+                tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
+                tableLayoutPanel3.Controls.Remove(currentFragmentView);
+            }
+            label2.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending));
         }
 
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
@@ -164,14 +192,17 @@ namespace VigilantCupcake {
                 _treeModel.FragmentNodes.First(x => x != null).Nodes.Add(treeNode);
                 treeNode.CheckState = CheckState.Checked;
                 currentHosts.FileContents = _newHostsFile.FileContents;
-                currentHosts.save();
+                currentHosts.Save();
                 _selectedFragment = currentHosts;
-                _selectedFragment.PropertyChanged += fragmentPropertyChanged;
             }
 
             hostsFileBindingSource.DataSource = _newHostsFile;
             updateCurrentFragmentView();
-            _treeModel.Fragments.AsParallel().ForAll(x => x.PropertyChanged += fragmentPropertyChanged);
+            _treeModel.Fragments.AsParallel().ForAll(x => {
+                x.PropertyChanged += fragmentPropertyChanged;
+                x.DownloadStarting += fragmentDownloadStarting;
+                x.ContentsDownloaded += fragmentDownloadEnding;
+            });
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
@@ -245,8 +276,8 @@ namespace VigilantCupcake {
 
         private void saveAll() {
             try {
-                _treeModel.saveAll();
-                _newHostsFile.save();
+                _treeModel.SaveAll();
+                _newHostsFile.Save();
                 OperatingSystemUtilities.DnsUtility.FlushDns();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -345,6 +376,10 @@ namespace VigilantCupcake {
                 remoteUrlView.Enabled = false;
             } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
+                if (_selectedFragment.DownloadPending) {
+                    tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
+                    tableLayoutPanel3.Controls.Remove(currentFragmentView);
+                }
             }
 
             updateCurrentFragmentView();
@@ -368,14 +403,14 @@ namespace VigilantCupcake {
 
                 //TODO: More efficient????
                 var newHosts = string.Empty;
-                if (false && Properties.Settings.Default.MergeHostsEntries) { //TODO: MAKE MERGING WORK AND NAME IT BETTER
-                    //var combiner = new FragmentCombiner();
-                    //var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                    //var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
-                    //newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                } else {
-                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                }
+                //if (Properties.Settings.Default.MergeHostsEntries) { //TODO: MAKE MERGING WORK AND NAME IT BETTER
+                //    var combiner = new FragmentCombiner();
+                //    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                //    var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
+                //    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                //} else {
+                newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                //}
                 _newHostsFile.FileContents = newHosts;
                 newHostsLabel.BeginInvokeIfRequired(() => newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty));
             }
