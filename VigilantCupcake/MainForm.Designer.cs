@@ -43,7 +43,7 @@
             this.fragmentFilter = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.downloadingLabel = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -300,7 +300,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.downloadingLabel, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -320,13 +320,13 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(110, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Downloading...";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label2.Visible = false;
+            this.downloadingLabel.Location = new System.Drawing.Point(110, 0);
+            this.downloadingLabel.Name = "label2";
+            this.downloadingLabel.Size = new System.Drawing.Size(100, 14);
+            this.downloadingLabel.TabIndex = 4;
+            this.downloadingLabel.Text = "Downloading...";
+            this.downloadingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.downloadingLabel.Visible = false;
             // 
             // splitContainer2
             // 
@@ -894,7 +894,7 @@
         private System.Windows.Forms.RichTextBox fragmentFilter;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label downloadingLabel;
 
     }
 }

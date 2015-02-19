@@ -142,19 +142,23 @@ namespace VigilantCupcake {
         private void fragmentDownloadEnding(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && !fragment.DownloadPending) {
-                tableLayoutPanel3.Controls.Remove(loadingLabel);
-                tableLayoutPanel3.Controls.Add(currentFragmentView, 0, 2);
+                tableLayoutPanel3.BeginInvokeIfRequired(() => {
+                    tableLayoutPanel3.Controls.Remove(loadingLabel);
+                    tableLayoutPanel3.Controls.Add(currentFragmentView, 0, 2);
+                });
             }
-            label2.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending));
+            downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
         }
 
         private void fragmentDownloadStarting(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && fragment.DownloadPending) {
-                tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
-                tableLayoutPanel3.Controls.Remove(currentFragmentView);
+                tableLayoutPanel3.BeginInvokeIfRequired(() => {
+                    tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
+                    tableLayoutPanel3.Controls.Remove(currentFragmentView);
+                });
             }
-            label2.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending));
+            downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
         }
 
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
