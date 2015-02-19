@@ -71,7 +71,7 @@ namespace VigilantCupcake {
         }
 
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
-            _treeModel.Fragments.Where(x => x.Enabled).AsParallel().ForAll(y => y.DownloadFile());
+            _treeModel.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
         }
 
