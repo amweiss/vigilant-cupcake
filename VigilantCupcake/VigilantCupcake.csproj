@@ -108,6 +108,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SubForms\ActualHostsFile.resx">
       <DependentUpon>ActualHostsFile.cs</DependentUpon>
@@ -131,6 +132,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\NewSolutionFolder_6289.png" />
+    <None Include="Resources\NewRequest_8796.png" />
+    <None Include="Resources\Save_6530.png" />
+    <None Include="Resources\Clearallrequests_8816.png" />
+    <None Include="Resources\Restart_6322.png" />
+    <None Include="Resources\CheckOutforEdit_13187.png" />
     <Content Include="VC2-nobg-whitecake.ico" />
   </ItemGroup>
   <ItemGroup />

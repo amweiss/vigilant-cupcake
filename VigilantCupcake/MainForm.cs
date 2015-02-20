@@ -51,6 +51,19 @@ namespace VigilantCupcake {
             fragmentTreeView.SelectionChanged += triStateTreeView1_SelectionChanged;
 
             _newHostsFile.PropertyChanged += fragmentPropertyChanged;
+
+            fragmentListContextMenu.Opening += fragmentListContextMenu_Opening;
+        }
+
+        void fragmentListContextMenu_Opening(object sender, CancelEventArgs e) {
+            if (fragmentTreeView.SelectedNode != null) {
+                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
+                if (selectedNode != null && selectedNode.Fragment != null) {
+                    var visible = !string.IsNullOrWhiteSpace(selectedNode.Fragment.RemoteLocation);
+                    toolStripSeparator5.Visible = visible;
+                    downloadFragmentToolStripMenuItem.Visible = visible;
+                }
+            }
         }
 
         protected override void WndProc(ref Message m) {
@@ -118,6 +131,15 @@ namespace VigilantCupcake {
                 treeNode.Parent = directoryNode;
                 fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
                 nodeTextBox1.BeginEdit();
+            }
+        }
+
+        private void downloadFragmentToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (fragmentTreeView.SelectedNode != null) {
+                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
+                if (selectedNode != null && selectedNode.Fragment != null) {
+                    selectedNode.Fragment.DownloadFile();
+                }
             }
         }
 
