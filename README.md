@@ -1,12 +1,14 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Get v0.8.0 [here!](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.8.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
-###NOTE: Most browsers will warn you about the download or execution due to it modifying your hosts file.
-
-Or install with [chocolatey](https://chocolatey.org/) (currently out of date due to waiting for moderators, but this will become the primary method)
-
+##Install with [chocolatey](https://chocolatey.org/) as [vigilantcupcake](https://chocolatey.org/packages/vigilantcupcake) with:
 `choco install vigilantcupcake`
+
+Chocolatey is helpful to keep the program up to date without manually downloading the file.
+
+###Other ways to install
+* Download it directly [here](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.8.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+* Clone the repo and create a shortcut to `vigilant-cupcake/VigilantCupcake/bin/Release/VigilantCupcake.exe`
 
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
