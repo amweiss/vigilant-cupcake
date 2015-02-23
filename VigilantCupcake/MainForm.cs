@@ -215,7 +215,7 @@ namespace VigilantCupcake {
                 var treeNode = new FragmentNode() { Text = "Existing Hosts" };
                 var currentHosts = new Fragment() { Name = treeNode.Text };
                 treeNode.Fragment = currentHosts;
-                _treeModel.FragmentNodes.First(x => x != null).Nodes.Add(treeNode);
+                _treeModel.FragmentNodes.First(x => x != null && x.Parent != null).Nodes.Add(treeNode);
                 treeNode.CheckState = CheckState.Checked;
                 currentHosts.FileContents = _newHostsFile.FileContents;
                 currentHosts.Save();
