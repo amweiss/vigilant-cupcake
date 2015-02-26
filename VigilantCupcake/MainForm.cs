@@ -48,6 +48,7 @@ namespace VigilantCupcake {
             enabledToolStripMenuItem_CheckedChanged(null, null);
 
             fragmentTreeView.Model = _treeModel;
+            fragmentTreeView.Root.Children.ToList().ForEach(x => x.Expand());
             fragmentTreeView.SelectionChanged += triStateTreeView1_SelectionChanged;
 
             _newHostsFile.PropertyChanged += fragmentPropertyChanged;
