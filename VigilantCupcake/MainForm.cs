@@ -103,36 +103,34 @@ namespace VigilantCupcake {
         }
 
         private void createNewNode(bool isFragment) {
-            if (fragmentTreeView.SelectedNode != null) {
-                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
-                var directoryNode = selectedNode.IsLeaf ? selectedNode.Parent : selectedNode;
-                var treeNode = new FragmentNode();
+            var selectedNode = (fragmentTreeView.SelectedNode != null) ? (FragmentNode)fragmentTreeView.SelectedNode.Tag : (FragmentNode)fragmentTreeView.Root.Children[0].Tag;
+            var directoryNode = selectedNode.IsLeaf ? selectedNode.Parent : selectedNode;
+            var treeNode = new FragmentNode();
 
-                if (isFragment) {
-                    var rootPath = Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath);
-                    var fragment = new Fragment() {
-                        RootPath = rootPath,
-                        FileContents = string.Empty
-                    };
-                    fragment.PropertyChanged += fragmentPropertyChanged;
-                    fragment.DownloadStarting += fragmentDownloadStarting;
-                    fragment.ContentsDownloaded += fragmentDownloadEnding;
-                    treeNode.Fragment = fragment;
-                }
-
-                var name = (isFragment) ? "New Fragment" : "New Folder";
-                treeNode.Text = name;
-                var fileNumber = 1;
-                while (directoryNode.Nodes.Any(x => x.Text.Equals(treeNode.Text))) {
-                    var newName = string.Format("{0} {1}", name, fileNumber);
-                    treeNode.Text = newName;
-                    fileNumber++;
-                }
-
-                treeNode.Parent = directoryNode;
-                fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
-                nodeTextBox1.BeginEdit();
+            if (isFragment) {
+                var rootPath = Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, directoryNode.FullPath);
+                var fragment = new Fragment() {
+                    RootPath = rootPath,
+                    FileContents = string.Empty
+                };
+                fragment.PropertyChanged += fragmentPropertyChanged;
+                fragment.DownloadStarting += fragmentDownloadStarting;
+                fragment.ContentsDownloaded += fragmentDownloadEnding;
+                treeNode.Fragment = fragment;
             }
+
+            var name = (isFragment) ? "New Fragment" : "New Folder";
+            treeNode.Text = name;
+            var fileNumber = 1;
+            while (directoryNode.Nodes.Any(x => x.Text.Equals(treeNode.Text))) {
+                var newName = string.Format("{0} {1}", name, fileNumber);
+                treeNode.Text = newName;
+                fileNumber++;
+            }
+
+            treeNode.Parent = directoryNode;
+            fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
+            nodeTextBox1.BeginEdit();
         }
 
         private void downloadFragmentToolStripMenuItem_Click(object sender, EventArgs e) {
