@@ -63,9 +63,9 @@ namespace VigilantCupcake.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CheckOutforEdit_13187 {
+        internal static System.Drawing.Bitmap Clearallrequests_8816 {
             get {
-                object obj = ResourceManager.GetObject("CheckOutforEdit_13187", resourceCulture);
+                object obj = ResourceManager.GetObject("Clearallrequests_8816", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,19 @@ namespace VigilantCupcake.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Clearallrequests_8816 {
+        internal static System.Drawing.Bitmap FileDownload {
             get {
-                object obj = ResourceManager.GetObject("Clearallrequests_8816", resourceCulture);
+                object obj = ResourceManager.GetObject("FileDownload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ListMembers_2407 {
+            get {
+                object obj = ResourceManager.GetObject("ListMembers_2407", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

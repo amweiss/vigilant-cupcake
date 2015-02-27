@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using VigilantCupcake.OperatingSystemUtilities;
 
 namespace VigilantCupcake.Models {
 
@@ -102,6 +103,7 @@ namespace VigilantCupcake.Models {
                 }
             }
             set {
+                value = value.AsFileName();
                 if (string.IsNullOrWhiteSpace(value)) { throw new InvalidDataException("Invalid value for Name"); }
                 if (!string.IsNullOrWhiteSpace(_name) && (_oldFullPath == null || (!File.Exists(_oldFullPath) && File.Exists(FullPath)))) _oldFullPath = FullPath;
                 if ((_name == null && value != null) || !_name.Equals(value)) {

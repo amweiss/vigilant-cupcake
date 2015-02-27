@@ -138,6 +138,8 @@
     <None Include="Resources\Clearallrequests_8816.png" />
     <None Include="Resources\Restart_6322.png" />
     <None Include="Resources\CheckOutforEdit_13187.png" />
+    <None Include="Resources\FileDownload.png" />
+    <None Include="Resources\ListMembers_2407.png" />
     <Content Include="VC2-nobg-whitecake.ico" />
   </ItemGroup>
   <ItemGroup />

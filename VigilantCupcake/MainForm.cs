@@ -54,17 +54,8 @@ namespace VigilantCupcake {
             _newHostsFile.PropertyChanged += fragmentPropertyChanged;
 
             fragmentListContextMenu.Opening += fragmentListContextMenu_Opening;
-        }
 
-        void fragmentListContextMenu_Opening(object sender, CancelEventArgs e) {
-            if (fragmentTreeView.SelectedNode != null) {
-                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
-                if (selectedNode != null && selectedNode.Fragment != null) {
-                    var visible = !string.IsNullOrWhiteSpace(selectedNode.Fragment.RemoteLocation);
-                    toolStripSeparator5.Visible = visible;
-                    downloadFragmentToolStripMenuItem.Visible = visible;
-                }
-            }
+            _treeModel.NodesChanged += _treeModel_NodesChanged;
         }
 
         protected override void WndProc(ref Message m) {
@@ -84,9 +75,38 @@ namespace VigilantCupcake {
             return result;
         }
 
+        private static string GetLongestCommonPrefix(IEnumerable<string> lines) {
+            var matching =
+                from len in Enumerable.Range(0, lines.Min(s => s.Length)).Reverse()
+                let possibleMatch = lines.First().Substring(0, len)
+                where lines.All(f => f.StartsWith(possibleMatch))
+                select possibleMatch;
+            return matching.FirstOrDefault();
+        }
+
+        private void _treeModel_NodesChanged(object sender, TreeModelEventArgs e) {
+            var node = (FragmentNode)e.Children[0];
+            node.Text = node.Text.AsFileName();
+        }
+
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
             _treeModel.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
+        }
+
+        private void buildImportedPaths(string remoteUrl, string name) {
+            var split = name.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
+            if (split.Length > 1) {
+                var foundChild = fragmentTreeView.SelectedNode.Children.FirstOrDefault(x => ((FragmentNode)x.Tag).Text == split[0]);
+                if (foundChild != null) {
+                    fragmentTreeView.SelectedNode = foundChild;
+                } else {
+                    createNewNode(false, split[0], split[0]);
+                }
+                buildImportedPaths(remoteUrl, string.Join(Path.DirectorySeparatorChar.ToString(), split.Skip(1)));
+            } else {
+                createNewNode(true, name, remoteUrl, false);
+            }
         }
 
         private void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
@@ -102,7 +122,7 @@ namespace VigilantCupcake {
             createNewNode(true);
         }
 
-        private void createNewNode(bool isFragment) {
+        private void createNewNode(bool isFragment, string text = null, string remote = null, bool selectNode = true) {
             var selectedNode = (fragmentTreeView.SelectedNode != null) ? (FragmentNode)fragmentTreeView.SelectedNode.Tag : (FragmentNode)fragmentTreeView.Root.Children[0].Tag;
             var directoryNode = selectedNode.IsLeaf ? selectedNode.Parent : selectedNode;
             var treeNode = new FragmentNode();
@@ -113,13 +133,16 @@ namespace VigilantCupcake {
                     RootPath = rootPath,
                     FileContents = string.Empty
                 };
+                if (!string.IsNullOrWhiteSpace(remote)) fragment.RemoteLocation = remote;
                 fragment.PropertyChanged += fragmentPropertyChanged;
                 fragment.DownloadStarting += fragmentDownloadStarting;
                 fragment.ContentsDownloaded += fragmentDownloadEnding;
                 treeNode.Fragment = fragment;
             }
 
-            var name = (isFragment) ? "New Fragment" : "New Folder";
+            var validText = !string.IsNullOrWhiteSpace(text);
+            var name = (validText) ? text : (isFragment) ? "New Fragment" : "New Folder";
+            name = name.AsFileName();
             treeNode.Text = name;
             var fileNumber = 1;
             while (directoryNode.Nodes.Any(x => x.Text.Equals(treeNode.Text))) {
@@ -129,8 +152,10 @@ namespace VigilantCupcake {
             }
 
             treeNode.Parent = directoryNode;
-            fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
-            nodeTextBox1.BeginEdit();
+            if (selectNode || !validText) fragmentTreeView.SelectedNode = fragmentTreeView.FindNodeByTag(treeNode);
+            if (!validText) {
+                nodeTextBox1.BeginEdit();
+            }
         }
 
         private void downloadFragmentToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -182,6 +207,18 @@ namespace VigilantCupcake {
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
         }
 
+        private void fragmentListContextMenu_Opening(object sender, CancelEventArgs e) {
+            if (fragmentTreeView.SelectedNode != null) {
+                var selectedNode = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
+                if (selectedNode == null) return;
+
+                downloadFragmentToolStripMenuItem.Visible = (selectedNode.Fragment != null) && !string.IsNullOrWhiteSpace(selectedNode.Fragment.RemoteLocation);
+                importRemoteFragmentsToolStripMenuItem.Visible = (!selectedNode.IsLeaf && selectedNode.Nodes.Count == 0);
+
+                toolStripSeparator5.Visible = downloadFragmentToolStripMenuItem.Visible || importRemoteFragmentsToolStripMenuItem.Visible;
+            }
+        }
+
         private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
             if (confirmAndDelete(fragmentTreeView.SelectedNode.Tag as FragmentNode) == DialogResult.Yes) {
                 if (fragmentTreeView.SelectedNode != null)
@@ -207,6 +244,42 @@ namespace VigilantCupcake {
         private void fragmentSearchTextChanged(object sender, EventArgs e) {
             _treeModel.Filter = fragmentFilter.Text;
             fragmentTreeView.ExpandAll();
+        }
+
+        private void importRemoteFragmentsToolStripMenuItem_Click(object sender, EventArgs e) {
+            var dialog = new OpenFileDialog();
+            Stream myStream = null;
+            dialog.RestoreDirectory = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                try {
+                    if ((myStream = dialog.OpenFile()) != null) {
+                        var lines = new List<string>();
+                        using (myStream)
+                        using (var sr = new StreamReader(myStream)) {
+                            string line;
+                            while ((line = sr.ReadLine()) != null) {
+                                lines.Add(line);
+                            }
+                        }
+
+                        var prefix = GetLongestCommonPrefix(lines);
+                        var selectedNode = fragmentTreeView.SelectedNode;
+
+                        foreach (var item in lines) {
+                            fragmentTreeView.SelectedNode = selectedNode;
+                            var name = item;
+                            name = name.Replace(prefix, string.Empty);
+
+                            buildImportedPaths(item, name);
+                        }
+
+                        fragmentTreeView.SelectedNode = selectedNode;
+                    }
+                } catch (Exception ex) {
+                    MessageBox.Show("Error: Could not read from fragment list source. Original error: " + ex.Message);
+                }
+            }
         }
 
         private void loadFragments() {

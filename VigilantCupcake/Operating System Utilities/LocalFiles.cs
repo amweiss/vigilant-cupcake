@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace VigilantCupcake.OperatingSystemUtilities {
 
@@ -17,6 +18,14 @@ namespace VigilantCupcake.OperatingSystemUtilities {
             get {
                 return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
+        }
+
+        public static string AsFileName(this string value) {
+            var sb = new StringBuilder(value);
+            foreach (char c in System.IO.Path.GetInvalidFileNameChars()) {
+                sb = sb.Replace(c, '_');
+            }
+            return sb.ToString();
         }
 
         //From http://stackoverflow.com/questions/50744/wait-until-file-is-unlocked-in-net
