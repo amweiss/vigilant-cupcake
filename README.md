@@ -7,7 +7,7 @@
 Chocolatey is helpful to keep the program up to date without manually downloading the file.
 
 ###Other ways to install
-* Download it directly [here](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.8.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+* Download it directly [here](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.9.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
 * Clone the repo and create a shortcut to `vigilant-cupcake/VigilantCupcake/bin/Release/VigilantCupcake.exe`
 
 ##What is it?
@@ -20,6 +20,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Sync fragments with remote URLs
 * Download and save files while running in the background
 * Intelligent searching of fragments
+* Import collections of fragments
 
 ##Usage
 The fragment list on the left is a collection of all the possible hosts file fragments you can use.
@@ -36,6 +37,13 @@ Double click or right click an existing row to rename it.
 Check the box to make the fragment active.
 
 Right click a row and select delete to delete the fragment.
+
+###Importing
+Currently you can import a set of fragments by right clicking an empty folder and selecting `Import Remote Fragments`.
+
+The format is one URL per line.
+
+The "Open File" dialog can read from a local file or remote URL.
 
 ###Hotkeys
 The file windows support the following hotkeys:
