@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -15,7 +14,7 @@ namespace VigilantCupcake.Models {
 
             var results = new List<string>();
             foreach (KeyValuePair<string, List<string>> pair in _ipToHostMapping) {
-                var records = new HostfileRecord(){ Ip =pair.Key, Hosts = pair.Value };
+                var records = new HostfileRecord() { Ip = pair.Key, Hosts = pair.Value };
                 results.AddRange(records.ToStringEnumerable());
             }
             return results;

@@ -512,7 +512,7 @@ namespace VigilantCupcake {
                     var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
                     newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 } else {
-                newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 }
                 _newHostsFile.FileContents = newHosts;
                 newHostsLabel.BeginInvokeIfRequired(() => newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty));

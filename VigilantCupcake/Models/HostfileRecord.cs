@@ -7,10 +7,8 @@ namespace VigilantCupcake.Models {
 
     public class HostfileRecord {
 
-        public string Ip { get; set; }
-        public IEnumerable<string> Hosts { get; set; }
-
-        public HostfileRecord() { }
+        public HostfileRecord() {
+        }
 
         public HostfileRecord(string dnsRecord) {
             if (string.IsNullOrEmpty(dnsRecord)) return;
@@ -24,6 +22,10 @@ namespace VigilantCupcake.Models {
             Ip = ip;
             Hosts = hosts;
         }
+
+        public IEnumerable<string> Hosts { get; set; }
+
+        public string Ip { get; set; }
 
         public IEnumerable<string> ToStringEnumerable() {
             int maxLength = 80; //We want to wrap into a second entry if the length of the line will be greater than 1020

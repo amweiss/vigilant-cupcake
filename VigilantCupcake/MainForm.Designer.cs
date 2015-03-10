@@ -663,7 +663,7 @@
             this.mergeHostsEntriesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mergeHostsEntriesToolStripMenuItem.Name = "mergeHostsEntriesToolStripMenuItem";
             this.mergeHostsEntriesToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.mergeHostsEntriesToolStripMenuItem.Text = "&Merge Hosts Entries";
+            this.mergeHostsEntriesToolStripMenuItem.Text = "&Consolidate Hosts Entries";
             this.mergeHostsEntriesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.mergeHostsEntriesToolStripMenuItem_CheckedChanged);
             // 
             // closeToTrayToolStripMenuItem
