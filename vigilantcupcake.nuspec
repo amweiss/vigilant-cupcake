@@ -4,7 +4,7 @@
   <metadata>
     <id>vigilantcupcake</id>
     <title>Vigilant Cupcake</title>
-    <version>0.9.0</version>
+    <version>0.9.8</version>
     <authors>Adam Weiss, Matt Gaczewski</authors>
     <owners>Adam Weiss</owners>
     <summary>Keeping your hosts file fully baked</summary>
@@ -18,6 +18,7 @@
     <releaseNotes>Initial release</releaseNotes>
   </metadata>
   <files>
-    <file src="VigilantCupcake\bin\Release\VigilantCupcake.exe" />
+    <file src="VigilantCupcake\bin\Release\VigilantCupcake.exe" target="lib/net45"/>
+    <file src="VigilantCupcake\bin\Release\*.dll" target="lib/net45"/>
   </files>
 </package>

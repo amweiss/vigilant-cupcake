@@ -1,4 +1,5 @@
 ﻿using Aga.Controls.Tree;
+using Squirrel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
 using VigilantCupcake.OperatingSystemUtilities;
@@ -33,8 +35,6 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
-
-            mergeHostsEntriesToolStripMenuItem.Visible = false;
 
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup;
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
@@ -270,7 +270,6 @@ namespace VigilantCupcake {
                             fragmentTreeView.SelectedNode = selectedNode;
                             var name = item;
                             name = name.Replace(prefix, string.Empty);
-
                             buildImportedPaths(item, name);
                         }
 
@@ -338,9 +337,15 @@ namespace VigilantCupcake {
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e) {
+        private async void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             if (Properties.Settings.Default.AutoSaveOnStartup) saveAll();
+
+            await Task.Factory.StartNew(async () => {
+                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
+                    await mgr.UpdateApp();
+                }
+            });
         }
 
         private void menuNewFolder_Click(object sender, EventArgs e) {
@@ -501,14 +506,14 @@ namespace VigilantCupcake {
 
                 //TODO: More efficient????
                 var newHosts = string.Empty;
-                //if (Properties.Settings.Default.MergeHostsEntries) { //TODO: MAKE MERGING WORK AND NAME IT BETTER
-                //    var combiner = new FragmentCombiner();
-                //    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                //    var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
-                //    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                //} else {
+                if (Properties.Settings.Default.MergeHostsEntries) {
+                    var combiner = new HostfileRecordCombiner();
+                    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
+                    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                } else {
                 newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                //}
+                }
                 _newHostsFile.FileContents = newHosts;
                 newHostsLabel.BeginInvokeIfRequired(() => newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty));
             }

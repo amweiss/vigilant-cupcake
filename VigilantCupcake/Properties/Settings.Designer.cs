@@ -213,5 +213,23 @@ namespace VigilantCupcake.Properties {
                 this["UpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://vigilantcupcake.com/Releases")]
+        public string ReleasesUrl {
+            get {
+                return ((string)(this["ReleasesUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("vigilantcupcake")]
+        public string NuspecId {
+            get {
+                return ((string)(this["NuspecId"]));
+            }
+        }
     }
 }

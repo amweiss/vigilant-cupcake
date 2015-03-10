@@ -1,13 +1,10 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
-##Install with [chocolatey](https://chocolatey.org/) as [vigilantcupcake](https://chocolatey.org/packages/vigilantcupcake) with:
-`choco install vigilantcupcake`
+##How to get it
+* Run from [here](http://vigilantcupcake.com/Releases/Setup.exe) to have it install the self-updating executable
 
-Chocolatey is helpful to keep the program up to date without manually downloading the file.
-
-###Other ways to install
-* Download it directly [here](https://cdn.rawgit.com/amweiss/vigilant-cupcake/v0.9.0/VigilantCupcake/bin/Release/vigilantcupcake.zip)
+###Run the development version
 * Clone the repo and create a shortcut to `vigilant-cupcake/VigilantCupcake/bin/Release/VigilantCupcake.exe`
 
 ##What is it?
@@ -21,6 +18,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Download and save files while running in the background
 * Intelligent searching of fragments
 * Import collections of fragments
+* Self updating executable
 
 ##Usage
 The fragment list on the left is a collection of all the possible hosts file fragments you can use.
@@ -96,6 +94,7 @@ In fragment editors:
 ##Libraries
 * [FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
 * [TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
+* [Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows)
 
 -----
 Created by [Adam Weiss](https://github.com/amweiss) and [Matt Gaczewski](https://github.com/mgaczewski)

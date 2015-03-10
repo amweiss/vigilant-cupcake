@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Fragments {
+namespace VigilantCupcake.Models {
 
-    public class FragmentCombiner {
+    public class HostfileRecordCombiner {
         private HostfileRecord _hnRecord = new HostfileRecord();
         private Dictionary<string, List<string>> _hostToIPMapping = new Dictionary<string, List<string>>();
         private Dictionary<string, List<string>> _ipToHostMapping = new Dictionary<string, List<string>>();
-        //private Dictionary<string, List<string>> _collisions = new Dictionary<string, List<string>>();
 
         public IEnumerable<string> GenerateOutput(IEnumerable<string> mergedFile) {
             generateMappingsFromMerged(mergedFile.ToArray());
 
             var results = new List<string>();
             foreach (KeyValuePair<string, List<string>> pair in _ipToHostMapping) {
-                var records = _hnRecord.CombineHostfileRecord(pair.Key, pair.Value);
-                results.AddRange(records);
+                var records = new HostfileRecord(){ Ip =pair.Key, Hosts = pair.Value };
+                results.AddRange(records.ToStringEnumerable());
             }
             return results;
         }
@@ -25,17 +24,16 @@ namespace Fragments {
         private void generateMappingsFromMerged(string[] merged) {
             foreach (string entry in merged) {
                 string trimmedEntry = entry.Trim();
-                if (!Regex.IsMatch(trimmedEntry, @"^\d+")) //skip this one if it is not an entry.. has to start with a digit
-                {
+
+                //skip this one if it is not an entry.. has to start with a digit
+                if (!Regex.IsMatch(trimmedEntry, @"^\d+")) {
                     continue;
                 }
 
                 trimmedEntry = Regex.Replace(trimmedEntry, @"#.*", string.Empty);
 
-                Tuple<string, string[]> splittedRecord = HostfileRecord.SplitHostfileRecord(trimmedEntry);
-                string ipAddress = splittedRecord.Item1;
-                string[] hostnames = splittedRecord.Item2;
-                foreach (string host in hostnames) {
+                var splittedRecord = new HostfileRecord(trimmedEntry);
+                foreach (string host in splittedRecord.Hosts) {
                     //if (this.hostToIPMapping.ContainsKey(host) && !hostToIPMapping[host].Contains(ipAddress)) // There was a collision
                     //{
                     //    /*
@@ -55,24 +53,24 @@ namespace Fragments {
                     //    }
                     //} else //There was no collision
                     //{
-                    if (this._ipToHostMapping.ContainsKey(ipAddress)) {
-                        if (!_ipToHostMapping[ipAddress].Contains(host)) {
-                            _ipToHostMapping[ipAddress].Add(host);
+                    if (this._ipToHostMapping.ContainsKey(splittedRecord.Ip)) {
+                        if (!_ipToHostMapping[splittedRecord.Ip].Contains(host)) {
+                            _ipToHostMapping[splittedRecord.Ip].Add(host);
                         }
                     } else {
                         List<string> hostToAdd = new List<string>();
                         hostToAdd.Add(host);
-                        _ipToHostMapping.Add(ipAddress, hostToAdd);
+                        _ipToHostMapping.Add(splittedRecord.Ip, hostToAdd);
                     }
                     //}
 
                     if (this._hostToIPMapping.ContainsKey(host)) {
-                        if (!_hostToIPMapping[host].Contains(ipAddress)) {
-                            _hostToIPMapping[host].Add(ipAddress);
+                        if (!_hostToIPMapping[host].Contains(splittedRecord.Ip)) {
+                            _hostToIPMapping[host].Add(splittedRecord.Ip);
                         }
                     } else {
                         List<string> ipToAdd = new List<string>();
-                        ipToAdd.Add(ipAddress);
+                        ipToAdd.Add(splittedRecord.Ip);
                         _hostToIPMapping.Add(host, ipToAdd);
                     }
                 }

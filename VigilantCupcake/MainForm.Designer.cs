@@ -175,6 +175,7 @@
             this.fragmentTreeView.DefaultToolTipProvider = null;
             this.fragmentTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentTreeView.DragDropMarkColor = System.Drawing.Color.Black;
+            this.fragmentTreeView.FullRowSelect = true;
             this.fragmentTreeView.LineColor = System.Drawing.SystemColors.ControlDark;
             this.fragmentTreeView.Location = new System.Drawing.Point(3, 53);
             this.fragmentTreeView.Model = null;
@@ -501,13 +502,15 @@
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.newHostsLabel, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.hostsFileView, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.hostsFileView, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(600, 792);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
@@ -516,7 +519,7 @@
             this.newHostsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.newHostsLabel.Location = new System.Drawing.Point(3, 0);
             this.newHostsLabel.Name = "newHostsLabel";
-            this.newHostsLabel.Size = new System.Drawing.Size(594, 50);
+            this.newHostsLabel.Size = new System.Drawing.Size(594, 20);
             this.newHostsLabel.TabIndex = 1;
             this.newHostsLabel.Text = "New Hosts";
             // 
@@ -543,7 +546,6 @@
             this.hostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.hostsFileView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.hostsFileBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hostsFileView.IsReplaceMode = false;
             this.hostsFileView.Location = new System.Drawing.Point(3, 53);
             this.hostsFileView.Name = "hostsFileView";

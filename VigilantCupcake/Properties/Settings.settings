@@ -59,5 +59,11 @@
     <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="ReleasesUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://vigilantcupcake.com/Releases</Value>
+    </Setting>
+    <Setting Name="NuspecId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">vigilantcupcake</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
