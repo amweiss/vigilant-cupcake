@@ -3,13 +3,14 @@ using System.Text.RegularExpressions;
 
 namespace VigilantCupcake.Models {
 
+    //TODO: Cleanup
     public static class HostnameFilter {
 
         public static IEnumerable<string> Apply(IEnumerable<string> lines, string filter) {
-            var appliedFilter = new List<string>();
-            if (lines == null) return appliedFilter;
+            if (lines == null || string.IsNullOrWhiteSpace(filter)) return lines;
 
-            //TODO: Cleanup
+            var appliedFilter = new List<string>();
+
             foreach (string line in lines) {
                 string writeBackLine = line;
                 if (Regex.IsMatch(line, filter) && !Regex.IsMatch(line, @"^#")) {

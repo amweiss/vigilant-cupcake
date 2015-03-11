@@ -59,6 +59,9 @@
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
             this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.newHostFilterBox = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,6 +114,7 @@
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
+            this.tableLayoutPanel7.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
             this.SuspendLayout();
@@ -503,6 +507,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.newHostsLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.hostsFileView, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel7, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -560,6 +565,44 @@
             // hostsFileBindingSource
             // 
             this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.26936F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 89.73064F));
+            this.tableLayoutPanel7.Controls.Add(this.newHostFilterBox, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 23);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(594, 24);
+            this.tableLayoutPanel7.TabIndex = 3;
+            // 
+            // newHostFilterBox
+            // 
+            this.newHostFilterBox.DetectUrls = false;
+            this.newHostFilterBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newHostFilterBox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newHostFilterBox.Location = new System.Drawing.Point(63, 3);
+            this.newHostFilterBox.MaxLength = 0;
+            this.newHostFilterBox.Multiline = false;
+            this.newHostFilterBox.Name = "newHostFilterBox";
+            this.newHostFilterBox.Size = new System.Drawing.Size(148, 20);
+            this.newHostFilterBox.Text = global::VigilantCupcake.Properties.Settings.Default.NewHostsFilter;
+            this.newHostFilterBox.TextChanged += new System.EventHandler(this.newHostFilterBox_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 24);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Exclude:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // menuStrip1
             // 
@@ -856,6 +899,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
+            this.tableLayoutPanel7.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
@@ -928,6 +972,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem downloadFragmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importRemoteFragmentsToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox newHostFilterBox;
 
     }
 }

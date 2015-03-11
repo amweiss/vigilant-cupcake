@@ -231,5 +231,17 @@ namespace VigilantCupcake.Properties {
                 return ((string)(this["NuspecId"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NewHostsFilter {
+            get {
+                return ((string)(this["NewHostsFilter"]));
+            }
+            set {
+                this["NewHostsFilter"] = value;
+            }
+        }
     }
 }

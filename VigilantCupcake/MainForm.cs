@@ -39,6 +39,7 @@ namespace VigilantCupcake {
 
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup;
             mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
+            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter; //TODO: Cleanup
             currentFragmentView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
             hostsFileView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
 
@@ -525,6 +526,13 @@ namespace VigilantCupcake {
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
+        }
+
+        private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.NewHostsFilter = newHostFilterBox.Text;
+            Properties.Settings.Default.Save();
+            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter;
+            updateHostsFileView();
         }
     }
 }

@@ -4,10 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace VigilantCupcake.Models {
 
+    //TODO: Cleanup
     public class HostfileRecordCombiner {
         private HostfileRecord _hnRecord = new HostfileRecord();
 
         public Dictionary<string, List<string>> Collisions { get; private set; }
+
+        public string Filter { get; set; }
 
         public Dictionary<string, List<string>> HostToIpMapping { get; private set; }
 
@@ -17,7 +20,8 @@ namespace VigilantCupcake.Models {
             HostToIpMapping = new Dictionary<string, List<string>>();
             IpToHostMapping = new Dictionary<string, List<string>>();
             Collisions = new Dictionary<string, List<string>>();
-            GenerateMappingsFromMerged(mergedFile.ToArray());
+
+            GenerateMappingsFromMerged(filterHosts(mergedFile).ToArray());
 
             var results = new List<string>();
             foreach (KeyValuePair<string, List<string>> pair in IpToHostMapping) {
@@ -25,6 +29,12 @@ namespace VigilantCupcake.Models {
                 results.AddRange(records.ToStringEnumerable());
             }
             return results;
+        }
+
+        private IEnumerable<string> filterHosts(IEnumerable<string> lines) {
+            if (lines == null || string.IsNullOrWhiteSpace(Filter)) return lines;
+
+            return lines.Where(x => !Regex.IsMatch(x, Filter));
         }
 
         private void GenerateMappingsFromMerged(string[] merged) {
