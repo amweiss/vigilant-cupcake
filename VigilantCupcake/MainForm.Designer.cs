@@ -546,6 +546,7 @@
             this.hostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.hostsFileView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.hostsFileBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hostsFileView.IsReplaceMode = false;
             this.hostsFileView.Location = new System.Drawing.Point(3, 53);
             this.hostsFileView.Name = "hostsFileView";
