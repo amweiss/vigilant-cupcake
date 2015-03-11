@@ -18,6 +18,7 @@ namespace VigilantCupcake {
 
     public partial class MainForm : Form {
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
+        private HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
         private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
         private int _pendingDownloads = 0;
         private bool _reallyClose = false;
@@ -507,15 +508,18 @@ namespace VigilantCupcake {
                 //TODO: More efficient????
                 var newHosts = string.Empty;
                 if (Properties.Settings.Default.MergeHostsEntries) {
-                    var combiner = new HostfileRecordCombiner();
                     var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                    var result = combiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
+                    var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
                     newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 } else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 }
+                FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
                 _newHostsFile.FileContents = newHosts;
-                newHostsLabel.BeginInvokeIfRequired(() => newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty));
+                hostsFileView.BeginInvokeIfRequired(() => hostsFileView.RefreshStyles());
+                newHostsLabel.BeginInvokeIfRequired(() =>
+                    newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty) + ((_hostfileRecordCombiner.Collisions.Keys.Count > 0) ? " (Conflicts in red)" : string.Empty)
+                );
             }
         }
 

@@ -4,9 +4,6 @@
 ##How to get it
 * Run from [here](http://vigilantcupcake.com/Releases/Setup.exe) to have it install the self-updating executable
 
-###Run the development version
-* Clone the repo and create a shortcut to `vigilant-cupcake/VigilantCupcake/bin/Release/VigilantCupcake.exe`
-
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
 
@@ -18,6 +15,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Download and save files while running in the background
 * Intelligent searching of fragments
 * Import collections of fragments
+* Automatically identify conflicts
 * Self updating executable
 
 ##Usage
@@ -86,7 +84,6 @@ In fragment editors:
 * .NET 4.5 runtime
 
 ##Coming Soon
-* Automatically identify conflicts
 * Filter the merged hosts file to exclude entries you don't want
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
 
