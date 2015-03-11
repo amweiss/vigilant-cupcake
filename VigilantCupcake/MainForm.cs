@@ -38,7 +38,7 @@ namespace VigilantCupcake {
             InitializeComponent();
 
             saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup;
-            mergeHostsEntriesToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
+            newHostsAnalysisToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
             _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter; //TODO: Cleanup
             currentFragmentView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
             hostsFileView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
@@ -358,20 +358,22 @@ namespace VigilantCupcake {
             createNewFragment();
         }
 
-        private void mergeHostsEntriesToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.MergeHostsEntries = mergeHostsEntriesToolStripMenuItem.Checked;
-            Properties.Settings.Default.Save();
-
-            newHostFilterBox.Enabled = mergeHostsEntriesToolStripMenuItem.Checked;
-
-            updateHostsFileView();
-        }
-
         private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
             Properties.Settings.Default.NewHostsFilter = newHostFilterBox.Text;
             Properties.Settings.Default.Save();
             _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter;
             updateHostsFileView();
+            updateCurrentFragmentView();
+        }
+
+        private void newHostsAnalysisToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.MergeHostsEntries = newHostsAnalysisToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
+
+            newHostFilterBox.Enabled = newHostsAnalysisToolStripMenuItem.Checked;
+
+            updateHostsFileView();
+            updateCurrentFragmentView();
         }
 
         private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
@@ -507,6 +509,7 @@ namespace VigilantCupcake {
                 currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
                 currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
                 selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = "Selected Fragment" + ((_selectedFragment.Dirty) ? "*" : string.Empty));
+                currentFragmentView.BeginInvokeIfRequired(() => currentFragmentView.RefreshStyles()); //Needed?
             }
         }
 
@@ -519,9 +522,10 @@ namespace VigilantCupcake {
                 //TODO: More efficient????
                 var newHosts = string.Empty;
                 if (Properties.Settings.Default.MergeHostsEntries) {
-                    var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    // Join then split then join to normalize line endings etc, I don't really like it but it works
+                    var blob = string.Join(Environment.NewLine, text);
                     var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
-                    newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    newHosts = string.Join(Environment.NewLine, result);
                     FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
                 } else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;

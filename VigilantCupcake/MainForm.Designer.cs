@@ -72,7 +72,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mergeHostsEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newHostsAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncronizeFragmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncEnabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -683,7 +683,7 @@
             this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveOnProgramStartToolStripMenuItem,
-            this.mergeHostsEntriesToolStripMenuItem,
+            this.newHostsAnalysisToolStripMenuItem,
             this.closeToTrayToolStripMenuItem,
             this.syncronizeFragmentsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -702,13 +702,13 @@
             // 
             // mergeHostsEntriesToolStripMenuItem
             // 
-            this.mergeHostsEntriesToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.MergeHostsEntries;
-            this.mergeHostsEntriesToolStripMenuItem.CheckOnClick = true;
-            this.mergeHostsEntriesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mergeHostsEntriesToolStripMenuItem.Name = "mergeHostsEntriesToolStripMenuItem";
-            this.mergeHostsEntriesToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.mergeHostsEntriesToolStripMenuItem.Text = "&Enable New Hosts Analysis";
-            this.mergeHostsEntriesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.mergeHostsEntriesToolStripMenuItem_CheckedChanged);
+            this.newHostsAnalysisToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.MergeHostsEntries;
+            this.newHostsAnalysisToolStripMenuItem.CheckOnClick = true;
+            this.newHostsAnalysisToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.newHostsAnalysisToolStripMenuItem.Name = "mergeHostsEntriesToolStripMenuItem";
+            this.newHostsAnalysisToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.newHostsAnalysisToolStripMenuItem.Text = "&Enable New Hosts Analysis";
+            this.newHostsAnalysisToolStripMenuItem.CheckedChanged += new System.EventHandler(this.newHostsAnalysisToolStripMenuItem_CheckedChanged);
             // 
             // closeToTrayToolStripMenuItem
             // 
@@ -932,7 +932,7 @@
         private FastColoredTextBoxNS.FastColoredTextBox currentFragmentView;
         private FastColoredTextBoxNS.FastColoredTextBox hostsFileView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ToolStripMenuItem mergeHostsEntriesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newHostsAnalysisToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip fragmentListContextMenu;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuDelete;
         private System.Windows.Forms.ToolStripMenuItem fragmentListContextMenuRename;

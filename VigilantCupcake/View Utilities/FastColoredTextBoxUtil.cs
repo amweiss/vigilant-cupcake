@@ -19,10 +19,11 @@ namespace VigilantCupcake.ViewUtilities {
         }
 
         private static void setStyles(FastColoredTextBoxNS.Range range) {
+            range.ClearStyle(_conflictStyle, _commentStyle);
+
             if (Collisions != null
                 && Collisions.Keys != null
                 && Collisions.Keys.Count > 0) {
-                range.ClearStyle(_conflictStyle);
                 Collisions.Keys.ToList().ForEach(x => {
                     var pattern = Regex.Escape(x);
                     range.SetStyle(_conflictStyle, pattern);
