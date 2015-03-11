@@ -16,6 +16,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Intelligent searching of fragments
 * Import collections of fragments
 * Automatically identify conflicts
+* Filter the hosts file to exclude entries you don't want
 * Self updating executable
 
 ##Usage
@@ -33,6 +34,10 @@ Double click or right click an existing row to rename it.
 Check the box to make the fragment active.
 
 Right click a row and select delete to delete the fragment.
+
+If you enable "New Hosts Analysis" from the options menu, filtering and conflict identification will be enabled.
+
+Filter the new hosts file by entering a regular expression into the "Exclude:" text box.
 
 ###Importing
 Currently you can import a set of fragments by right clicking an empty folder and selecting `Import Remote Fragments`.
@@ -84,7 +89,6 @@ In fragment editors:
 * .NET 4.5 runtime
 
 ##Coming Soon
-* Filter the merged hosts file to exclude entries you don't want
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
 
 

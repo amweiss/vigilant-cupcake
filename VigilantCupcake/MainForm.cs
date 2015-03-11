@@ -361,6 +361,16 @@ namespace VigilantCupcake {
         private void mergeHostsEntriesToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Properties.Settings.Default.MergeHostsEntries = mergeHostsEntriesToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
+
+            newHostFilterBox.Enabled = mergeHostsEntriesToolStripMenuItem.Checked;
+
+            updateHostsFileView();
+        }
+
+        private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.NewHostsFilter = newHostFilterBox.Text;
+            Properties.Settings.Default.Save();
+            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter;
             updateHostsFileView();
         }
 
@@ -512,27 +522,22 @@ namespace VigilantCupcake {
                     var blob = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                     var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
                     newHosts = (result.Count() > 0) ? result.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
                 } else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    FastColoredTextBoxUtility.Collisions = null;
                 }
-                FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
+
                 _newHostsFile.FileContents = newHosts;
                 hostsFileView.BeginInvokeIfRequired(() => hostsFileView.RefreshStyles());
                 newHostsLabel.BeginInvokeIfRequired(() =>
-                    newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty) + ((_hostfileRecordCombiner.Collisions.Keys.Count > 0) ? " (Conflicts in red)" : string.Empty)
+                    newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty) + ((_hostfileRecordCombiner.Collisions != null && _hostfileRecordCombiner.Collisions.Keys.Count > 0) ? " (Conflicts in red)" : string.Empty)
                 );
             }
         }
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
-        }
-
-        private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.NewHostsFilter = newHostFilterBox.Text;
-            Properties.Settings.Default.Save();
-            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter;
-            updateHostsFileView();
         }
     }
 }
