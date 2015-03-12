@@ -237,7 +237,7 @@ namespace VigilantCupcake {
             switch (e.PropertyName) {
                 case "RemoteLocation": if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 case "FileContents": if (fragment.Enabled) updateHostsFileView(); break;
-                case "Enabled": updateHostsFileView(); break;
+                case "Enabled": updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 case "Dirty": updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 default: break;
             }
