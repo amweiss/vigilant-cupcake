@@ -28,7 +28,7 @@ namespace VigilantCupcake.Models {
         public string Ip { get; set; }
 
         public IEnumerable<string> ToStringEnumerable() {
-            int maxLength = 80; //We want to wrap into a second entry if the length of the line will be greater than 1020
+            int maxLength = 300; //When to wrap a line (higher than max FQDN length currently to prevent errors)
             var ipFormat = Regex.IsMatch(Ip, @"\.") ? "{0,-16}" : "{0,-40}"; //IPv4 vs. IPv6
             var entryString = string.Format(ipFormat, Ip);
             //TODO: Cleanup
