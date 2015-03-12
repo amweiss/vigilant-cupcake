@@ -521,6 +521,7 @@ namespace VigilantCupcake {
 
                 //TODO: More efficient????
                 var newHosts = string.Empty;
+                FastColoredTextBoxUtility.Collisions = null;
                 if (Properties.Settings.Default.MergeHostsEntries) {
                     // Join then split then join to normalize line endings etc, I don't really like it but it works
                     var blob = string.Join(Environment.NewLine, text);
@@ -529,7 +530,6 @@ namespace VigilantCupcake {
                     FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
                 } else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
-                    FastColoredTextBoxUtility.Collisions = null;
                 }
 
                 _newHostsFile.FileContents = newHosts;

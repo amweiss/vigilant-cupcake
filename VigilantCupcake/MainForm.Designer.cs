@@ -54,7 +54,7 @@
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.remoteUrlView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.remoteUrlView = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -110,7 +110,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.remoteUrlView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
@@ -466,38 +465,16 @@
             // 
             // remoteUrlView
             // 
-            this.remoteUrlView.AutoCompleteBracketsList = new char[] {
-        '(',
-        ')',
-        '{',
-        '}',
-        '[',
-        ']',
-        '\"',
-        '\"',
-        '\'',
-        '\''};
-            this.remoteUrlView.AutoScrollMinSize = new System.Drawing.Size(2, 12);
-            this.remoteUrlView.BackBrush = null;
-            this.remoteUrlView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.remoteUrlView.CharHeight = 12;
-            this.remoteUrlView.CharWidth = 7;
-            this.remoteUrlView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.remoteUrlView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.selectedFragmentBindingSource, "RemoteLocation", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.remoteUrlView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.remoteUrlView.DetectUrls = false;
             this.remoteUrlView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.remoteUrlView.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.remoteUrlView.IsReplaceMode = false;
+            this.remoteUrlView.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.remoteUrlView.Location = new System.Drawing.Point(87, 3);
             this.remoteUrlView.Multiline = false;
             this.remoteUrlView.Name = "remoteUrlView";
-            this.remoteUrlView.Paddings = new System.Windows.Forms.Padding(0);
-            this.remoteUrlView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.remoteUrlView.ShowLineNumbers = false;
-            this.remoteUrlView.ShowScrollBars = false;
             this.remoteUrlView.Size = new System.Drawing.Size(504, 20);
             this.remoteUrlView.TabIndex = 1;
-            this.remoteUrlView.Zoom = 100;
+            this.remoteUrlView.Text = "";
             this.remoteUrlView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.remoteUrlView_KeyPress);
             this.remoteUrlView.Validated += new System.EventHandler(this.remoteUrlView_Validated);
             // 
@@ -590,7 +567,8 @@
             this.newHostFilterBox.MaxLength = 0;
             this.newHostFilterBox.Multiline = false;
             this.newHostFilterBox.Name = "newHostFilterBox";
-            this.newHostFilterBox.Size = new System.Drawing.Size(148, 20);
+            this.newHostFilterBox.Size = new System.Drawing.Size(528, 18);
+            this.newHostFilterBox.TabIndex = 0;
             this.newHostFilterBox.Text = global::VigilantCupcake.Properties.Settings.Default.NewHostsFilter;
             this.newHostFilterBox.TextChanged += new System.EventHandler(this.newHostFilterBox_TextChanged);
             // 
@@ -599,7 +577,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 24);
+            this.label2.Size = new System.Drawing.Size(54, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "Exclude:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -700,12 +678,12 @@
             this.saveOnProgramStartToolStripMenuItem.Text = "&Save on Program Start";
             this.saveOnProgramStartToolStripMenuItem.CheckedChanged += new System.EventHandler(this.saveOnProgramStartToolStripMenuItem_CheckedChanged);
             // 
-            // mergeHostsEntriesToolStripMenuItem
+            // newHostsAnalysisToolStripMenuItem
             // 
             this.newHostsAnalysisToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.MergeHostsEntries;
             this.newHostsAnalysisToolStripMenuItem.CheckOnClick = true;
             this.newHostsAnalysisToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.newHostsAnalysisToolStripMenuItem.Name = "mergeHostsEntriesToolStripMenuItem";
+            this.newHostsAnalysisToolStripMenuItem.Name = "newHostsAnalysisToolStripMenuItem";
             this.newHostsAnalysisToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.newHostsAnalysisToolStripMenuItem.Text = "&Enable New Hosts Analysis";
             this.newHostsAnalysisToolStripMenuItem.CheckedChanged += new System.EventHandler(this.newHostsAnalysisToolStripMenuItem_CheckedChanged);
@@ -895,7 +873,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.remoteUrlView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
@@ -925,7 +902,7 @@
         private System.Windows.Forms.ToolStripMenuItem flushDNSToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label3;
-        private FastColoredTextBoxNS.FastColoredTextBox remoteUrlView;
+        private System.Windows.Forms.RichTextBox remoteUrlView;
         private System.Windows.Forms.ToolStripMenuItem viewCurrentHostsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveOnProgramStartToolStripMenuItem;

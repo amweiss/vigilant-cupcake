@@ -249,9 +249,14 @@ namespace VigilantCupcake.Models {
                     UpdateParent(_checkState);
                 }
 
-                if (Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
-                    Nodes.ToList().ForEach(n => ((FragmentNode)n).UpdateCheckState(_checkState));
+                try {
+                    if (Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
+                        Nodes.ToList().ForEach(n => ((FragmentNode)n).UpdateCheckState(_checkState));
+                    }
+                } catch (ArgumentOutOfRangeException) {
+                    //TODO: Deal with the fact that checking the boxes on directories while filtering doesn't work
                 }
+
                 _updatingNodes--;
                 NotifyModel();
             }

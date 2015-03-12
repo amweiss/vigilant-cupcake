@@ -20,7 +20,7 @@ namespace VigilantCupcake.Models {
         }
 
         public FragmentNode FindNode(TreePath path) {
-            if (path.IsEmpty())
+            if (path == null || path.IsEmpty())
                 return _root;
             else
                 return FindNode(_root, path, 0);

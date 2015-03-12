@@ -26,7 +26,7 @@ namespace VigilantCupcake.ViewUtilities {
                 && Collisions.Keys.Count > 0) {
                 Collisions.Keys.ToList().ForEach(x => {
                     var pattern = Regex.Escape(x);
-                    range.SetStyle(_conflictStyle, pattern);
+                    range.SetStyle(_conflictStyle, @"(?<=[\s])" + pattern);
                 });
             }
 
