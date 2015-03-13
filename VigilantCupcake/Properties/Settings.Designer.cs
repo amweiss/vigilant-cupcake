@@ -157,5 +157,14 @@ namespace VigilantCupcake.Properties {
                 return ((string)(this["UserSettingsFile"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1800000")]
+        public int UpdateCheckInterval {
+            get {
+                return ((int)(this["UpdateCheckInterval"]));
+            }
+        }
     }
 }

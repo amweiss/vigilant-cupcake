@@ -832,7 +832,7 @@
             // updateCheckTimer
             // 
             this.updateCheckTimer.Enabled = true;
-            this.updateCheckTimer.Interval = 1800000;
+            this.updateCheckTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.UpdateCheckInterval;
             this.updateCheckTimer.Tick += new System.EventHandler(this.updateCheckTimer_Tick);
             // 
             // selectedFragmentBindingSource
