@@ -17,6 +17,7 @@ namespace VigilantCupcake {
 
     public partial class MainForm : Form {
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
+        private AboutBox _aboutBox = new AboutBox();
         private HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
         private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
         private int _pendingDownloads = 0;
@@ -552,6 +553,10 @@ namespace VigilantCupcake {
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+            _aboutBox.ShowDialog();
         }
     }
 }
