@@ -11,6 +11,13 @@ namespace VigilantCupcake {
         /// </summary>
         [STAThread]
         private static void Main() {
+
+            if (Properties.Settings.Default.UpgradeRequired) {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
+
             if (!SingleInstance.Start()) {
                 SingleInstance.ShowFirstInstance();
                 return;
@@ -18,12 +25,6 @@ namespace VigilantCupcake {
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            if (Properties.Settings.Default.UpgradeRequired) {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpgradeRequired = false;
-                Properties.Settings.Default.Save();
-            }
 
             try {
                 MainForm mainForm = new MainForm();
