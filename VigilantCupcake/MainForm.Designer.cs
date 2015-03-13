@@ -50,7 +50,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,7 +57,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostFilterBox = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -91,6 +89,9 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
+            this.updateCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -108,14 +109,14 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -425,10 +426,6 @@
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
             // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // selectedFragmentLabel
             // 
             this.selectedFragmentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -538,10 +535,6 @@
             this.hostsFileView.Size = new System.Drawing.Size(594, 740);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
-            // 
-            // hostsFileBindingSource
-            // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // tableLayoutPanel7
             // 
@@ -836,6 +829,20 @@
             // 
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
+            // updateCheckTimer
+            // 
+            this.updateCheckTimer.Enabled = true;
+            this.updateCheckTimer.Interval = 1800000;
+            this.updateCheckTimer.Tick += new System.EventHandler(this.updateCheckTimer_Tick);
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -868,15 +875,15 @@
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -949,6 +956,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox newHostFilterBox;
+        private System.Windows.Forms.Timer updateCheckTimer;
 
     }
 }

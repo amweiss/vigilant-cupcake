@@ -504,6 +504,14 @@ namespace VigilantCupcake {
             updateCurrentFragmentView();
         }
 
+        private async void updateCheckTimer_Tick(object sender, EventArgs e) {
+            await Task.Factory.StartNew(async () => {
+                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
+                    await mgr.UpdateApp();
+                }
+            });
+        }
+
         private void updateCurrentFragmentView() {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
