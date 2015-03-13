@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using VigilantCupcake.Models;
 using VigilantCupcake.OperatingSystemUtilities;
 
 namespace VigilantCupcake {
@@ -11,12 +12,7 @@ namespace VigilantCupcake {
         /// </summary>
         [STAThread]
         private static void Main() {
-
-            if (Properties.Settings.Default.UpgradeRequired) {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpgradeRequired = false;
-                Properties.Settings.Default.Save();
-            }
+            UserConfig.Instance.Reload();
 
             if (!SingleInstance.Start()) {
                 SingleInstance.ShowFirstInstance();

@@ -23,17 +23,6 @@ namespace VigilantCupcake.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection SelectedFiles {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["SelectedFiles"]));
-            }
-            set {
-                this["SelectedFiles"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#Remote:")]
@@ -115,66 +104,6 @@ namespace VigilantCupcake.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoSaveOnStartup {
-            get {
-                return ((bool)(this["AutoSaveOnStartup"]));
-            }
-            set {
-                this["AutoSaveOnStartup"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MergeHostsEntries {
-            get {
-                return ((bool)(this["MergeHostsEntries"]));
-            }
-            set {
-                this["MergeHostsEntries"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3600000")]
-        public int MinutesBetweenDownloads {
-            get {
-                return ((int)(this["MinutesBetweenDownloads"]));
-            }
-            set {
-                this["MinutesBetweenDownloads"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DownloadInBackground {
-            get {
-                return ((bool)(this["DownloadInBackground"]));
-            }
-            set {
-                this["DownloadInBackground"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CloseToTray {
-            get {
-                return ((bool)(this["CloseToTray"]));
-            }
-            set {
-                this["CloseToTray"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(".txt")]
@@ -202,18 +131,6 @@ namespace VigilantCupcake.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UpgradeRequired {
-            get {
-                return ((bool)(this["UpgradeRequired"]));
-            }
-            set {
-                this["UpgradeRequired"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://vigilantcupcake.com/Releases")]
@@ -232,15 +149,12 @@ namespace VigilantCupcake.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NewHostsFilter {
+        [global::System.Configuration.DefaultSettingValueAttribute("settings.json")]
+        public string UserSettingsFile {
             get {
-                return ((string)(this["NewHostsFilter"]));
-            }
-            set {
-                this["NewHostsFilter"] = value;
+                return ((string)(this["UserSettingsFile"]));
             }
         }
     }

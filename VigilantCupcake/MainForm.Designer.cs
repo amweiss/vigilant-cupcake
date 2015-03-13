@@ -569,7 +569,7 @@
             this.newHostFilterBox.Name = "newHostFilterBox";
             this.newHostFilterBox.Size = new System.Drawing.Size(528, 18);
             this.newHostFilterBox.TabIndex = 0;
-            this.newHostFilterBox.Text = global::VigilantCupcake.Properties.Settings.Default.NewHostsFilter;
+            this.newHostFilterBox.Text = "";
             this.newHostFilterBox.TextChanged += new System.EventHandler(this.newHostFilterBox_TextChanged);
             // 
             // label2
@@ -657,7 +657,7 @@
             // 
             // optionsToolStripMenuItem
             // 
-            this.optionsToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.optionsToolStripMenuItem.Checked = true;
             this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveOnProgramStartToolStripMenuItem,
@@ -670,7 +670,7 @@
             // 
             // saveOnProgramStartToolStripMenuItem
             // 
-            this.saveOnProgramStartToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.AutoSaveOnStartup;
+            this.saveOnProgramStartToolStripMenuItem.Checked = true;
             this.saveOnProgramStartToolStripMenuItem.CheckOnClick = true;
             this.saveOnProgramStartToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveOnProgramStartToolStripMenuItem.Name = "saveOnProgramStartToolStripMenuItem";
@@ -680,7 +680,7 @@
             // 
             // newHostsAnalysisToolStripMenuItem
             // 
-            this.newHostsAnalysisToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.MergeHostsEntries;
+            this.newHostsAnalysisToolStripMenuItem.Checked = true;
             this.newHostsAnalysisToolStripMenuItem.CheckOnClick = true;
             this.newHostsAnalysisToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newHostsAnalysisToolStripMenuItem.Name = "newHostsAnalysisToolStripMenuItem";
@@ -690,7 +690,6 @@
             // 
             // closeToTrayToolStripMenuItem
             // 
-            this.closeToTrayToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.CloseToTray;
             this.closeToTrayToolStripMenuItem.CheckOnClick = true;
             this.closeToTrayToolStripMenuItem.Name = "closeToTrayToolStripMenuItem";
             this.closeToTrayToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
@@ -712,7 +711,7 @@
             // 
             // syncEnabledToolStripMenuItem
             // 
-            this.syncEnabledToolStripMenuItem.Checked = global::VigilantCupcake.Properties.Settings.Default.DownloadInBackground;
+            this.syncEnabledToolStripMenuItem.Checked = true;
             this.syncEnabledToolStripMenuItem.CheckOnClick = true;
             this.syncEnabledToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.syncEnabledToolStripMenuItem.Name = "syncEnabledToolStripMenuItem";
@@ -835,8 +834,6 @@
             // 
             // backgroundDownloadTimer
             // 
-            this.backgroundDownloadTimer.Enabled = global::VigilantCupcake.Properties.Settings.Default.DownloadInBackground;
-            this.backgroundDownloadTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.MinutesBetweenDownloads;
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
             // MainForm

@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VigilantCupcake.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SelectedFiles" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="RemoteLocationSyntax" Type="System.String" Scope="Application">
       <Value Profile="(Default)">#Remote:</Value>
     </Setting>
@@ -32,21 +29,6 @@
     <Setting Name="LinuxHostsFilePath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/etc/hosts</Value>
     </Setting>
-    <Setting Name="AutoSaveOnStartup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="MergeHostsEntries" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="MinutesBetweenDownloads" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3600000</Value>
-    </Setting>
-    <Setting Name="DownloadInBackground" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="CloseToTray" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="FragmentFileExtension" Type="System.String" Scope="Application">
       <Value Profile="(Default)">.txt</Value>
     </Setting>
@@ -56,17 +38,14 @@
     <Setting Name="LineCleaningReplacement" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\r\n</Value>
     </Setting>
-    <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="ReleasesUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://vigilantcupcake.com/Releases</Value>
     </Setting>
     <Setting Name="NuspecId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">vigilantcupcake</Value>
     </Setting>
-    <Setting Name="NewHostsFilter" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="UserSettingsFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">settings.json</Value>
     </Setting>
   </Settings>
 </SettingsFile>

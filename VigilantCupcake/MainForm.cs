@@ -2,7 +2,6 @@
 using Squirrel;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -37,15 +36,13 @@ namespace VigilantCupcake {
         public MainForm() {
             InitializeComponent();
 
-            saveOnProgramStartToolStripMenuItem.Checked = Properties.Settings.Default.AutoSaveOnStartup;
-            newHostsAnalysisToolStripMenuItem.Checked = Properties.Settings.Default.MergeHostsEntries;
-            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter; //TODO: Cleanup
-            currentFragmentView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
-            hostsFileView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
-
             _syncDurationMenuItems = new List<ToolStripMenuItem>() {
                 syncFiveMinutes, syncFifteenMinutes, syncThirtyMinutes, syncSixtyMinutes
             };
+
+            loadUserSettings();
+            currentFragmentView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
+            hostsFileView.TextChanged += ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged;
 
             enabledToolStripMenuItem_CheckedChanged(null, null);
 
@@ -112,8 +109,7 @@ namespace VigilantCupcake {
         }
 
         private void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.CloseToTray = closeToTrayToolStripMenuItem.Checked;
-            Properties.Settings.Default.Save();
+            UserConfig.Instance.CloseToTray = closeToTrayToolStripMenuItem.Checked;
         }
 
         private void createNewDirectory() {
@@ -170,11 +166,11 @@ namespace VigilantCupcake {
         }
 
         private void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
-            backgroundDownloadTimer.Enabled = Properties.Settings.Default.DownloadInBackground;
+            UserConfig.Instance.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
+            backgroundDownloadTimer.Enabled = UserConfig.Instance.DownloadInBackground;
             _syncDurationMenuItems.ForEach(x => {
                 x.Enabled = syncEnabledToolStripMenuItem.Checked;
-                x.Checked = (int.Parse(x.Tag.ToString()) == Properties.Settings.Default.MinutesBetweenDownloads);
+                x.Checked = (int.Parse(x.Tag.ToString()) == UserConfig.Instance.SecondsBetweenBackgroundDownloads);
             });
         }
 
@@ -304,13 +300,22 @@ namespace VigilantCupcake {
             });
         }
 
+        private void loadUserSettings() {
+            saveOnProgramStartToolStripMenuItem.Checked = UserConfig.Instance.AutoSaveOnStartup;
+            closeToTrayToolStripMenuItem.Checked = UserConfig.Instance.CloseToTray;
+            syncEnabledToolStripMenuItem.Checked = UserConfig.Instance.DownloadInBackground;
+            newHostsAnalysisToolStripMenuItem.Checked = UserConfig.Instance.NewHostsAnalysis;
+            _hostfileRecordCombiner.Filter = UserConfig.Instance.NewHostsFilter;
+            backgroundDownloadTimer.Interval = UserConfig.Instance.SecondsBetweenBackgroundDownloads;
+        }
+
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
             savePreferences();
             OperatingSystemUtilities.DnsUtility.FlushDns();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (Properties.Settings.Default.CloseToTray && !_reallyClose) {
+            if (UserConfig.Instance.CloseToTray && !_reallyClose) {
                 notifyIcon1.Visible = true;
                 Hide();
                 e.Cancel = true;
@@ -341,7 +346,7 @@ namespace VigilantCupcake {
 
         private async void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
-            if (Properties.Settings.Default.AutoSaveOnStartup) saveAll();
+            if (UserConfig.Instance.AutoSaveOnStartup) saveAll();
 
             await Task.Factory.StartNew(async () => {
                 using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
@@ -359,16 +364,14 @@ namespace VigilantCupcake {
         }
 
         private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.NewHostsFilter = newHostFilterBox.Text;
-            Properties.Settings.Default.Save();
-            _hostfileRecordCombiner.Filter = Properties.Settings.Default.NewHostsFilter;
+            UserConfig.Instance.NewHostsFilter = newHostFilterBox.Text;
+            _hostfileRecordCombiner.Filter = UserConfig.Instance.NewHostsFilter;
             updateHostsFileView();
             updateCurrentFragmentView();
         }
 
         private void newHostsAnalysisToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.MergeHostsEntries = newHostsAnalysisToolStripMenuItem.Checked;
-            Properties.Settings.Default.Save();
+            UserConfig.Instance.NewHostsAnalysis = newHostsAnalysisToolStripMenuItem.Checked;
 
             newHostFilterBox.Enabled = newHostsAnalysisToolStripMenuItem.Checked;
 
@@ -402,17 +405,16 @@ namespace VigilantCupcake {
         }
 
         private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
-            Properties.Settings.Default.Save();
+            UserConfig.Instance.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
         }
 
         private void savePreferences() {
-            Properties.Settings.Default.SelectedFiles = new StringCollection();
+            UserConfig.Instance.SelectedFiles = new List<string>();
             if (_treeModel != null && _treeModel.Root.Nodes.Count() > 0) {
                 var paths = _treeModel.Fragments.Where(x => x.Enabled).Select(x => x.FullPath).ToArray();
-                Properties.Settings.Default.SelectedFiles.AddRange(paths);
+                UserConfig.Instance.SelectedFiles.AddRange(paths);
             }
-            Properties.Settings.Default.Save();
+            UserConfig.Instance.Save();
         }
 
         private void showMainForm(object sender, EventArgs e) {
@@ -427,8 +429,8 @@ namespace VigilantCupcake {
         private void syncDuration_CheckedChanged(object sender, EventArgs e) {
             var item = (ToolStripMenuItem)sender;
             if (item.Checked) {
-                Properties.Settings.Default.MinutesBetweenDownloads = int.Parse(item.Tag.ToString());
-                backgroundDownloadTimer.Interval = Properties.Settings.Default.MinutesBetweenDownloads;
+                UserConfig.Instance.SecondsBetweenBackgroundDownloads = int.Parse(item.Tag.ToString());
+                backgroundDownloadTimer.Interval = UserConfig.Instance.SecondsBetweenBackgroundDownloads;
                 enabledToolStripMenuItem_CheckedChanged(null, null);
             }
         }
@@ -522,7 +524,7 @@ namespace VigilantCupcake {
                 //TODO: More efficient????
                 var newHosts = string.Empty;
                 FastColoredTextBoxUtility.Collisions = null;
-                if (Properties.Settings.Default.MergeHostsEntries) {
+                if (UserConfig.Instance.NewHostsAnalysis) {
                     // Join then split then join to normalize line endings etc, I don't really like it but it works
                     var blob = string.Join(Environment.NewLine, text);
                     var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));

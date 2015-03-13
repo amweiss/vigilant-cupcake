@@ -47,7 +47,7 @@ namespace VigilantCupcake.Models {
                 var fragment = new Fragment() {
                     Name = name,
                     FullPath = file.FullName,
-                    Enabled = Properties.Settings.Default.SelectedFiles != null && Properties.Settings.Default.SelectedFiles.Contains(file.FullName)
+                    Enabled = UserConfig.Instance.SelectedFiles != null && UserConfig.Instance.SelectedFiles.Contains(file.FullName)
                 };
                 fragment.ForceLoad();
                 directoryNode.Nodes.Add(treeNode);
