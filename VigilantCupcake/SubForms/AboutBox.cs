@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VigilantCupcake.SubForms {
+
     partial class AboutBox : Form {
+
         public AboutBox() {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
@@ -19,6 +16,16 @@ namespace VigilantCupcake.SubForms {
         }
 
         #region Assembly Attribute Accessors
+
+        public string AssemblyProduct {
+            get {
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                if (attributes.Length == 0) {
+                    return "";
+                }
+                return ((AssemblyProductAttribute)attributes[0]).Product;
+            }
+        }
 
         public string AssemblyTitle {
             get {
@@ -45,15 +52,6 @@ namespace VigilantCupcake.SubForms {
             }
         }
 
-        public string AssemblyProduct {
-            get {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0) {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-        #endregion
+        #endregion Assembly Attribute Accessors
     }
 }

@@ -16,8 +16,8 @@ using VigilantCupcake.ViewUtilities;
 namespace VigilantCupcake {
 
     public partial class MainForm : Form {
-        private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private AboutBox _aboutBox = new AboutBox();
+        private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
         private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
         private int _pendingDownloads = 0;
@@ -87,6 +87,10 @@ namespace VigilantCupcake {
         private void _treeModel_NodesChanged(object sender, TreeModelEventArgs e) {
             var node = (FragmentNode)e.Children[0];
             node.Text = node.Text.AsFileName();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+            _aboutBox.ShowDialog();
         }
 
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
@@ -553,10 +557,6 @@ namespace VigilantCupcake {
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            _aboutBox.ShowDialog();
         }
     }
 }

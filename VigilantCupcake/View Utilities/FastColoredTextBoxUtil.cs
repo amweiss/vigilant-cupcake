@@ -18,6 +18,10 @@ namespace VigilantCupcake.ViewUtilities {
             setStyles(e.ChangedRange);
         }
 
+        public static void RefreshStyles(this FastColoredTextBox fctb) {
+            setStyles(fctb.Range);
+        }
+
         private static void setStyles(FastColoredTextBoxNS.Range range) {
             range.ClearStyle(_conflictStyle, _commentStyle);
 
@@ -31,10 +35,6 @@ namespace VigilantCupcake.ViewUtilities {
             }
 
             range.SetStyle(_commentStyle, "#.*");
-        }
-
-        public static void RefreshStyles(this FastColoredTextBox fctb) {
-            setStyles(fctb.Range);
         }
     }
 }
