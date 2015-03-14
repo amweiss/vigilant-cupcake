@@ -4,7 +4,7 @@
   <metadata>
     <id>vigilantcupcake</id>
     <title>Vigilant Cupcake</title>
-    <version>1.0.2</version>
+    <version>$version$</version>
     <authors>Adam Weiss, Matt Gaczewski</authors>
     <owners>Adam Weiss</owners>
     <summary>Keeping your hosts file fully baked</summary>
