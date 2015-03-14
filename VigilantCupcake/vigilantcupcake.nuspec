@@ -15,10 +15,9 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/amweiss/vigilant-cupcake/15b5c8eafd721346cfe2eee6e7aaad8cf4bfa353/images/VC2-nobg-whitecake.png</iconUrl>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Updated to build version numbers.</releaseNotes>
   </metadata>
   <files>
-    <file src="VigilantCupcake\bin\Release\VigilantCupcake.exe" target="lib/net45"/>
-    <file src="VigilantCupcake\bin\Release\*.dll" target="lib/net45"/>
+    <file src="bin\Release\*.dll" target="lib/net45"/>
   </files>
 </package>
