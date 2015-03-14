@@ -166,5 +166,14 @@ namespace VigilantCupcake.Properties {
                 return ((int)(this["UpdateCheckInterval"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://vigilantcupcake.com")]
+        public string WebsiteUrl {
+            get {
+                return ((string)(this["WebsiteUrl"]));
+            }
+        }
     }
 }

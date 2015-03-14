@@ -11,8 +11,9 @@ namespace VigilantCupcake.SubForms {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            this.labelVersion.Text = AssemblyVersion;
             this.buildDate.Text = String.Format("Last Updated: {0}", LastUpdatedDate);
+            this.linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
         }
 
         #region Assembly Attribute Accessors
@@ -53,5 +54,14 @@ namespace VigilantCupcake.SubForms {
         }
 
         #endregion Assembly Attribute Accessors
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            this.linkLabel1.LinkVisited = true;
+            System.Diagnostics.Process.Start(Properties.Settings.Default.WebsiteUrl);
+        }
+
+        private void logoPictureBox_Click(object sender, EventArgs e) {
+            System.Diagnostics.Process.Start(Properties.Settings.Default.WebsiteUrl);
+        }
     }
 }

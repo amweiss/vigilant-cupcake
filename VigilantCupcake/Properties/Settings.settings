@@ -50,5 +50,8 @@
     <Setting Name="UpdateCheckInterval" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1800000</Value>
     </Setting>
+    <Setting Name="WebsiteUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://vigilantcupcake.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
