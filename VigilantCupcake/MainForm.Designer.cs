@@ -30,8 +30,13 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.fragmentTreeView = new Aga.Controls.Tree.TreeViewAdv();
             this.fragmentListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fragmentListContextMenuNewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.importRemoteFragmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFragmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.fragmentListContextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeCheckBox1 = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.nodeStateIcon1 = new Aga.Controls.Tree.NodeControls.NodeStateIcon();
@@ -45,6 +50,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -52,12 +58,16 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostsLabel = new System.Windows.Forms.Label();
             this.hostsFileView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostFilterBox = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,29 +82,19 @@
             this.syncThirtyMinutes = new System.Windows.Forms.ToolStripMenuItem();
             this.syncSixtyMinutes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentHostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateNotification = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
-            this.updateNotification = new System.Windows.Forms.ToolStripMenuItem();
             this.updateCheckTimer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.fragmentListContextMenuNewFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.importRemoteFragmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.downloadFragmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fragmentListContextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flushDNSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hostsFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -112,14 +112,14 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.notifyIconMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer2
@@ -128,11 +128,11 @@
             // toolStripContainer2.ContentPanel
             // 
             this.toolStripContainer2.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(1428, 792);
+            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(1428, 765);
             this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer2.Name = "toolStripContainer2";
-            this.toolStripContainer2.Size = new System.Drawing.Size(1428, 816);
+            this.toolStripContainer2.Size = new System.Drawing.Size(1428, 789);
             this.toolStripContainer2.TabIndex = 4;
             this.toolStripContainer2.Text = "toolStripContainer2";
             // 
@@ -153,7 +153,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1428, 792);
+            this.splitContainer1.Size = new System.Drawing.Size(1428, 765);
             this.splitContainer1.SplitterDistance = 220;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -171,7 +171,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 792);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(220, 765);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // fragmentTreeView
@@ -211,15 +211,55 @@
             this.fragmentListContextMenu.Name = "fragmentListContextMenu";
             this.fragmentListContextMenu.Size = new System.Drawing.Size(214, 148);
             // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Image = global::VigilantCupcake.Properties.Resources.NewRequest_8796;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(213, 22);
+            this.toolStripMenuItem3.Text = "New Fragment";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.menuNewFragment_Click);
+            // 
+            // fragmentListContextMenuNewFolder
+            // 
+            this.fragmentListContextMenuNewFolder.Image = global::VigilantCupcake.Properties.Resources.NewSolutionFolder_6289;
+            this.fragmentListContextMenuNewFolder.Name = "fragmentListContextMenuNewFolder";
+            this.fragmentListContextMenuNewFolder.Size = new System.Drawing.Size(213, 22);
+            this.fragmentListContextMenuNewFolder.Text = "New Folder";
+            this.fragmentListContextMenuNewFolder.Click += new System.EventHandler(this.menuNewFolder_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(210, 6);
             // 
+            // importRemoteFragmentsToolStripMenuItem
+            // 
+            this.importRemoteFragmentsToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.ListMembers_2407;
+            this.importRemoteFragmentsToolStripMenuItem.Name = "importRemoteFragmentsToolStripMenuItem";
+            this.importRemoteFragmentsToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.importRemoteFragmentsToolStripMenuItem.Text = "Import Remote Fragments";
+            this.importRemoteFragmentsToolStripMenuItem.Click += new System.EventHandler(this.importRemoteFragmentsToolStripMenuItem_Click);
+            // 
+            // downloadFragmentToolStripMenuItem
+            // 
+            this.downloadFragmentToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.FileDownload;
+            this.downloadFragmentToolStripMenuItem.Name = "downloadFragmentToolStripMenuItem";
+            this.downloadFragmentToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.downloadFragmentToolStripMenuItem.Text = "Download Fragment";
+            this.downloadFragmentToolStripMenuItem.Click += new System.EventHandler(this.downloadFragmentToolStripMenuItem_Click);
+            // 
             // fragmentListContextMenuSeparator1
             // 
             this.fragmentListContextMenuSeparator1.Name = "fragmentListContextMenuSeparator1";
             this.fragmentListContextMenuSeparator1.Size = new System.Drawing.Size(210, 6);
+            // 
+            // fragmentListContextMenuDelete
+            // 
+            this.fragmentListContextMenuDelete.Image = global::VigilantCupcake.Properties.Resources.Clearallrequests_8816;
+            this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
+            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(213, 22);
+            this.fragmentListContextMenuDelete.Text = "Delete";
+            this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
             // 
             // fragmentListContextMenuRename
             // 
@@ -336,7 +376,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(1204, 792);
+            this.splitContainer2.Size = new System.Drawing.Size(1204, 765);
             this.splitContainer2.SplitterDistance = 600;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -354,7 +394,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(600, 792);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(600, 765);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // currentFragmentView
@@ -388,6 +428,10 @@
             this.currentFragmentView.Size = new System.Drawing.Size(594, 740);
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // selectedFragmentLabel
             // 
@@ -453,7 +497,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(600, 792);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(600, 765);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // newHostsLabel
@@ -498,6 +542,10 @@
             this.hostsFileView.Size = new System.Drawing.Size(594, 740);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
+            // 
+            // hostsFileBindingSource
+            // 
+            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // tableLayoutPanel7
             // 
@@ -567,10 +615,40 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.NewRequest_8796;
+            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.newToolStripMenuItem.Text = "&New Fragment";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.menuNewFragment_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Image = global::VigilantCupcake.Properties.Resources.NewSolutionFolder_6289;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.N)));
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(218, 22);
+            this.toolStripMenuItem4.Text = "New Folder";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.menuNewFolder_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(215, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.Save_6530;
+            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.saveToolStripMenuItem.Text = "&Save and Flush DNS";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.save_Click);
             // 
             // toolStripSeparator4
             // 
@@ -700,6 +778,15 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
+            // flushDNSToolStripMenuItem
+            // 
+            this.flushDNSToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.Restart_6322;
+            this.flushDNSToolStripMenuItem.Name = "flushDNSToolStripMenuItem";
+            this.flushDNSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.flushDNSToolStripMenuItem.Text = "&Flush DNS";
+            this.flushDNSToolStripMenuItem.Click += new System.EventHandler(this.flushDns_Click);
+            // 
             // viewCurrentHostsToolStripMenuItem
             // 
             this.viewCurrentHostsToolStripMenuItem.Name = "viewCurrentHostsToolStripMenuItem";
@@ -722,6 +809,16 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // updateNotification
+            // 
+            this.updateNotification.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.updateNotification.Image = global::VigilantCupcake.Properties.Resources.Activity_16xLG;
+            this.updateNotification.Name = "updateNotification";
+            this.updateNotification.Size = new System.Drawing.Size(282, 20);
+            this.updateNotification.Text = "Update will be applied on next application start";
+            this.updateNotification.Visible = false;
+            this.updateNotification.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // notifyIcon1
             // 
@@ -752,6 +849,14 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Image = global::VigilantCupcake.Properties.Resources.Restart_6322;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem2.Text = "Flush DNS";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.flushDns_Click);
+            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
@@ -763,122 +868,17 @@
             // 
             this.backgroundDownloadTimer.Tick += new System.EventHandler(this.backgroundDownloadTimer_Tick);
             // 
-            // updateNotification
-            // 
-            this.updateNotification.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.updateNotification.Image = global::VigilantCupcake.Properties.Resources.Activity_16xLG;
-            this.updateNotification.Name = "updateNotification";
-            this.updateNotification.Size = new System.Drawing.Size(282, 20);
-            this.updateNotification.Text = "Update will be applied on next application start";
-            this.updateNotification.Visible = false;
-            this.updateNotification.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
             // updateCheckTimer
             // 
             this.updateCheckTimer.Enabled = true;
             this.updateCheckTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.UpdateCheckInterval;
             this.updateCheckTimer.Tick += new System.EventHandler(this.updateCheckTimer_Tick);
             // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Image = global::VigilantCupcake.Properties.Resources.NewRequest_8796;
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(213, 22);
-            this.toolStripMenuItem3.Text = "New Fragment";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.menuNewFragment_Click);
-            // 
-            // fragmentListContextMenuNewFolder
-            // 
-            this.fragmentListContextMenuNewFolder.Image = global::VigilantCupcake.Properties.Resources.NewSolutionFolder_6289;
-            this.fragmentListContextMenuNewFolder.Name = "fragmentListContextMenuNewFolder";
-            this.fragmentListContextMenuNewFolder.Size = new System.Drawing.Size(213, 22);
-            this.fragmentListContextMenuNewFolder.Text = "New Folder";
-            this.fragmentListContextMenuNewFolder.Click += new System.EventHandler(this.menuNewFolder_Click);
-            // 
-            // importRemoteFragmentsToolStripMenuItem
-            // 
-            this.importRemoteFragmentsToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.ListMembers_2407;
-            this.importRemoteFragmentsToolStripMenuItem.Name = "importRemoteFragmentsToolStripMenuItem";
-            this.importRemoteFragmentsToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.importRemoteFragmentsToolStripMenuItem.Text = "Import Remote Fragments";
-            this.importRemoteFragmentsToolStripMenuItem.Click += new System.EventHandler(this.importRemoteFragmentsToolStripMenuItem_Click);
-            // 
-            // downloadFragmentToolStripMenuItem
-            // 
-            this.downloadFragmentToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.FileDownload;
-            this.downloadFragmentToolStripMenuItem.Name = "downloadFragmentToolStripMenuItem";
-            this.downloadFragmentToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.downloadFragmentToolStripMenuItem.Text = "Download Fragment";
-            this.downloadFragmentToolStripMenuItem.Click += new System.EventHandler(this.downloadFragmentToolStripMenuItem_Click);
-            // 
-            // fragmentListContextMenuDelete
-            // 
-            this.fragmentListContextMenuDelete.Image = global::VigilantCupcake.Properties.Resources.Clearallrequests_8816;
-            this.fragmentListContextMenuDelete.Name = "fragmentListContextMenuDelete";
-            this.fragmentListContextMenuDelete.Size = new System.Drawing.Size(213, 22);
-            this.fragmentListContextMenuDelete.Text = "Delete";
-            this.fragmentListContextMenuDelete.Click += new System.EventHandler(this.fragmentListContextMenuDelete_Click);
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.NewRequest_8796;
-            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.newToolStripMenuItem.Text = "&New Fragment";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.menuNewFragment_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Image = global::VigilantCupcake.Properties.Resources.NewSolutionFolder_6289;
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.N)));
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(218, 22);
-            this.toolStripMenuItem4.Text = "New Folder";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.menuNewFolder_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.Save_6530;
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.saveToolStripMenuItem.Text = "&Save and Flush DNS";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.save_Click);
-            // 
-            // flushDNSToolStripMenuItem
-            // 
-            this.flushDNSToolStripMenuItem.Image = global::VigilantCupcake.Properties.Resources.Restart_6322;
-            this.flushDNSToolStripMenuItem.Name = "flushDNSToolStripMenuItem";
-            this.flushDNSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.flushDNSToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.flushDNSToolStripMenuItem.Text = "&Flush DNS";
-            this.flushDNSToolStripMenuItem.Click += new System.EventHandler(this.flushDns_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Image = global::VigilantCupcake.Properties.Resources.Restart_6322;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(128, 22);
-            this.toolStripMenuItem2.Text = "Flush DNS";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.flushDns_Click);
-            // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
-            // hostsFileBindingSource
-            // 
-            this.hostsFileBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1428, 816);
+            this.ClientSize = new System.Drawing.Size(1428, 789);
             this.Controls.Add(this.toolStripContainer2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -906,15 +906,15 @@
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
