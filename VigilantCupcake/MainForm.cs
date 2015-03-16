@@ -349,15 +349,11 @@ namespace VigilantCupcake {
             }
         }
 
-        private async void MainForm_Load(object sender, EventArgs e) {
+        private void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             if (UserConfig.Instance.AutoSaveOnStartup) saveAll();
 
-            await Task.Factory.StartNew(async () => {
-                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
-                    await mgr.UpdateApp();
-                }
-            });
+            updateCheckTimer_Tick(null, null);
         }
 
         private void menuNewFolder_Click(object sender, EventArgs e) {
@@ -512,7 +508,27 @@ namespace VigilantCupcake {
         private async void updateCheckTimer_Tick(object sender, EventArgs e) {
             await Task.Factory.StartNew(async () => {
                 using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
-                    await mgr.UpdateApp();
+                    bool ignoreDeltaUpdates = false;
+
+                retry:
+                    var updateInfo = default(UpdateInfo);
+
+                    try {
+                        updateInfo = await mgr.CheckForUpdate(ignoreDeltaUpdates);
+                        await mgr.DownloadReleases(updateInfo.ReleasesToApply);
+                        await mgr.ApplyReleases(updateInfo);
+                        await mgr.CreateUninstallerRegistryEntry();
+                    } catch (Exception) {
+                        if (ignoreDeltaUpdates == false) {
+                            ignoreDeltaUpdates = true;
+                            goto retry;
+                        }
+
+                        throw;
+                    }
+                    var releaseNotes = updateInfo.FetchReleaseNotes();
+                    toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
+                    _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
                 }
             });
         }

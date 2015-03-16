@@ -16,6 +16,11 @@ namespace VigilantCupcake.SubForms {
             this.linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
         }
 
+        public string LatestVersionText {
+            get { return latestBox.Text; }
+            set { latestBox.Text = value; }
+        }
+
         #region Assembly Attribute Accessors
 
         public string AssemblyProduct {
