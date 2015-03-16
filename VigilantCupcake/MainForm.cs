@@ -191,9 +191,9 @@ namespace VigilantCupcake {
         private void fragmentDownloadEnding(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && !fragment.DownloadPending) {
-                tableLayoutPanel3.BeginInvokeIfRequired(() => {
-                    tableLayoutPanel3.Controls.Remove(loadingLabel);
-                    tableLayoutPanel3.Controls.Add(currentFragmentView, 0, 2);
+                mainBodyTable.BeginInvokeIfRequired(() => {
+                    mainBodyTable.Controls.Remove(loadingLabel);
+                    mainBodyTable.Controls.Add(currentFragmentView, 0, 2);
                 });
             }
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
@@ -202,9 +202,9 @@ namespace VigilantCupcake {
         private void fragmentDownloadStarting(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && fragment.DownloadPending) {
-                tableLayoutPanel3.BeginInvokeIfRequired(() => {
-                    tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
-                    tableLayoutPanel3.Controls.Remove(currentFragmentView);
+                mainBodyTable.BeginInvokeIfRequired(() => {
+                    mainBodyTable.Controls.Add(loadingLabel, 0, 2);
+                    mainBodyTable.Controls.Remove(currentFragmentView);
                 });
             }
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
@@ -497,8 +497,8 @@ namespace VigilantCupcake {
             } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
                 if (_selectedFragment.DownloadPending) {
-                    tableLayoutPanel3.Controls.Add(loadingLabel, 0, 2);
-                    tableLayoutPanel3.Controls.Remove(currentFragmentView);
+                    mainBodyTable.Controls.Add(loadingLabel, 0, 2);
+                    mainBodyTable.Controls.Remove(currentFragmentView);
                 }
             }
 
