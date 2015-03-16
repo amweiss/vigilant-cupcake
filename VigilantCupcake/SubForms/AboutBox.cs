@@ -12,7 +12,7 @@ namespace VigilantCupcake.SubForms {
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = AssemblyVersion;
-            this.buildDate.Text = String.Format("Last Updated: {0}", LastUpdatedDate);
+            this.lastUpdatedBox.Text = LastUpdatedDate.ToString();
             this.linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
         }
 
