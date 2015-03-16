@@ -130,13 +130,14 @@
             this.fragmentTreeView.FullRowSelect = true;
             this.fragmentTreeView.LineColor = System.Drawing.SystemColors.ControlDark;
             this.fragmentTreeView.Location = new System.Drawing.Point(3, 55);
+            this.fragmentTreeView.MinimumSize = new System.Drawing.Size(120, 120);
             this.fragmentTreeView.Model = null;
             this.fragmentTreeView.Name = "fragmentTreeView";
             this.fragmentTreeView.NodeControls.Add(this.nodeCheckBox1);
             this.fragmentTreeView.NodeControls.Add(this.nodeStateIcon1);
             this.fragmentTreeView.NodeControls.Add(this.nodeTextBox1);
             this.fragmentTreeView.SelectedNode = null;
-            this.fragmentTreeView.Size = new System.Drawing.Size(192, 707);
+            this.fragmentTreeView.Size = new System.Drawing.Size(182, 707);
             this.fragmentTreeView.TabIndex = 3;
             this.fragmentTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.triStateTreeView1_ItemDrag);
             this.fragmentTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.triStateTreeView1_DragDrop);
@@ -240,7 +241,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Location = new System.Drawing.Point(3, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 26);
+            this.label1.Size = new System.Drawing.Size(59, 26);
             this.label1.TabIndex = 0;
             this.label1.Text = "Search:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -250,11 +251,11 @@
             this.fragmentFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.fragmentFilter.DetectUrls = false;
             this.fragmentFilter.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fragmentFilter.Location = new System.Drawing.Point(83, 29);
+            this.fragmentFilter.Location = new System.Drawing.Point(68, 29);
             this.fragmentFilter.MaxLength = 0;
             this.fragmentFilter.Multiline = false;
             this.fragmentFilter.Name = "fragmentFilter";
-            this.fragmentFilter.Size = new System.Drawing.Size(112, 20);
+            this.fragmentFilter.Size = new System.Drawing.Size(117, 20);
             this.fragmentFilter.TabIndex = 1;
             this.fragmentFilter.Text = "";
             this.fragmentFilter.TextChanged += new System.EventHandler(this.fragmentSearchTextChanged);
@@ -284,22 +285,23 @@
             this.currentFragmentView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.currentFragmentView.IsReplaceMode = false;
-            this.currentFragmentView.Location = new System.Drawing.Point(201, 55);
+            this.currentFragmentView.Location = new System.Drawing.Point(191, 55);
             this.currentFragmentView.Name = "currentFragmentView";
             this.currentFragmentView.Paddings = new System.Windows.Forms.Padding(0);
             this.currentFragmentView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.currentFragmentView.Size = new System.Drawing.Size(608, 707);
+            this.currentFragmentView.Size = new System.Drawing.Size(613, 707);
             this.currentFragmentView.TabIndex = 2;
             this.currentFragmentView.Zoom = 100;
             // 
             // selectedFragmentLabel
             // 
-            this.selectedFragmentLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.selectedFragmentLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.selectedFragmentLabel.AutoSize = true;
             this.mainBodyTable.SetColumnSpan(this.selectedFragmentLabel, 2);
-            this.selectedFragmentLabel.Location = new System.Drawing.Point(201, 0);
+            this.selectedFragmentLabel.Location = new System.Drawing.Point(191, 6);
+            this.selectedFragmentLabel.MinimumSize = new System.Drawing.Size(120, 0);
             this.selectedFragmentLabel.Name = "selectedFragmentLabel";
-            this.selectedFragmentLabel.Size = new System.Drawing.Size(608, 20);
+            this.selectedFragmentLabel.Size = new System.Drawing.Size(613, 13);
             this.selectedFragmentLabel.TabIndex = 0;
             this.selectedFragmentLabel.Text = "Selected Fragment";
             this.selectedFragmentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -307,9 +309,9 @@
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(201, 26);
+            this.label3.Location = new System.Drawing.Point(191, 26);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 26);
+            this.label3.Size = new System.Drawing.Size(59, 26);
             this.label3.TabIndex = 0;
             this.label3.Text = "Remote:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -320,10 +322,10 @@
             this.remoteUrlView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.selectedFragmentBindingSource, "RemoteLocation", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.remoteUrlView.DetectUrls = false;
             this.remoteUrlView.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.remoteUrlView.Location = new System.Drawing.Point(281, 29);
+            this.remoteUrlView.Location = new System.Drawing.Point(256, 29);
             this.remoteUrlView.Multiline = false;
             this.remoteUrlView.Name = "remoteUrlView";
-            this.remoteUrlView.Size = new System.Drawing.Size(528, 20);
+            this.remoteUrlView.Size = new System.Drawing.Size(548, 20);
             this.remoteUrlView.TabIndex = 1;
             this.remoteUrlView.Text = "";
             this.remoteUrlView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.remoteUrlView_KeyPress);
@@ -331,12 +333,13 @@
             // 
             // newHostsLabel
             // 
-            this.newHostsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.newHostsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.newHostsLabel.AutoSize = true;
             this.mainBodyTable.SetColumnSpan(this.newHostsLabel, 2);
-            this.newHostsLabel.Location = new System.Drawing.Point(815, 0);
+            this.newHostsLabel.Location = new System.Drawing.Point(810, 6);
+            this.newHostsLabel.MinimumSize = new System.Drawing.Size(120, 0);
             this.newHostsLabel.Name = "newHostsLabel";
-            this.newHostsLabel.Size = new System.Drawing.Size(610, 20);
+            this.newHostsLabel.Size = new System.Drawing.Size(615, 13);
             this.newHostsLabel.TabIndex = 1;
             this.newHostsLabel.Text = "New Hosts";
             this.newHostsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -367,12 +370,12 @@
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hostsFileView.IsReplaceMode = false;
-            this.hostsFileView.Location = new System.Drawing.Point(815, 55);
+            this.hostsFileView.Location = new System.Drawing.Point(810, 55);
             this.hostsFileView.Name = "hostsFileView";
             this.hostsFileView.Paddings = new System.Windows.Forms.Padding(0);
             this.hostsFileView.ReadOnly = true;
             this.hostsFileView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.hostsFileView.Size = new System.Drawing.Size(610, 707);
+            this.hostsFileView.Size = new System.Drawing.Size(615, 707);
             this.hostsFileView.TabIndex = 2;
             this.hostsFileView.Zoom = 100;
             // 
@@ -381,11 +384,11 @@
             this.newHostFilterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.newHostFilterBox.DetectUrls = false;
             this.newHostFilterBox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newHostFilterBox.Location = new System.Drawing.Point(895, 30);
+            this.newHostFilterBox.Location = new System.Drawing.Point(875, 30);
             this.newHostFilterBox.MaxLength = 0;
             this.newHostFilterBox.Multiline = false;
             this.newHostFilterBox.Name = "newHostFilterBox";
-            this.newHostFilterBox.Size = new System.Drawing.Size(530, 18);
+            this.newHostFilterBox.Size = new System.Drawing.Size(550, 18);
             this.newHostFilterBox.TabIndex = 0;
             this.newHostFilterBox.Text = "";
             this.newHostFilterBox.TextChanged += new System.EventHandler(this.newHostFilterBox_TextChanged);
@@ -393,9 +396,9 @@
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(815, 27);
+            this.label2.Location = new System.Drawing.Point(810, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 24);
+            this.label2.Size = new System.Drawing.Size(59, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "Exclude:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -691,11 +694,11 @@
             // mainBodyTable
             // 
             this.mainBodyTable.ColumnCount = 6;
-            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.mainBodyTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.mainBodyTable.Controls.Add(this.hostsFileView, 4, 2);
             this.mainBodyTable.Controls.Add(this.currentFragmentView, 2, 2);
@@ -722,22 +725,24 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 6);
+            this.label4.MinimumSize = new System.Drawing.Size(59, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 14);
+            this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Fragment List";
+            this.label4.Text = "Fragments";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // downloadingLabel
             // 
-            this.downloadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadingLabel.Location = new System.Drawing.Point(83, 0);
+            this.downloadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.downloadingLabel.AutoSize = true;
+            this.downloadingLabel.Location = new System.Drawing.Point(68, 6);
+            this.downloadingLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.downloadingLabel.Name = "downloadingLabel";
-            this.downloadingLabel.Size = new System.Drawing.Size(112, 14);
+            this.downloadingLabel.Size = new System.Drawing.Size(117, 13);
             this.downloadingLabel.TabIndex = 4;
             this.downloadingLabel.Text = "Downloading...";
             this.downloadingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -759,6 +764,7 @@
             this.Controls.Add(this.toolStripContainer2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Text = "Vigilant Cupcake";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -776,6 +782,7 @@
             this.menuStrip1.PerformLayout();
             this.notifyIconMenu.ResumeLayout(false);
             this.mainBodyTable.ResumeLayout(false);
+            this.mainBodyTable.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).EndInit();
             this.ResumeLayout(false);
