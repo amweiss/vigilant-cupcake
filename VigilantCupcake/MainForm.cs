@@ -191,9 +191,10 @@ namespace VigilantCupcake {
         private void fragmentDownloadEnding(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && !fragment.DownloadPending) {
-                mainBodyTable.BeginInvokeIfRequired(() => {
-                    mainBodyTable.Controls.Remove(loadingLabel);
-                    mainBodyTable.Controls.Add(currentFragmentView, 0, 2);
+                tableLayoutPanel2.BeginInvokeIfRequired(() => {
+                    tableLayoutPanel2.Controls.Remove(loadingLabel);
+                    tableLayoutPanel2.Controls.Add(currentFragmentView, 0, 2);
+                    tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
                 });
             }
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
@@ -202,9 +203,10 @@ namespace VigilantCupcake {
         private void fragmentDownloadStarting(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && fragment.DownloadPending) {
-                mainBodyTable.BeginInvokeIfRequired(() => {
-                    mainBodyTable.Controls.Add(loadingLabel, 0, 2);
-                    mainBodyTable.Controls.Remove(currentFragmentView);
+                tableLayoutPanel2.BeginInvokeIfRequired(() => {
+                    tableLayoutPanel2.Controls.Add(loadingLabel, 0, 2);
+                    tableLayoutPanel2.Controls.Remove(currentFragmentView);
+                    tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
                 });
             }
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (_treeModel.Fragments.Any(f => f.DownloadPending)));
@@ -380,17 +382,6 @@ namespace VigilantCupcake {
             updateCurrentFragmentView();
         }
 
-        private void remoteUrlView_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == (char)Keys.Return) {
-                updateCurrentFragmentView();
-                e.Handled = true;
-            }
-        }
-
-        private void remoteUrlView_Validated(object sender, EventArgs e) {
-            updateCurrentFragmentView();
-        }
-
         private void save_Click(object sender, EventArgs e) {
             saveAll();
         }
@@ -497,8 +488,9 @@ namespace VigilantCupcake {
             } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
                 if (_selectedFragment.DownloadPending) {
-                    mainBodyTable.Controls.Add(loadingLabel, 0, 2);
-                    mainBodyTable.Controls.Remove(currentFragmentView);
+                    tableLayoutPanel2.Controls.Add(loadingLabel, 0, 2);
+                    tableLayoutPanel2.Controls.Remove(currentFragmentView);
+                    tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
                 }
             }
 
@@ -537,6 +529,9 @@ namespace VigilantCupcake {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
+                if (!_selectedFragment.RemoteLocation.Equals(remoteUrlView.Text)) {
+                    remoteUrlView.Text = _selectedFragment.RemoteLocation;
+                }
                 currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
                 currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
                 selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = "Selected Fragment" + ((_selectedFragment.Dirty) ? "*" : string.Empty));
@@ -573,6 +568,10 @@ namespace VigilantCupcake {
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
+        }
+
+        private void remoteUrlView_TextChanged(object sender, EventArgs e) {
+            _selectedFragment.RemoteLocation = remoteUrlView.Text;
         }
     }
 }
