@@ -529,7 +529,7 @@ namespace VigilantCupcake {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
-                if (!_selectedFragment.RemoteLocation.Equals(remoteUrlView.Text)) {
+                if (_selectedFragment.RemoteLocation != null && !_selectedFragment.RemoteLocation.Equals(remoteUrlView.Text)) {
                     remoteUrlView.Text = _selectedFragment.RemoteLocation;
                 }
                 currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
