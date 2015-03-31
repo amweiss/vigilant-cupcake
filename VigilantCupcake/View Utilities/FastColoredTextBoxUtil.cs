@@ -34,7 +34,7 @@ namespace VigilantCupcake.ViewUtilities {
                 });
             }
 
-            range.SetStyle(_commentStyle, "#.*");
+            range.SetStyle(_commentStyle, @"#.*");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace VigilantCupcake.Models {
         public string Ip { get; set; }
 
         public IEnumerable<string> ToStringEnumerable() {
-            int maxLength = 300; //When to wrap a line (higher than max FQDN length currently to prevent errors)
+            int maxLength = 80; //Keep small so that we don't get errors.
             var ipFormat = Regex.IsMatch(Ip, @"\.") ? "{0,-16}" : "{0,-40}"; //IPv4 vs. IPv6
             var entryString = string.Format(ipFormat, Ip);
             //TODO: Cleanup
@@ -36,7 +36,7 @@ namespace VigilantCupcake.Models {
             while (hostArray.Count != 0) {
                 var host = hostArray.First();
 
-                if (entryString.Length + host.Length + 1 <= maxLength) {
+                if (entryString.Length + host.Length + 1 <= maxLength || entryString.Trim().Equals(string.Format(ipFormat, Ip).Trim())) {
                     entryString = entryString + " " + host;
                     hostArray.Remove(host);
                 } else {

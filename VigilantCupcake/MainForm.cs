@@ -487,6 +487,7 @@ namespace VigilantCupcake {
                 remoteUrlView.Enabled = false;
             } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
+                remoteUrlView.Text = _selectedFragment.RemoteLocation;
                 if (_selectedFragment.DownloadPending) {
                     tableLayoutPanel2.Controls.Add(loadingLabel, 0, 2);
                     tableLayoutPanel2.Controls.Remove(currentFragmentView);
@@ -535,15 +536,9 @@ namespace VigilantCupcake {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
-                remoteUrlView.BeginInvokeIfRequired(() => {
-                    if (_selectedFragment.RemoteLocation != null && !_selectedFragment.RemoteLocation.Equals(remoteUrlView.Text)) {
-                        remoteUrlView.Text = _selectedFragment.RemoteLocation;
-                    }
-                });
                 currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
                 currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
                 selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = "Selected Fragment" + ((_selectedFragment.Dirty) ? "*" : string.Empty));
-                currentFragmentView.BeginInvokeIfRequired(() => currentFragmentView.RefreshStyles()); //Needed?
             }
         }
 
