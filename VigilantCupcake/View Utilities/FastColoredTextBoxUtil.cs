@@ -13,8 +13,6 @@ namespace VigilantCupcake.ViewUtilities {
         public static Dictionary<string, List<string>> Collisions { get; set; }
 
         public static void FastColoredTextBoxTextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e) {
-            if (e == null || e.ChangedRange == null || string.IsNullOrEmpty(e.ChangedRange.Text)) return;
-
             setStyles(e.ChangedRange);
         }
 
@@ -23,6 +21,7 @@ namespace VigilantCupcake.ViewUtilities {
         }
 
         private static void setStyles(FastColoredTextBoxNS.Range range) {
+            if (range == null || string.IsNullOrEmpty(range.Text)) return;
             range.ClearStyle(_conflictStyle, _commentStyle);
 
             if (Collisions != null

@@ -56,7 +56,7 @@ namespace VigilantCupcake.Models {
             NewHostsAnalysis = true;
             NewHostsFilter = "";
             SecondsBetweenBackgroundDownloads = 3600000;
-            SelectedFiles = new List<string>() { "hello", "world" };
+            SelectedFiles = new List<string>() { };
             Version = 1;
         }
 
