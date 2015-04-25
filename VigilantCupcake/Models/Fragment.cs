@@ -176,6 +176,7 @@ namespace VigilantCupcake.Models {
                 if (!string.IsNullOrWhiteSpace(RemoteLocation)) {
                     DownloadFile();
                 } else {
+                    if (!File.Exists(FullPath)) using (File.Create(FullPath)) { }
                     _currentContents = Regex.Replace(File.ReadAllText(FullPath), Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement));
                     CheckForRemoteLocation();
                 }
