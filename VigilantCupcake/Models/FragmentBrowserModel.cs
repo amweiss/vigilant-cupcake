@@ -8,7 +8,7 @@ namespace VigilantCupcake.Models {
     public class FragmentBrowserModel : FilterableTreeModel {
 
         public FragmentBrowserModel(string path) {
-            Root.Nodes.Add(CreateDirectoryNode(new DirectoryInfo(path)));
+            Root.Nodes.Add(CreateDirectoryNode(new DirectoryInfo(path), Root));
         }
 
         public IEnumerable<FragmentNode> FragmentNodes {
@@ -36,14 +36,14 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo) {
-            var directoryNode = new FragmentNode() { Text = directoryInfo.Name };
+        private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo, FragmentNode parent) {
+            var directoryNode = new FragmentNode() { Text = directoryInfo.Name, Parent = parent};
             if (!directoryInfo.Exists) return directoryNode;
             foreach (var directory in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory, directoryNode));
             foreach (var file in directoryInfo.GetFiles()) {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
-                var treeNode = new FragmentNode() { Text = name };
+                var treeNode = new FragmentNode() { Text = name, Parent = directoryNode };
                 var fragment = new Fragment() {
                     Name = name,
                     FullPath = file.FullName,
