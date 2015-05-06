@@ -525,9 +525,12 @@ namespace VigilantCupcake {
 
                         throw;
                     }
-                    var releaseNotes = updateInfo.FetchReleaseNotes();
-                    toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
-                    _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
+                    if (updateInfo != null && updateInfo.FutureReleaseEntry != null && updateInfo.FutureReleaseEntry.Version != null) {
+                        toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
+                        _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
+                    } else {
+                        _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = "Error finding latest version");
+                    }
                 }
             });
         }
