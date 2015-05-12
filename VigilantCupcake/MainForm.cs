@@ -383,6 +383,12 @@ namespace VigilantCupcake {
             updateCurrentFragmentView();
         }
 
+        private void remoteUrlView_TextChanged(object sender, EventArgs e) {
+            if (_selectedFragment != null) {
+                _selectedFragment.RemoteLocation = remoteUrlView.Text;
+            }
+        }
+
         private void save_Click(object sender, EventArgs e) {
             saveAll();
         }
@@ -576,12 +582,6 @@ namespace VigilantCupcake {
 
         private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
-        }
-
-        private void remoteUrlView_TextChanged(object sender, EventArgs e) {
-            if (_selectedFragment != null) {
-                _selectedFragment.RemoteLocation = remoteUrlView.Text;
-            }
         }
     }
 }

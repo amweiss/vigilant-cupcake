@@ -37,7 +37,7 @@ namespace VigilantCupcake.Models {
         }
 
         private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo, FragmentNode parent) {
-            var directoryNode = new FragmentNode() { Text = directoryInfo.Name, Parent = parent};
+            var directoryNode = new FragmentNode() { Text = directoryInfo.Name, Parent = parent };
             if (!directoryInfo.Exists) return directoryNode;
             foreach (var directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(CreateDirectoryNode(directory, directoryNode));
