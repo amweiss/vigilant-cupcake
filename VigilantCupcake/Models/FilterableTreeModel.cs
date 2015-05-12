@@ -79,7 +79,7 @@ namespace VigilantCupcake.Models {
                 else
                     return false;
             } else {
-                throw new ArgumentException("treePath");
+                throw new ArgumentException("Node not found.");
             }
         }
 

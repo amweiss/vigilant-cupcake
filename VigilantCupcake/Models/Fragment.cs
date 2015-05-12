@@ -209,7 +209,11 @@ namespace VigilantCupcake.Models {
         }
 
         protected static bool IsARemoteUrlString(string value) {
-            return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
+            if (value != null) {
+                return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
+            } else {
+                throw new ArgumentException("value is null");
+            }
         }
 
         static protected void SaveTextAs(string filename, string text) {

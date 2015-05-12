@@ -17,13 +17,12 @@ namespace VigilantCupcake.SubForms {
         }
 
         public string LatestVersionText {
-            get { return latestBox.Text; }
             set { latestBox.Text = value; }
         }
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyProduct {
+        public static string AssemblyProduct {
             get {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0) {
@@ -33,12 +32,12 @@ namespace VigilantCupcake.SubForms {
             }
         }
 
-        public string AssemblyTitle {
+        public static string AssemblyTitle {
             get {
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 if (attributes.Length > 0) {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "") {
+                    if (!string.IsNullOrEmpty(titleAttribute.Title)) {
                         return titleAttribute.Title;
                     }
                 }
@@ -46,13 +45,13 @@ namespace VigilantCupcake.SubForms {
             }
         }
 
-        public string AssemblyVersion {
+        public static string AssemblyVersion {
             get {
                 return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
 
-        public DateTime LastUpdatedDate {
+        public static DateTime LastUpdatedDate {
             get {
                 return new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
             }
@@ -62,10 +61,6 @@ namespace VigilantCupcake.SubForms {
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this.linkLabel1.LinkVisited = true;
-            System.Diagnostics.Process.Start(Properties.Settings.Default.WebsiteUrl);
-        }
-
-        private void logoPictureBox_Click(object sender, EventArgs e) {
             System.Diagnostics.Process.Start(Properties.Settings.Default.WebsiteUrl);
         }
     }

@@ -13,11 +13,11 @@ namespace VigilantCupcake.ViewUtilities {
         public static Dictionary<string, List<string>> Collisions { get; set; }
 
         public static void FastColoredTextBoxTextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e) {
-            setStyles(e.ChangedRange);
+            if (e != null) setStyles(e.ChangedRange);
         }
 
         public static void RefreshStyles(this FastColoredTextBox fctb) {
-            setStyles(fctb.Range);
+            if (fctb != null) setStyles(fctb.Range);
         }
 
         private static void setStyles(FastColoredTextBoxNS.Range range) {

@@ -29,9 +29,9 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lastUpdated = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.TextBox();
-            this.labelProductName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
+            this.labelProductName = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,6 +109,7 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "http://vigilantcupcake.com";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // lastUpdated
             // 
@@ -133,19 +134,6 @@
             this.labelVersion.TabIndex = 2;
             this.labelVersion.Text = "Version";
             // 
-            // labelProductName
-            // 
-            this.tableLayoutPanel.SetColumnSpan(this.labelProductName, 2);
-            this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelProductName.Location = new System.Drawing.Point(6, 0);
-            this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelProductName.Name = "labelProductName";
-            this.labelProductName.Size = new System.Drawing.Size(259, 50);
-            this.labelProductName.TabIndex = 28;
-            this.labelProductName.Text = "Product Name";
-            this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -167,6 +155,19 @@
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 1;
             this.okButton.Text = "&OK";
+            // 
+            // labelProductName
+            // 
+            this.tableLayoutPanel.SetColumnSpan(this.labelProductName, 2);
+            this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProductName.Location = new System.Drawing.Point(6, 0);
+            this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.labelProductName.Name = "labelProductName";
+            this.labelProductName.Size = new System.Drawing.Size(259, 50);
+            this.labelProductName.TabIndex = 28;
+            this.labelProductName.Text = "Product Name";
+            this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AboutBox
             // 

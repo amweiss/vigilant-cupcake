@@ -36,6 +36,7 @@ namespace VigilantCupcake {
 
         public MainForm() {
             InitializeComponent();
+            components.Add(loadingLabel);
 
             _syncDurationMenuItems = new List<ToolStripMenuItem>() {
                 syncFiveMinutes, syncFifteenMinutes, syncThirtyMinutes, syncSixtyMinutes
@@ -252,36 +253,36 @@ namespace VigilantCupcake {
         }
 
         private void importRemoteFragmentsToolStripMenuItem_Click(object sender, EventArgs e) {
-            var dialog = new OpenFileDialog();
-            Stream myStream = null;
-            dialog.RestoreDirectory = true;
+            using (var dialog = new OpenFileDialog()) {
+                dialog.RestoreDirectory = true;
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    try {
+                        using (Stream myStream = dialog.OpenFile()) {
+                            if (myStream != null) {
+                                var lines = new List<string>();
+                                using (var sr = new StreamReader(myStream)) {
+                                    string line;
+                                    while ((line = sr.ReadLine()) != null) {
+                                        lines.Add(line);
+                                    }
+                                }
 
-            if (dialog.ShowDialog() == DialogResult.OK) {
-                try {
-                    if ((myStream = dialog.OpenFile()) != null) {
-                        var lines = new List<string>();
-                        using (myStream)
-                        using (var sr = new StreamReader(myStream)) {
-                            string line;
-                            while ((line = sr.ReadLine()) != null) {
-                                lines.Add(line);
+                                var prefix = GetLongestCommonPrefix(lines);
+                                var selectedNode = fragmentTreeView.SelectedNode;
+
+                                foreach (var item in lines) {
+                                    fragmentTreeView.SelectedNode = selectedNode;
+                                    var name = item;
+                                    name = name.Replace(prefix, string.Empty);
+                                    buildImportedPaths(item, name);
+                                }
+
+                                fragmentTreeView.SelectedNode = selectedNode;
                             }
                         }
-
-                        var prefix = GetLongestCommonPrefix(lines);
-                        var selectedNode = fragmentTreeView.SelectedNode;
-
-                        foreach (var item in lines) {
-                            fragmentTreeView.SelectedNode = selectedNode;
-                            var name = item;
-                            name = name.Replace(prefix, string.Empty);
-                            buildImportedPaths(item, name);
-                        }
-
-                        fragmentTreeView.SelectedNode = selectedNode;
+                    } catch (Exception ex) {
+                        MessageBox.Show("Error: Could not read from fragment list source. Original error: " + ex.Message);
                     }
-                } catch (Exception ex) {
-                    MessageBox.Show("Error: Could not read from fragment list source. Original error: " + ex.Message);
                 }
             }
         }

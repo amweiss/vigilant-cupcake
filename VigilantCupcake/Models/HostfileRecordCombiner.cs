@@ -6,8 +6,6 @@ namespace VigilantCupcake.Models {
 
     //TODO: Cleanup
     public class HostfileRecordCombiner {
-        private HostfileRecord _hnRecord = new HostfileRecord();
-
         public Dictionary<string, List<string>> Collisions { get; private set; }
 
         public string Filter { get; set; }

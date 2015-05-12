@@ -48,10 +48,10 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.remoteUrlView = new System.Windows.Forms.RichTextBox();
-            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.selectedFragmentLabel = new System.Windows.Forms.Label();
             this.currentFragmentView = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.selectedFragmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.newHostFilterBox = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -105,8 +105,8 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileBindingSource)).BeginInit();
@@ -383,10 +383,6 @@
             this.remoteUrlView.Text = "";
             this.remoteUrlView.TextChanged += new System.EventHandler(this.remoteUrlView_TextChanged);
             // 
-            // selectedFragmentBindingSource
-            // 
-            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -430,7 +426,6 @@
             this.currentFragmentView.CharWidth = 8;
             this.tableLayoutPanel2.SetColumnSpan(this.currentFragmentView, 2);
             this.currentFragmentView.CommentPrefix = "#";
-            this.currentFragmentView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.currentFragmentView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.selectedFragmentBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.currentFragmentView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -439,9 +434,14 @@
             this.currentFragmentView.Name = "currentFragmentView";
             this.currentFragmentView.Paddings = new System.Windows.Forms.Padding(0);
             this.currentFragmentView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.currentFragmentView.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("currentFragmentView.ServiceColors")));
             this.currentFragmentView.Size = new System.Drawing.Size(612, 707);
             this.currentFragmentView.TabIndex = 4;
             this.currentFragmentView.Zoom = 100;
+            // 
+            // selectedFragmentBindingSource
+            // 
+            this.selectedFragmentBindingSource.DataSource = typeof(VigilantCupcake.Models.Fragment);
             // 
             // tableLayoutPanel3
             // 
@@ -521,7 +521,6 @@
             this.hostsFileView.CharWidth = 8;
             this.tableLayoutPanel3.SetColumnSpan(this.hostsFileView, 2);
             this.hostsFileView.CommentPrefix = "#";
-            this.hostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.hostsFileView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.hostsFileBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -531,6 +530,7 @@
             this.hostsFileView.Paddings = new System.Windows.Forms.Padding(0);
             this.hostsFileView.ReadOnly = true;
             this.hostsFileView.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.hostsFileView.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("hostsFileView.ServiceColors")));
             this.hostsFileView.Size = new System.Drawing.Size(612, 707);
             this.hostsFileView.TabIndex = 4;
             this.hostsFileView.Zoom = 100;
@@ -859,8 +859,8 @@
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentFragmentView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFragmentBindingSource)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hostsFileView)).EndInit();
