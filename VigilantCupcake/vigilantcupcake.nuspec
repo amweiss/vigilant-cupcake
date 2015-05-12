@@ -19,6 +19,5 @@
   </metadata>
   <files>
     <file src="bin\$configuration$\*.dll" target="lib\net45" />
-    <file src="..\packages\squirrel.windows.*\tools\squirrel.exe" target="lib\net45" />
   </files>
 </package>
