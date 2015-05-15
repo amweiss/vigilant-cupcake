@@ -534,7 +534,7 @@ namespace VigilantCupcake {
                         throw;
                     }
                     if (updateInfo != null && updateInfo.FutureReleaseEntry != null && updateInfo.FutureReleaseEntry.Version != null && updateInfo.CurrentlyInstalledVersion != null) {
-                        var showNotification = (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version) || updateInfo.CurrentlyInstalledVersion == null || updateInfo.CurrentlyInstalledVersion.Version != null;
+                        var showNotification = (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
                         toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = showNotification);
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
                     } else {
