@@ -20,7 +20,6 @@ namespace VigilantCupcake {
         private ActualHostsFile _currentHostsForm = new ActualHostsFile();
         private HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
         private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
-        private int _pendingDownloads = 0;
         private bool _reallyClose = false;
         private Fragment _selectedFragment = null;
         private List<ToolStripMenuItem> _syncDurationMenuItems;
@@ -242,7 +241,7 @@ namespace VigilantCupcake {
                 case "RemoteLocation": if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 case "FileContents": if (fragment.Enabled) updateHostsFileView(); break;
                 case "Enabled": updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
-                case "Dirty": updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
+                case "Dirty": if (fragment.Enabled) updateHostsFileView(); if (fragment == _selectedFragment) updateCurrentFragmentView(); break;
                 default: break;
             }
         }
@@ -330,7 +329,7 @@ namespace VigilantCupcake {
                 return;
             }
 
-            if (_pendingDownloads > 0) {
+            if (_treeModel.Fragments.Any(x => x.DownloadPending)) {
                 DialogResult result = MessageBox.Show("There are still downloads pending, do you really want to exit?", "Downloads Pending", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                     e.Cancel = true;
@@ -506,6 +505,8 @@ namespace VigilantCupcake {
                         tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
                     });
                 }
+                currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
+                currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
             }
 
             updateCurrentFragmentView();
@@ -547,8 +548,6 @@ namespace VigilantCupcake {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
-                currentFragmentView.ReadOnly = !string.IsNullOrEmpty(_selectedFragment.RemoteLocation);
-                currentFragmentView.BackColor = (currentFragmentView.ReadOnly) ? SystemColors.Control : Color.White;
                 selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = "Selected Fragment" + ((_selectedFragment.Dirty) ? "*" : string.Empty));
             }
         }
