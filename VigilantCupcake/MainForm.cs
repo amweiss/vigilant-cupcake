@@ -514,7 +514,7 @@ namespace VigilantCupcake {
 
         private async void updateCheckTimer_Tick(object sender, EventArgs e) {
             await Task.Factory.StartNew(async () => {
-                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId, FrameworkVersion.Net45)) {
+                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId)) {
                     bool ignoreDeltaUpdates = false;
 
                 retry:
@@ -533,7 +533,7 @@ namespace VigilantCupcake {
 
                         throw;
                     }
-                    if (updateInfo != null && updateInfo.FutureReleaseEntry != null && updateInfo.FutureReleaseEntry.Version != null) {
+                    if (updateInfo != null && updateInfo.FutureReleaseEntry != null && updateInfo.FutureReleaseEntry.Version != null && updateInfo.CurrentlyInstalledVersion != null) {
                         var showNotification = (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version) || updateInfo.CurrentlyInstalledVersion == null || updateInfo.CurrentlyInstalledVersion.Version != null;
                         toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = showNotification);
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
