@@ -117,6 +117,13 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FragmentTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FragmentTreeView.Designer.cs">
+      <DependentUpon>FragmentTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extension Methods\IEnumerableStringExtensions.cs" />
     <Compile Include="Models\HostfileRecordCombiner.cs" />
     <Compile Include="Models\HostfileRecord.cs" />
     <Compile Include="Models\HostnameFilter.cs" />
@@ -151,8 +158,12 @@
     <Compile Include="SubForms\ActualHostsFile.Designer.cs">
       <DependentUpon>ActualHostsFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="View Utilities\FastColoredTextBoxUtil.cs" />
-    <Compile Include="View Utilities\ISynchronizeInvokeExtensions.cs" />
+    <Compile Include="View Extensions\FastColoredTextBoxUtil.cs" />
+    <Compile Include="Extension Methods\ISynchronizeInvokeExtensions.cs" />
+    <Compile Include="View Extensions\Prompts.cs" />
+    <EmbeddedResource Include="Controls\FragmentTreeView.resx">
+      <DependentUpon>FragmentTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

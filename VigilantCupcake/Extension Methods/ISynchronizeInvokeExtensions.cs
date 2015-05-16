@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace VigilantCupcake.ViewUtilities {
+namespace VigilantCupcake.ExtensionMethods {
 
     internal static class ISynchronizeInvokeExtensions {
 

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace VigilantCupcake.ViewUtilities {
+namespace VigilantCupcake.ViewExtensions {
 
     public static class FastColoredTextBoxUtility {
         private static TextStyle _commentStyle = new TextStyle(Brushes.DimGray, null, FontStyle.Regular);

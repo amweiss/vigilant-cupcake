@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using VigilantCupcake.Models;
+using VigilantCupcake.ViewExtensions;
 
 namespace VigilantCupcake.SubForms {
 
@@ -8,7 +9,7 @@ namespace VigilantCupcake.SubForms {
 
         public ActualHostsFile() {
             InitializeComponent();
-            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(ViewUtilities.FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
+            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
         }
 
         private void ActualHostsFile_Load(object sender, EventArgs e) {
