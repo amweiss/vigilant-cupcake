@@ -13,14 +13,14 @@ using VigilantCupcake.ViewExtensions;
 namespace VigilantCupcake.Controls {
 
     public partial class FragmentTreeView : TreeViewAdv {
-        private FragmentBrowserModel _model = new FragmentBrowserModel(LocalFiles.BaseDirectory);
+        private FragmentBrowserModel _model = null;
 
         public FragmentTreeView() {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime) _model = new FragmentBrowserModel(LocalFiles.BaseDirectory);
             base.Model = _model;
             InitializeComponent();
             Root.Children.ToList().ForEach(x => x.Expand());
-
-            Model.NodesChanged += _treeModel_NodesChanged;
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime) Model.NodesChanged += _treeModel_NodesChanged;
         }
 
         public new FragmentBrowserModel Model { get { return _model; } }
