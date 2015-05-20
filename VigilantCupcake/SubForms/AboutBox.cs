@@ -10,7 +10,7 @@ namespace VigilantCupcake.SubForms {
         public AboutBox() {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
+            this.labelProductName.Text = AssemblyTitle;
             this.labelVersion.Text = AssemblyVersion;
             this.lastUpdatedBox.Text = LastUpdatedDate.ToString();
             this.linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
@@ -22,26 +22,9 @@ namespace VigilantCupcake.SubForms {
 
         #region Assembly Attribute Accessors
 
-        public static string AssemblyProduct {
-            get {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0) {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
         public static string AssemblyTitle {
             get {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0) {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (!string.IsNullOrEmpty(titleAttribute.Title)) {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return "Vigilant Cupcake";
             }
         }
 
