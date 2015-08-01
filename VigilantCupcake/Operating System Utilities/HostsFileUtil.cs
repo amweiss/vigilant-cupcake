@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using static VigilantCupcake.OperatingSystemUtilities.PlatformCheck;
 
 namespace VigilantCupcake.OperatingSystemUtilities {
 
@@ -7,8 +8,8 @@ namespace VigilantCupcake.OperatingSystemUtilities {
 
         public static string CurrentHostsFile {
             get {
-                switch (OperatingSystemUtilities.PlatformCheck.RunningPlatform()) {
-                    case PlatformCheck.Platform.Windows: return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), Properties.Settings.Default.WindowsHostsFilePath);
+                switch (RunningPlatform()) {
+                    case Platform.Windows: return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), Properties.Settings.Default.WindowsHostsFilePath);
                     default: return Properties.Settings.Default.LinuxHostsFilePath;
                 }
             }

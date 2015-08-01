@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static VigilantCupcake.OperatingSystemUtilities.PlatformCheck;
 
 namespace VigilantCupcake.OperatingSystemUtilities {
 
@@ -9,14 +10,14 @@ namespace VigilantCupcake.OperatingSystemUtilities {
                 var startInfo = new ProcessStartInfo();
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-                switch (OperatingSystemUtilities.PlatformCheck.RunningPlatform()) {
-                    case OperatingSystemUtilities.PlatformCheck.Platform.Linux:
+                switch (RunningPlatform()) {
+                    case Platform.Linux:
                         {
                             startInfo.FileName = Properties.Settings.Default.DnsFlushCommandLinux;
                             startInfo.Arguments = Properties.Settings.Default.DnsFlushArgumentsLinux;
                             break;
                         }
-                    case OperatingSystemUtilities.PlatformCheck.Platform.Mac:
+                    case Platform.Mac:
                         {
                             startInfo.FileName = Properties.Settings.Default.DnsFlushCommandMac;
                             startInfo.Arguments = Properties.Settings.Default.DnsFlushArgumentsMac;
