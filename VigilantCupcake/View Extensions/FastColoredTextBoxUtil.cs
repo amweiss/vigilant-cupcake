@@ -20,13 +20,11 @@ namespace VigilantCupcake.ViewExtensions {
             if (fctb != null) setStyles(fctb.Range);
         }
 
-        static void setStyles(FastColoredTextBoxNS.Range range) {
+        static void setStyles(Range range) {
             if (range == null || string.IsNullOrEmpty(range.Text)) return;
             range.ClearStyle(_conflictStyle, _commentStyle);
 
-            if (Collisions != null
-                && Collisions.Keys != null
-                && Collisions.Keys.Count > 0) {
+            if (Collisions?.Keys?.Count > 0) {
                 Collisions.Keys.ToList().ForEach(x => {
                     var pattern = Regex.Escape(x);
                     range.SetStyle(_conflictStyle, @"(?<=[\s])" + pattern);

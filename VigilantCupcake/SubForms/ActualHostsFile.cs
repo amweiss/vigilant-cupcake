@@ -9,7 +9,7 @@ namespace VigilantCupcake.SubForms {
 
         public ActualHostsFile() {
             InitializeComponent();
-            actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
+            actualHostsFileView.TextChanged += new EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
         }
 
         void ActualHostsFile_Load(object sender, EventArgs e) {
@@ -18,8 +18,7 @@ namespace VigilantCupcake.SubForms {
         }
 
         void actualHostsFileView_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == (char)Keys.Escape)
-                this.Close();
+            if (e.KeyChar == (char)Keys.Escape) this.Close();
         }
     }
 }
