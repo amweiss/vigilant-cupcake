@@ -21,14 +21,13 @@ namespace VigilantCupcake.OperatingSystemUtilities {
         }
 
         static public bool Start() {
-            bool onlyInstance = false;
-            string mutexName = String.Format("Local\\{0}", _attribute);
+            var onlyInstance = false;
 
             // if you want your app to be limited to a single instance
             // across ALL SESSIONS (multiple users & terminal services), then use the following line instead:
             // string mutexName = String.Format("Global\\{0}", _attribute);
 
-            mutex = new Mutex(true, mutexName, out onlyInstance);
+            mutex = new Mutex(true, $"Local\\{_attribute}", out onlyInstance);
             return onlyInstance;
         }
 

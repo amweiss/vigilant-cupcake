@@ -9,24 +9,18 @@ namespace VigilantCupcake.SubForms {
 
         public AboutBox() {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyTitle;
-            this.labelVersion.Text = AssemblyVersion;
-            this.lastUpdatedBox.Text = LastUpdatedDate.ToString();
-            this.linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
+            Text = $"About {AssemblyTitle}";
+            labelProductName.Text = AssemblyTitle;
+            labelVersion.Text = AssemblyVersion;
+            lastUpdatedBox.Text = LastUpdatedDate.ToString();
+            linkLabel1.Text = Properties.Settings.Default.WebsiteUrl;
         }
 
         public string LatestVersionText {
             set { latestBox.Text = value; }
         }
 
-        #region Assembly Attribute Accessors
-
-        public static string AssemblyTitle {
-            get {
-                return "Vigilant Cupcake";
-            }
-        }
+        public static string AssemblyTitle { get; } = "Vigilant Cupcake";
 
         public static string AssemblyVersion {
             get {
@@ -39,8 +33,6 @@ namespace VigilantCupcake.SubForms {
                 return new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
             }
         }
-
-        #endregion Assembly Attribute Accessors
 
         void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this.linkLabel1.LinkVisited = true;

@@ -113,7 +113,7 @@ namespace VigilantCupcake.Controls {
             treeNode.Text = name;
             var fileNumber = 1;
             while (directoryNode.Nodes.Any(x => x.Text.Equals(treeNode.Text))) {
-                var newName = string.Format("{0} {1}", name, fileNumber);
+                var newName = $"{name} {fileNumber}";
                 treeNode.Text = newName;
                 fileNumber++;
             }
