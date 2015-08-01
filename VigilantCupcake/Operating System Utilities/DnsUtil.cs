@@ -6,7 +6,7 @@ namespace VigilantCupcake.OperatingSystemUtilities {
 
         public static bool FlushDns() {
             using (var process = new Process()) {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
+                var startInfo = new ProcessStartInfo();
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
                 switch (OperatingSystemUtilities.PlatformCheck.RunningPlatform()) {

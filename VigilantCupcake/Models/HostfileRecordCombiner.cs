@@ -30,13 +30,13 @@ namespace VigilantCupcake.Models {
             return results;
         }
 
-        private IEnumerable<string> filterHosts(IEnumerable<string> lines) {
+        IEnumerable<string> filterHosts(IEnumerable<string> lines) {
             if (lines == null || string.IsNullOrWhiteSpace(Filter)) return lines;
 
             return lines.Where(x => !Regex.IsMatch(x, Filter));
         }
 
-        private void GenerateMappingsFromMerged(string[] merged) {
+        void GenerateMappingsFromMerged(string[] merged) {
             foreach (string entry in merged) {
                 string trimmedEntry = entry.Trim();
 
@@ -60,7 +60,8 @@ namespace VigilantCupcake.Models {
                             if (!Collisions[host].Contains(splittedRecord.Ip)) {
                                 Collisions[host].Add(splittedRecord.Ip);
                             }
-                        } else {
+                        }
+                        else {
                             var collisionList = new List<string>();
                             collisionList.Add(splittedRecord.Ip);
                             collisionList.AddRange(HostToIpMapping[host]);
@@ -72,7 +73,8 @@ namespace VigilantCupcake.Models {
                         if (!IpToHostMapping[splittedRecord.Ip].Contains(host)) {
                             IpToHostMapping[splittedRecord.Ip].Add(host);
                         }
-                    } else {
+                    }
+                    else {
                         var hostToAdd = new List<string>();
                         hostToAdd.Add(host);
                         IpToHostMapping.Add(splittedRecord.Ip, hostToAdd);
@@ -82,7 +84,8 @@ namespace VigilantCupcake.Models {
                         if (!HostToIpMapping[host].Contains(splittedRecord.Ip)) {
                             HostToIpMapping[host].Add(splittedRecord.Ip);
                         }
-                    } else {
+                    }
+                    else {
                         var ipToAdd = new List<string>();
                         ipToAdd.Add(splittedRecord.Ip);
                         HostToIpMapping.Add(host, ipToAdd);

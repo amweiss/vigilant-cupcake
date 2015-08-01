@@ -5,13 +5,13 @@ using VigilantCupcake.OperatingSystemUtilities;
 
 namespace VigilantCupcake {
 
-    internal static class Program {
+    static class Program {
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main() {
+        static void Main() {
             UserConfig.Instance.Reload();
 
             if (!SingleInstance.Start()) {
@@ -23,9 +23,10 @@ namespace VigilantCupcake {
             Application.SetCompatibleTextRenderingDefault(false);
 
             try {
-                MainForm mainForm = new MainForm();
+                var mainForm = new MainForm();
                 Application.Run(mainForm);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 MessageBox.Show(e.Message);
             }
 

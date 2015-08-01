@@ -8,15 +8,15 @@ using System.Reflection;
 namespace VigilantCupcake.Models {
 
     public sealed class UserConfig {
-        private static readonly Lazy<UserConfig> lazy = new Lazy<UserConfig>(() => new UserConfig());
+        static readonly Lazy<UserConfig> lazy = new Lazy<UserConfig>(() => new UserConfig());
 
-        private string _settingFilePath = Path.Combine(
+        readonly string _settingFilePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName,
                 Properties.Settings.Default.UserSettingsFile
                 );
 
-        private UserConfig() {
+        UserConfig() {
         }
 
         public static UserConfig Instance { get { return lazy.Value; } }

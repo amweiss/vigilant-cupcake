@@ -5,8 +5,8 @@ using System.Collections.Generic;
 namespace VigilantCupcake.Models {
 
     public class FilterableTreeModel : ITreeModel {
-        private string _filter = null;
-        private FragmentNode _root;
+        string _filter = null;
+        FragmentNode _root;
 
         public FilterableTreeModel() {
             _root = new FragmentNode();
@@ -30,7 +30,7 @@ namespace VigilantCupcake.Models {
             if (node == _root)
                 return TreePath.Empty;
             else {
-                Stack<object> stack = new Stack<object>();
+                var stack = new Stack<object>();
                 while (node != _root) {
                     stack.Push(node);
                     node = node.Parent;
@@ -39,7 +39,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private FragmentNode FindNode(FragmentNode root, TreePath path, int level) {
+        FragmentNode FindNode(FragmentNode root, TreePath path, int level) {
             foreach (FragmentNode node in root.Nodes)
                 if (node == path.FullPath[level]) {
                     if (level == path.FullPath.Length - 1)
@@ -90,14 +90,14 @@ namespace VigilantCupcake.Models {
 
         internal void OnNodeInserted(FragmentNode parent, int index, FragmentNode node) {
             if (NodesInserted != null) {
-                TreeModelEventArgs args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+                var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
                 NodesInserted(this, args);
             }
         }
 
         internal void OnNodeRemoved(FragmentNode parent, int index, FragmentNode node) {
             if (NodesRemoved != null) {
-                TreeModelEventArgs args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+                var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
                 NodesRemoved(this, args);
             }
         }

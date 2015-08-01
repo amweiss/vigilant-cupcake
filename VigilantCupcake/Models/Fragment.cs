@@ -10,17 +10,17 @@ using VigilantCupcake.OperatingSystemUtilities;
 namespace VigilantCupcake.Models {
 
     public class Fragment : INotifyPropertyChanged {
-        private string _currentContents = null;
-        private bool _dirty = false;
-        private bool _downloadPending = false;
-        private bool _enabled = false;
-        private bool _loaded = false;
-        private string _name = null;
-        private string _oldFullPath = null;
+        string _currentContents = null;
+        bool _dirty = false;
+        bool _downloadPending = false;
+        bool _enabled = false;
+        bool _loaded = false;
+        string _name = null;
+        string _oldFullPath = null;
 
-        private string _remoteLocation = null;
+        string _remoteLocation = null;
 
-        private string _rootPath = null;
+        string _rootPath = null;
 
         public event EventHandler ContentsDownloaded;
 
@@ -210,7 +210,7 @@ namespace VigilantCupcake.Models {
 
         protected static bool IsARemoteUrlString(string value) {
             if (value != null) {
-                return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax);
+                return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax, StringComparison.Ordinal);
             } else {
                 throw new ArgumentException("value is null");
             }
@@ -225,7 +225,7 @@ namespace VigilantCupcake.Models {
         }
 
         protected void CheckForRemoteLocation() {
-            var length = (_currentContents.IndexOf(Environment.NewLine) > 0) ? _currentContents.IndexOf(Environment.NewLine) : _currentContents.Length;
+            var length = (_currentContents.IndexOf(Environment.NewLine, StringComparison.Ordinal) > 0) ? _currentContents.IndexOf(Environment.NewLine, StringComparison.Ordinal) : _currentContents.Length;
             if (length >= 0) {
                 var firstLine = _currentContents.Substring(0, length);
                 if (_currentContents.Length > 0 && IsARemoteUrlString(firstLine)) {

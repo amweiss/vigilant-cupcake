@@ -3,7 +3,7 @@ using VigilantCupcake.Models;
 
 namespace VigilantCupcake.ViewExtensions {
 
-    internal static class Prompts {
+    static class Prompts {
 
         public static DialogResult confirmAndDelete(FragmentNode node) {
             DialogResult result = MessageBox.Show("Delete " + node.Text + "?", "Delete Fragment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

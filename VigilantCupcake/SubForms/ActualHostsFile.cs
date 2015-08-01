@@ -12,12 +12,12 @@ namespace VigilantCupcake.SubForms {
             actualHostsFileView.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(FastColoredTextBoxUtility.FastColoredTextBoxTextChanged);
         }
 
-        private void ActualHostsFile_Load(object sender, EventArgs e) {
+        void ActualHostsFile_Load(object sender, EventArgs e) {
             var hostsFile = new Fragment() { IsHostsFile = true };
             actualHostsFileView.Text = hostsFile.FileContents;
         }
 
-        private void actualHostsFileView_KeyPress(object sender, KeyPressEventArgs e) {
+        void actualHostsFileView_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == (char)Keys.Escape)
                 this.Close();
         }

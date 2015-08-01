@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 namespace VigilantCupcake.ViewExtensions {
 
     public static class FastColoredTextBoxUtility {
-        private static TextStyle _commentStyle = new TextStyle(Brushes.DimGray, null, FontStyle.Regular);
-        private static TextStyle _conflictStyle = new TextStyle(Brushes.White, Brushes.Red, FontStyle.Regular);
+        static readonly TextStyle _commentStyle = new TextStyle(Brushes.DimGray, null, FontStyle.Regular);
+        static readonly TextStyle _conflictStyle = new TextStyle(Brushes.White, Brushes.Red, FontStyle.Regular);
 
         public static Dictionary<string, List<string>> Collisions { get; set; }
 
@@ -20,7 +20,7 @@ namespace VigilantCupcake.ViewExtensions {
             if (fctb != null) setStyles(fctb.Range);
         }
 
-        private static void setStyles(FastColoredTextBoxNS.Range range) {
+        static void setStyles(FastColoredTextBoxNS.Range range) {
             if (range == null || string.IsNullOrEmpty(range.Text)) return;
             range.ClearStyle(_conflictStyle, _commentStyle);
 

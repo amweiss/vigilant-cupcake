@@ -13,7 +13,7 @@ using VigilantCupcake.ViewExtensions;
 namespace VigilantCupcake.Controls {
 
     public partial class FragmentTreeView : TreeViewAdv {
-        private FragmentBrowserModel _model = null;
+        FragmentBrowserModel _model = null;
 
         public FragmentTreeView() {
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime) _model = new FragmentBrowserModel(LocalFiles.BaseDirectory);
@@ -87,12 +87,12 @@ namespace VigilantCupcake.Controls {
             }
         }
 
-        private void _treeModel_NodesChanged(object sender, TreeModelEventArgs e) {
+        void _treeModel_NodesChanged(object sender, TreeModelEventArgs e) {
             var node = (FragmentNode)e.Children[0];
             node.Text = node.Text.AsFileName();
         }
 
-        private void createNewNode(bool isFragment, string text = null, string remote = null, bool selectNode = true) {
+        void createNewNode(bool isFragment, string text = null, string remote = null, bool selectNode = true) {
             var selectedNode = (SelectedNode != null) ? (FragmentNode)SelectedNode.Tag : (FragmentNode)Root.Children[0].Tag;
             var directoryNode = selectedNode.IsLeaf ? selectedNode.Parent : selectedNode;
             var treeNode = new FragmentNode();
@@ -125,7 +125,7 @@ namespace VigilantCupcake.Controls {
             }
         }
 
-        private void downloadFragmentToolStripMenuItem_Click(object sender, EventArgs e) {
+        void downloadFragmentToolStripMenuItem_Click(object sender, EventArgs e) {
             if (SelectedNode != null) {
                 var selectedNode = (FragmentNode)SelectedNode.Tag;
                 if (selectedNode != null && selectedNode.Fragment != null) {
@@ -134,7 +134,7 @@ namespace VigilantCupcake.Controls {
             }
         }
 
-        private void fragmentListContextMenu_Opening(object sender, CancelEventArgs e) {
+        void fragmentListContextMenu_Opening(object sender, CancelEventArgs e) {
             if (SelectedNode != null) {
                 var selectedNode = (FragmentNode)SelectedNode.Tag;
                 if (selectedNode == null) return;
@@ -146,18 +146,18 @@ namespace VigilantCupcake.Controls {
             }
         }
 
-        private void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
+        void fragmentListContextMenuDelete_Click(object sender, EventArgs e) {
             if (Prompts.confirmAndDelete(SelectedNode.Tag as FragmentNode) == DialogResult.Yes) {
                 if (SelectedNode != null)
                     (SelectedNode.Tag as FragmentNode).Parent = null;
             }
         }
 
-        private void menuNewFolder_Click(object sender, EventArgs e) {
+        void menuNewFolder_Click(object sender, EventArgs e) {
             createNewDirectory();
         }
 
-        private void menuNewFragment_Click(object sender, EventArgs e) {
+        void menuNewFragment_Click(object sender, EventArgs e) {
             createNewFragment();
         }
     }

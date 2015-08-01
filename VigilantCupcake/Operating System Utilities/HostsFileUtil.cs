@@ -3,7 +3,7 @@ using System.IO;
 
 namespace VigilantCupcake.OperatingSystemUtilities {
 
-    internal static class HostsFileUtil {
+    static class HostsFileUtil {
 
         public static string CurrentHostsFile {
             get {

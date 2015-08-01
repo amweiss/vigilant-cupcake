@@ -9,8 +9,8 @@ namespace VigilantCupcake.OperatingSystemUtilities {
         public static readonly int WM_SHOWFIRSTINSTANCE =
             NativeMethods.RegisterWindowMessage("WM_SHOWFIRSTINSTANCE|{0}", _attribute);
 
-        private static string _attribute = ((GuidAttribute)typeof(Program).Assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0]).Value;
-        private static Mutex mutex;
+        static string _attribute = ((GuidAttribute)typeof(Program).Assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0]).Value;
+        static Mutex mutex;
 
         static public void ShowFirstInstance() {
             NativeMethods.PostMessage(

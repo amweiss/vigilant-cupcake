@@ -42,7 +42,7 @@ namespace VigilantCupcake.SubForms {
 
         #endregion Assembly Attribute Accessors
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             this.linkLabel1.LinkVisited = true;
             System.Diagnostics.Process.Start(Properties.Settings.Default.WebsiteUrl);
         }

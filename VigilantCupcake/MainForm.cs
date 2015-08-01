@@ -16,14 +16,14 @@ using VigilantCupcake.ViewExtensions;
 namespace VigilantCupcake {
 
     public partial class MainForm : Form {
-        private AboutBox _aboutBox = new AboutBox();
-        private ActualHostsFile _currentHostsForm = new ActualHostsFile();
-        private HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
-        private Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
-        private bool _reallyClose = false;
-        private Fragment _selectedFragment = null;
+        AboutBox _aboutBox = new AboutBox();
+        readonly ActualHostsFile _currentHostsForm = new ActualHostsFile();
+        HostfileRecordCombiner _hostfileRecordCombiner = new HostfileRecordCombiner();
+        Fragment _newHostsFile = new Fragment() { IsHostsFile = true };
+        bool _reallyClose = false;
+        Fragment _selectedFragment = null;
 
-        private Label loadingLabel = new Label() {
+        Label loadingLabel = new Label() {
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleCenter,
             Dock = DockStyle.Fill,
@@ -55,20 +55,20 @@ namespace VigilantCupcake {
             base.WndProc(ref m);
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+        void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
             _aboutBox.ShowDialog();
         }
 
-        private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
+        void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
             fragmentTreeView.Model.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
         }
 
-        private void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             UserConfig.Instance.CloseToTray = closeToTrayToolStripMenuItem.Checked;
         }
 
-        private void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             UserConfig.Instance.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
             backgroundDownloadTimer.Enabled = UserConfig.Instance.DownloadInBackground;
 
@@ -78,16 +78,16 @@ namespace VigilantCupcake {
             }
         }
 
-        private void exit_Click(object sender, EventArgs e) {
+        void exit_Click(object sender, EventArgs e) {
             _reallyClose = true;
             Close();
         }
 
-        private void flushDns_Click(object sender, EventArgs e) {
+        void flushDns_Click(object sender, EventArgs e) {
             OperatingSystemUtilities.DnsUtility.FlushDns();
         }
 
-        private void fragmentDownloadEnding(object sender, EventArgs e) {
+        void fragmentDownloadEnding(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && !fragment.DownloadPending) {
                 tableLayoutPanel2.BeginInvokeIfRequired(() => {
@@ -99,7 +99,7 @@ namespace VigilantCupcake {
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (fragmentTreeView.Model.Fragments.Any(f => f.DownloadPending)));
         }
 
-        private void fragmentDownloadStarting(object sender, EventArgs e) {
+        void fragmentDownloadStarting(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
             if (fragment == _selectedFragment && fragment.DownloadPending) {
                 tableLayoutPanel2.BeginInvokeIfRequired(() => {
@@ -111,7 +111,7 @@ namespace VigilantCupcake {
             downloadingLabel.BeginInvokeIfRequired(() => downloadingLabel.Visible = (fragmentTreeView.Model.Fragments.Any(f => f.DownloadPending)));
         }
 
-        private void fragmentPropertyChanged(object sender, PropertyChangedEventArgs e) {
+        void fragmentPropertyChanged(object sender, PropertyChangedEventArgs e) {
             var fragment = (Fragment)sender;
             switch (e.PropertyName) {
                 case "RemoteLocation":
@@ -134,17 +134,15 @@ namespace VigilantCupcake {
                     if (fragment == _selectedFragment)
                         updateCurrentFragmentView();
                     break;
-
-                default: break;
             }
         }
 
-        private void fragmentSearchTextChanged(object sender, EventArgs e) {
+        void fragmentSearchTextChanged(object sender, EventArgs e) {
             fragmentTreeView.Model.Filter = fragmentFilter.Text;
             fragmentTreeView.ExpandAll();
         }
 
-        private void loadFragments() {
+        void loadFragments() {
             if (fragmentTreeView.Model.Fragments.Count() == 0) {
                 var treeNode = new FragmentNode() { Text = "Existing Hosts" };
                 var currentHosts = new Fragment() { Name = treeNode.Text };
@@ -165,7 +163,7 @@ namespace VigilantCupcake {
             });
         }
 
-        private void loadUserSettings() {
+        void loadUserSettings() {
             saveOnProgramStartToolStripMenuItem.Checked = UserConfig.Instance.AutoSaveOnStartup;
             closeToTrayToolStripMenuItem.Checked = UserConfig.Instance.CloseToTray;
             syncEnabledToolStripMenuItem.Checked = UserConfig.Instance.DownloadInBackground;
@@ -174,12 +172,12 @@ namespace VigilantCupcake {
             backgroundDownloadTimer.Interval = UserConfig.Instance.SecondsBetweenBackgroundDownloads;
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
+        void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
             savePreferences();
             OperatingSystemUtilities.DnsUtility.FlushDns();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+        void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             if (UserConfig.Instance.CloseToTray && !_reallyClose) {
                 notifyIcon1.Visible = true;
                 Hide();
@@ -209,22 +207,22 @@ namespace VigilantCupcake {
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e) {
+        void MainForm_Load(object sender, EventArgs e) {
             loadFragments();
             if (UserConfig.Instance.AutoSaveOnStartup) saveAll();
 
             updateCheckTimer_Tick(null, null);
         }
 
-        private void menuNewFolder_Click(object sender, System.EventArgs e) {
+        void menuNewFolder_Click(object sender, System.EventArgs e) {
             fragmentTreeView.createNewDirectory();
         }
 
-        private void menuNewFragment_Click(object sender, System.EventArgs e) {
+        void menuNewFragment_Click(object sender, System.EventArgs e) {
             fragmentTreeView.createNewFragment();
         }
 
-        private void Model_NodesInserted(object sender, TreeModelEventArgs e) {
+        void Model_NodesInserted(object sender, TreeModelEventArgs e) {
             var changedNode = fragmentTreeView.Model.FindNode(e.Path);
             if (changedNode != null && changedNode.Fragment != null) {
                 changedNode.Fragment.PropertyChanged += fragmentPropertyChanged;
@@ -233,14 +231,14 @@ namespace VigilantCupcake {
             }
         }
 
-        private void newHostFilterBox_TextChanged(object sender, EventArgs e) {
+        void newHostFilterBox_TextChanged(object sender, EventArgs e) {
             UserConfig.Instance.NewHostsFilter = newHostFilterBox.Text;
             _hostfileRecordCombiner.Filter = UserConfig.Instance.NewHostsFilter;
             updateHostsFileView();
             updateCurrentFragmentView();
         }
 
-        private void newHostsAnalysisToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        void newHostsAnalysisToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             UserConfig.Instance.NewHostsAnalysis = newHostsAnalysisToolStripMenuItem.Checked;
 
             newHostFilterBox.Enabled = newHostsAnalysisToolStripMenuItem.Checked;
@@ -249,31 +247,32 @@ namespace VigilantCupcake {
             updateCurrentFragmentView();
         }
 
-        private void remoteUrlView_TextChanged(object sender, EventArgs e) {
+        void remoteUrlView_TextChanged(object sender, EventArgs e) {
             if (_selectedFragment != null) {
                 _selectedFragment.RemoteLocation = remoteUrlView.Text;
             }
         }
 
-        private void save_Click(object sender, EventArgs e) {
+        void save_Click(object sender, EventArgs e) {
             saveAll();
         }
 
-        private void saveAll() {
+        void saveAll() {
             try {
                 fragmentTreeView.Model.SaveAll();
                 _newHostsFile.Save();
                 OperatingSystemUtilities.DnsUtility.FlushDns();
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             UserConfig.Instance.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
         }
 
-        private void savePreferences() {
+        void savePreferences() {
             UserConfig.Instance.SelectedFiles = new List<string>();
             if (fragmentTreeView.Model != null && fragmentTreeView.Model.Root.Nodes.Count() > 0) {
                 var paths = fragmentTreeView.Model.Fragments.Where(x => x.Enabled).Select(x => x.FullPath).ToArray();
@@ -282,16 +281,16 @@ namespace VigilantCupcake {
             UserConfig.Instance.Save();
         }
 
-        private void showMainForm(object sender, EventArgs e) {
+        void showMainForm(object sender, EventArgs e) {
             ShowWindow();
         }
 
-        private void ShowWindow() {
+        void ShowWindow() {
             notifyIcon1.Visible = false;
             NativeMethods.ShowToFront(this.Handle);
         }
 
-        private void syncDuration_CheckedChanged(object sender, EventArgs e) {
+        void syncDuration_CheckedChanged(object sender, EventArgs e) {
             var item = (ToolStripMenuItem)sender;
             if (item.Checked) {
                 UserConfig.Instance.SecondsBetweenBackgroundDownloads = int.Parse(item.Tag.ToString());
@@ -300,14 +299,15 @@ namespace VigilantCupcake {
             }
         }
 
-        private void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
+        void triStateTreeView1_DragDrop(object sender, DragEventArgs e) {
             var nodeBeingDragged = (TreeNodeAdv)e.Data.GetData(typeof(TreeNodeAdv));
             var fragmentNode = nodeBeingDragged.Tag as FragmentNode;
             var dropNode = fragmentTreeView.DropPosition.Node.Tag as FragmentNode;
             if (!dropNode.IsLeaf) {
                 fragmentNode.Parent = dropNode;
                 fragmentTreeView.DropPosition.Node.IsExpanded = true;
-            } else {
+            }
+            else {
                 var parent = dropNode.Parent;
                 var nextItem = dropNode;
                 if (fragmentTreeView.DropPosition.Position == NodePosition.After)
@@ -326,22 +326,23 @@ namespace VigilantCupcake {
             if (fragmentNode.Fragment != null) fragmentNode.Fragment.RootPath = (fragmentNode.Parent).FilePath;
         }
 
-        private void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
+        void triStateTreeView1_DragOver(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(typeof(TreeNodeAdv))
                 && fragmentTreeView.DropPosition.Node != null
                 && fragmentTreeView.DropPosition.Node.Tag is FragmentNode
                 && fragmentTreeView.DropPosition.Position != NodePosition.Before) {
                 e.Effect = e.AllowedEffect;
-            } else {
+            }
+            else {
                 e.Effect = DragDropEffects.None;
             }
         }
 
-        private void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
+        void triStateTreeView1_ItemDrag(object sender, ItemDragEventArgs e) {
             DoDragDrop(fragmentTreeView.SelectedNode, DragDropEffects.Move);
         }
 
-        private void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
+        void triStateTreeView1_SelectionChanged(object sender, EventArgs e) {
             _selectedFragment = null;
             if (fragmentTreeView.SelectedNode != null && fragmentTreeView.SelectedNode.Tag is FragmentNode) {
                 var node = (FragmentNode)fragmentTreeView.SelectedNode.Tag;
@@ -358,14 +359,16 @@ namespace VigilantCupcake {
                 currentFragmentView.Text = string.Empty;
                 remoteUrlView.Text = string.Empty;
                 remoteUrlView.Enabled = false;
-            } else {
+            }
+            else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
                 remoteUrlView.Text = _selectedFragment.RemoteLocation;
                 if (_selectedFragment.DownloadPending) {
                     tableLayoutPanel2.Controls.Add(loadingLabel, 0, 2);
                     tableLayoutPanel2.Controls.Remove(currentFragmentView);
                     tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
-                } else if (!_selectedFragment.DownloadPending) {
+                }
+                else if (!_selectedFragment.DownloadPending) {
                     tableLayoutPanel2.BeginInvokeIfRequired(() => {
                         tableLayoutPanel2.Controls.Remove(loadingLabel);
                         tableLayoutPanel2.Controls.Add(currentFragmentView, 0, 2);
@@ -379,7 +382,7 @@ namespace VigilantCupcake {
             updateCurrentFragmentView();
         }
 
-        private async void updateCheckTimer_Tick(object sender, EventArgs e) {
+        async void updateCheckTimer_Tick(object sender, EventArgs e) {
             await Task.Factory.StartNew(async () => {
                 using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId)) {
                     bool ignoreDeltaUpdates = false;
@@ -392,7 +395,8 @@ namespace VigilantCupcake {
                         await mgr.DownloadReleases(updateInfo.ReleasesToApply);
                         await mgr.ApplyReleases(updateInfo);
                         await mgr.CreateUninstallerRegistryEntry();
-                    } catch (Exception) {
+                    }
+                    catch (Exception) {
                         if (ignoreDeltaUpdates == false) {
                             ignoreDeltaUpdates = true;
                             goto retry;
@@ -404,14 +408,15 @@ namespace VigilantCupcake {
                         var showNotification = (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
                         toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = showNotification);
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
-                    } else {
+                    }
+                    else {
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = "Error finding latest version");
                     }
                 }
             });
         }
 
-        private void updateCurrentFragmentView() {
+        void updateCurrentFragmentView() {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
@@ -419,7 +424,7 @@ namespace VigilantCupcake {
             }
         }
 
-        private void updateHostsFileView() {
+        void updateHostsFileView() {
             var text = new List<string>();
 
             if (fragmentTreeView.Model.Fragments.Count() > 0) {
@@ -434,19 +439,20 @@ namespace VigilantCupcake {
                     var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
                     newHosts = string.Join(Environment.NewLine, result);
                     FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
-                } else {
+                }
+                else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 }
 
                 _newHostsFile.FileContents = newHosts;
-                hostsFileView.BeginInvokeIfRequired(() => hostsFileView.RefreshStyles());
+                hostsFileView.BeginInvokeIfRequired(hostsFileView.RefreshStyles);
                 newHostsLabel.BeginInvokeIfRequired(() =>
                     newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty) + ((_hostfileRecordCombiner.Collisions != null && _hostfileRecordCombiner.Collisions.Keys.Count > 0) ? " (Conflicts in red)" : string.Empty)
                 );
             }
         }
 
-        private void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
+        void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
             _currentHostsForm.ShowDialog();
         }
     }

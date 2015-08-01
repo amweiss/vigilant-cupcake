@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace VigilantCupcake.OperatingSystemUtilities {
 
     //From: http://www.codeproject.com/Articles/32908/C-Single-Instance-App-With-the-Ability-To-Restore
-    static internal class NativeMethods {
+    static class NativeMethods {
         public const int HWND_BROADCAST = 0xffff;
 
         public const int SW_SHOWNORMAL = 1;
