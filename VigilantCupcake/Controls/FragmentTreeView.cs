@@ -160,5 +160,48 @@ namespace VigilantCupcake.Controls {
         void menuNewFragment_Click(object sender, EventArgs e) {
             createNewFragment();
         }
+
+        void fragmentTreeView_DragDrop(object sender, DragEventArgs e) {
+            var nodeBeingDragged = (TreeNodeAdv)e.Data.GetData(typeof(TreeNodeAdv));
+            var fragmentNode = nodeBeingDragged.Tag as FragmentNode;
+            var dropNode = DropPosition.Node.Tag as FragmentNode;
+            if (!dropNode.IsLeaf) {
+                fragmentNode.Parent = dropNode;
+                DropPosition.Node.IsExpanded = true;
+            }
+            else {
+                var parent = dropNode.Parent;
+                var nextItem = dropNode;
+                if (DropPosition.Position == NodePosition.After)
+                    nextItem = dropNode.NextNode;
+
+                fragmentNode.Parent = null;
+
+                var index = parent.Nodes.IndexOf(nextItem);
+                if (index == -1)
+                    parent.Nodes.Add(fragmentNode);
+                else {
+                    parent.Nodes.Insert(index, fragmentNode);
+                }
+            }
+
+            if (fragmentNode.Fragment != null) fragmentNode.Fragment.RootPath = (fragmentNode.Parent).FilePath;
+        }
+
+        void fragmentTreeView_DragOver(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(typeof(TreeNodeAdv))
+                && DropPosition.Node != null
+                && DropPosition.Node.Tag is FragmentNode
+                && DropPosition.Position != NodePosition.Before) {
+                e.Effect = e.AllowedEffect;
+            }
+            else {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        void fragmentTreeView_ItemDrag(object sender, ItemDragEventArgs e) {
+            DoDragDrop(SelectedNode, DragDropEffects.Move);
+        }
     }
 }

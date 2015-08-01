@@ -140,6 +140,9 @@
             this.NodeControls.Add(this.nodeStateIcon1);
             this.NodeControls.Add(this.nodeTextBox1);
             this.Size = new System.Drawing.Size(120, 240);
+            this.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.fragmentTreeView_ItemDrag);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.fragmentTreeView_DragDrop);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.fragmentTreeView_DragOver);
             this.fragmentListContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
