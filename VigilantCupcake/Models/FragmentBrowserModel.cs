@@ -56,9 +56,7 @@ namespace VigilantCupcake.Models {
             return directoryNode;
         }
 
-        void DoSaveAll() {
-            Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
-        }
+        void DoSaveAll() => Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
 
         IEnumerable<FragmentNode> GetAllNodesRecursively(FragmentNode subnode) {
             yield return subnode;

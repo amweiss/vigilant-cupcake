@@ -96,11 +96,7 @@ namespace VigilantCupcake.Models {
 
         public string Name {
             get {
-                if (!IsHostsFile) {
-                    return _name;
-                } else {
-                    return "hosts";
-                }
+                return (!IsHostsFile) ? _name : "hosts";
             }
             set {
                 value = value.AsFileName();
@@ -212,7 +208,7 @@ namespace VigilantCupcake.Models {
             if (value != null) {
                 return value.StartsWith(Properties.Settings.Default.RemoteLocationSyntax, StringComparison.Ordinal);
             } else {
-                throw new ArgumentException("value is null");
+                throw new ArgumentException(nameof(value));
             }
         }
 
@@ -235,23 +231,15 @@ namespace VigilantCupcake.Models {
         }
 
         protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected virtual void OnContentsDownloaded(EventArgs e) {
-            EventHandler handler = ContentsDownloaded;
-            if (handler != null) {
-                handler(this, e);
-            }
+            ContentsDownloaded?.Invoke(this, e);
         }
 
         protected virtual void OnDownloadStarting(EventArgs e) {
-            EventHandler handler = DownloadStarting;
-            if (handler != null) {
-                handler(this, e);
-            }
+            DownloadStarting?.Invoke(this, e);
         }
     }
 }

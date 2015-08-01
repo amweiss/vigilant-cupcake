@@ -14,8 +14,6 @@ namespace VigilantCupcake.Models {
         string _text;
         int _updatingNodes = 0;
 
-        #region NodeCollection
-
         public class FragmentNodeCollection : Collection<FragmentNode> {
             FragmentNode _owner;
 
@@ -63,22 +61,12 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        #endregion NodeCollection
-
-        #region Properties
-
-        FilterableTreeModel _model;
         FragmentNodeCollection _nodes;
 
         FragmentNode _parent;
 
         public int Index {
-            get {
-                if (_parent != null)
-                    return _parent.Nodes.IndexOf(this);
-                else
-                    return -1;
-            }
+            get { return (_parent != null) ? _parent.Nodes.IndexOf(this) : -1; }
         }
 
         public bool IsChecked {
@@ -127,12 +115,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        internal FilterableTreeModel Model {
-            get { return _model; }
-            set { _model = value; }
-        }
-
-        #endregion Properties
+        internal FilterableTreeModel Model { get; set; }
 
         public FragmentNode()
             : this(string.Empty) {
@@ -145,15 +128,11 @@ namespace VigilantCupcake.Models {
 
         public CheckState CheckState {
             get { return _checkState; }
-            set {
-                UpdateCheckState(value, true);
-            }
+            set { UpdateCheckState(value, true); }
         }
 
         public string FilePath {
-            get {
-                return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath);
-            }
+            get { return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath); }
         }
 
         public Fragment Fragment {
@@ -170,11 +149,7 @@ namespace VigilantCupcake.Models {
 
         public string FullPath {
             get {
-                if (Parent == null || Parent.Parent == null) {
-                    return Text;
-                } else {
-                    return Parent.FullPath + '\\' + Text;
-                }
+                return (Parent == null || Parent.Parent == null) ? Text : Parent.FullPath + '\\' + Text;
             }
         }
 

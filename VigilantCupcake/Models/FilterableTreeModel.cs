@@ -19,12 +19,7 @@ namespace VigilantCupcake.Models {
             get { return _root; }
         }
 
-        public FragmentNode FindNode(TreePath path) {
-            if (path == null || path.IsEmpty())
-                return _root;
-            else
-                return FindNode(_root, path, 0);
-        }
+        public FragmentNode FindNode(TreePath path) => (path == null || path.IsEmpty()) ? _root : FindNode(_root, path, 0);
 
         public TreePath GetPath(FragmentNode node) {
             if (node == _root)
@@ -89,22 +84,17 @@ namespace VigilantCupcake.Models {
         }
 
         internal void OnNodeInserted(FragmentNode parent, int index, FragmentNode node) {
-            if (NodesInserted != null) {
-                var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
-                NodesInserted(this, args);
-            }
+            var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+            NodesInserted?.Invoke(this, args);
         }
 
         internal void OnNodeRemoved(FragmentNode parent, int index, FragmentNode node) {
-            if (NodesRemoved != null) {
-                var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
-                NodesRemoved(this, args);
-            }
+            var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+            NodesRemoved?.Invoke(this, args);
         }
 
         internal void OnNodesChanged(TreeModelEventArgs args) {
-            if (NodesChanged != null)
-                NodesChanged(this, args);
+            NodesChanged?.Invoke(this, args);
         }
 
         #endregion ITreeModel Members
