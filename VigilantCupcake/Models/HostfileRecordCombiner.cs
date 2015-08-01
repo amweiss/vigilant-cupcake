@@ -6,7 +6,6 @@ namespace VigilantCupcake.Models {
 
     //TODO: Cleanup
     public class HostfileRecordCombiner {
-
         public Dictionary<string, List<string>> Collisions { get; private set; }
 
         public string Filter { get; set; }
@@ -60,8 +59,7 @@ namespace VigilantCupcake.Models {
                             if (!Collisions[host].Contains(splittedRecord.Ip)) {
                                 Collisions[host].Add(splittedRecord.Ip);
                             }
-                        }
-                        else {
+                        } else {
                             var collisionList = new List<string>();
                             collisionList.Add(splittedRecord.Ip);
                             collisionList.AddRange(HostToIpMapping[host]);
@@ -73,8 +71,7 @@ namespace VigilantCupcake.Models {
                         if (!IpToHostMapping[splittedRecord.Ip].Contains(host)) {
                             IpToHostMapping[splittedRecord.Ip].Add(host);
                         }
-                    }
-                    else {
+                    } else {
                         var hostToAdd = new List<string>();
                         hostToAdd.Add(host);
                         IpToHostMapping.Add(splittedRecord.Ip, hostToAdd);
@@ -84,8 +81,7 @@ namespace VigilantCupcake.Models {
                         if (!HostToIpMapping[host].Contains(splittedRecord.Ip)) {
                             HostToIpMapping[host].Add(splittedRecord.Ip);
                         }
-                    }
-                    else {
+                    } else {
                         var ipToAdd = new List<string>();
                         ipToAdd.Add(splittedRecord.Ip);
                         HostToIpMapping.Add(host, ipToAdd);

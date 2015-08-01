@@ -250,8 +250,7 @@ namespace VigilantCupcake.Models {
                     if (Nodes.Count > 0 && _checkState != CheckState.Indeterminate) {
                         Nodes.ToList().ForEach(n => ((FragmentNode)n).UpdateCheckState(_checkState));
                     }
-                }
-                catch (ArgumentOutOfRangeException) {
+                } catch (ArgumentOutOfRangeException) {
                     //TODO: Deal with the fact that checking the boxes on directories while filtering doesn't work
                 }
 

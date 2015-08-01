@@ -25,8 +25,7 @@ namespace VigilantCupcake {
             try {
                 var mainForm = new MainForm();
                 Application.Run(mainForm);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 MessageBox.Show(e.Message);
             }
 

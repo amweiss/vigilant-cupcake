@@ -262,8 +262,7 @@ namespace VigilantCupcake {
                 fragmentTreeView.Model.SaveAll();
                 _newHostsFile.Save();
                 OperatingSystemUtilities.DnsUtility.FlushDns();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -316,16 +315,14 @@ namespace VigilantCupcake {
                 currentFragmentView.Text = string.Empty;
                 remoteUrlView.Text = string.Empty;
                 remoteUrlView.Enabled = false;
-            }
-            else {
+            } else {
                 selectedFragmentBindingSource.DataSource = _selectedFragment;
                 remoteUrlView.Text = _selectedFragment.RemoteLocation;
                 if (_selectedFragment.DownloadPending) {
                     tableLayoutPanel2.Controls.Add(loadingLabel, 0, 2);
                     tableLayoutPanel2.Controls.Remove(currentFragmentView);
                     tableLayoutPanel2.SetColumnSpan(loadingLabel, 2);
-                }
-                else if (!_selectedFragment.DownloadPending) {
+                } else if (!_selectedFragment.DownloadPending) {
                     tableLayoutPanel2.BeginInvokeIfRequired(() => {
                         tableLayoutPanel2.Controls.Remove(loadingLabel);
                         tableLayoutPanel2.Controls.Add(currentFragmentView, 0, 2);
@@ -352,8 +349,7 @@ namespace VigilantCupcake {
                         await mgr.DownloadReleases(updateInfo.ReleasesToApply);
                         await mgr.ApplyReleases(updateInfo);
                         await mgr.CreateUninstallerRegistryEntry();
-                    }
-                    catch (Exception) {
+                    } catch (Exception) {
                         if (ignoreDeltaUpdates == false) {
                             ignoreDeltaUpdates = true;
                             goto retry;
@@ -365,8 +361,7 @@ namespace VigilantCupcake {
                         var showNotification = (updateInfo.FutureReleaseEntry.Version > updateInfo.CurrentlyInstalledVersion.Version);
                         toolStripContainer2.BeginInvokeIfRequired(() => updateNotification.Visible = showNotification);
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = updateInfo.FutureReleaseEntry.Version.ToString());
-                    }
-                    else {
+                    } else {
                         _aboutBox.BeginInvokeIfRequired(() => _aboutBox.LatestVersionText = "Error finding latest version");
                     }
                 }
@@ -396,8 +391,7 @@ namespace VigilantCupcake {
                     var result = _hostfileRecordCombiner.GenerateOutput(blob.Split(Environment.NewLine.ToArray()));
                     newHosts = string.Join(Environment.NewLine, result);
                     FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
-                }
-                else {
+                } else {
                     newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
                 }
 

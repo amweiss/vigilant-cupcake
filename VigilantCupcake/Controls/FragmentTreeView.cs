@@ -168,8 +168,7 @@ namespace VigilantCupcake.Controls {
             if (!dropNode.IsLeaf) {
                 fragmentNode.Parent = dropNode;
                 DropPosition.Node.IsExpanded = true;
-            }
-            else {
+            } else {
                 var parent = dropNode.Parent;
                 var nextItem = dropNode;
                 if (DropPosition.Position == NodePosition.After)
@@ -194,8 +193,7 @@ namespace VigilantCupcake.Controls {
                 && DropPosition.Node.Tag is FragmentNode
                 && DropPosition.Position != NodePosition.Before) {
                 e.Effect = e.AllowedEffect;
-            }
-            else {
+            } else {
                 e.Effect = DragDropEffects.None;
             }
         }
