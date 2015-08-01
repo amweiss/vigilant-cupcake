@@ -27,7 +27,7 @@ namespace VigilantCupcake {
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleCenter,
             Dock = DockStyle.Fill,
-            Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+            Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
             Text = "Loading..."
         };
 
@@ -55,18 +55,14 @@ namespace VigilantCupcake {
             base.WndProc(ref m);
         }
 
-        void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            _aboutBox.ShowDialog();
-        }
+        void aboutToolStripMenuItem_Click(object sender, EventArgs e) => _aboutBox.ShowDialog();
 
         void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
             fragmentTreeView.Model.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
         }
 
-        void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            UserConfig.Instance.CloseToTray = closeToTrayToolStripMenuItem.Checked;
-        }
+        void closeToTrayToolStripMenuItem_CheckedChanged(object sender, EventArgs e) => UserConfig.Instance.CloseToTray = closeToTrayToolStripMenuItem.Checked;
 
         void enabledToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             UserConfig.Instance.DownloadInBackground = syncEnabledToolStripMenuItem.Checked;
@@ -83,9 +79,7 @@ namespace VigilantCupcake {
             Close();
         }
 
-        void flushDns_Click(object sender, EventArgs e) {
-            OperatingSystemUtilities.DnsUtility.FlushDns();
-        }
+        void flushDns_Click(object sender, EventArgs e) => DnsUtility.FlushDns();
 
         void fragmentDownloadEnding(object sender, EventArgs e) {
             var fragment = (Fragment)sender;
@@ -174,7 +168,7 @@ namespace VigilantCupcake {
 
         void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
             savePreferences();
-            OperatingSystemUtilities.DnsUtility.FlushDns();
+            DnsUtility.FlushDns();
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -214,17 +208,13 @@ namespace VigilantCupcake {
             updateCheckTimer_Tick(null, null);
         }
 
-        void menuNewFolder_Click(object sender, System.EventArgs e) {
-            fragmentTreeView.createNewDirectory();
-        }
+        void menuNewFolder_Click(object sender, EventArgs e) => fragmentTreeView.createNewDirectory();
 
-        void menuNewFragment_Click(object sender, System.EventArgs e) {
-            fragmentTreeView.createNewFragment();
-        }
+        void menuNewFragment_Click(object sender, EventArgs e) => fragmentTreeView.createNewFragment();
 
         void Model_NodesInserted(object sender, TreeModelEventArgs e) {
             var changedNode = fragmentTreeView.Model.FindNode(e.Path);
-            if (changedNode != null && changedNode.Fragment != null) {
+            if (changedNode?.Fragment != null) {
                 changedNode.Fragment.PropertyChanged += fragmentPropertyChanged;
                 changedNode.Fragment.DownloadStarting += fragmentDownloadStarting;
                 changedNode.Fragment.ContentsDownloaded += fragmentDownloadEnding;
@@ -253,23 +243,19 @@ namespace VigilantCupcake {
             }
         }
 
-        void save_Click(object sender, EventArgs e) {
-            saveAll();
-        }
+        void save_Click(object sender, EventArgs e) => saveAll();
 
         void saveAll() {
             try {
                 fragmentTreeView.Model.SaveAll();
                 _newHostsFile.Save();
-                OperatingSystemUtilities.DnsUtility.FlushDns();
+                DnsUtility.FlushDns();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            UserConfig.Instance.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
-        }
+        void saveOnProgramStartToolStripMenuItem_CheckedChanged(object sender, EventArgs e) => UserConfig.Instance.AutoSaveOnStartup = saveOnProgramStartToolStripMenuItem.Checked;
 
         void savePreferences() {
             UserConfig.Instance.SelectedFiles = new List<string>();
@@ -280,9 +266,7 @@ namespace VigilantCupcake {
             UserConfig.Instance.Save();
         }
 
-        void showMainForm(object sender, EventArgs e) {
-            ShowWindow();
-        }
+        void showMainForm(object sender, EventArgs e) => ShowWindow();
 
         void ShowWindow() {
             notifyIcon1.Visible = false;
@@ -372,7 +356,7 @@ namespace VigilantCupcake {
             currentFragmentView.Enabled = _selectedFragment != null;
             remoteUrlView.Enabled = _selectedFragment != null;
             if (_selectedFragment != null) {
-                selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = "Selected Fragment" + ((_selectedFragment.Dirty) ? "*" : string.Empty));
+                selectedFragmentLabel.BeginInvokeIfRequired(() => selectedFragmentLabel.Text = $"Selected Fragment{(_selectedFragment.Dirty ? "*" : "")}");
             }
         }
 
@@ -392,19 +376,16 @@ namespace VigilantCupcake {
                     newHosts = string.Join(Environment.NewLine, result);
                     FastColoredTextBoxUtility.Collisions = _hostfileRecordCombiner.Collisions;
                 } else {
-                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : string.Empty;
+                    newHosts = (text.Count() > 0) ? text.Aggregate((agg, val) => agg + Environment.NewLine + val) : "";
                 }
 
                 _newHostsFile.FileContents = newHosts;
                 hostsFileView.BeginInvokeIfRequired(hostsFileView.RefreshStyles);
                 newHostsLabel.BeginInvokeIfRequired(() =>
-                    newHostsLabel.Text = "New Hosts" + ((_newHostsFile.Dirty) ? "*" : string.Empty) + ((_hostfileRecordCombiner.Collisions != null && _hostfileRecordCombiner.Collisions.Keys.Count > 0) ? " (Conflicts in red)" : string.Empty)
-                );
+                    newHostsLabel.Text = $"New Hosts{(_newHostsFile.Dirty ? "*" : "")} {(_hostfileRecordCombiner.Collisions != null && _hostfileRecordCombiner.Collisions.Keys.Count > 0 ? " (Conflicts in red)" : "")}");
             }
         }
 
-        void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) {
-            _currentHostsForm.ShowDialog();
-        }
+        void viewCurrentHostsToolStripMenuItem_Click(object sender, EventArgs e) => _currentHostsForm.ShowDialog();
     }
 }
