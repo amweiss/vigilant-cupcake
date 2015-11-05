@@ -91,6 +91,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundDownloadTimer = new System.Windows.Forms.Timer(this.components);
             this.updateCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.allowInvalidCertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -426,6 +427,7 @@
             this.currentFragmentView.CharWidth = 8;
             this.tableLayoutPanel2.SetColumnSpan(this.currentFragmentView, 2);
             this.currentFragmentView.CommentPrefix = "#";
+            this.currentFragmentView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.currentFragmentView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.selectedFragmentBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.currentFragmentView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.currentFragmentView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -521,6 +523,7 @@
             this.hostsFileView.CharWidth = 8;
             this.tableLayoutPanel3.SetColumnSpan(this.hostsFileView, 2);
             this.hostsFileView.CommentPrefix = "#";
+            this.hostsFileView.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.hostsFileView.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.hostsFileBindingSource, "FileContents", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.hostsFileView.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.hostsFileView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -622,6 +625,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveOnProgramStartToolStripMenuItem,
             this.newHostsAnalysisToolStripMenuItem,
+            this.allowInvalidCertToolStripMenuItem,
             this.closeToTrayToolStripMenuItem,
             this.syncronizeFragmentsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -827,6 +831,14 @@
             this.updateCheckTimer.Interval = global::VigilantCupcake.Properties.Settings.Default.UpdateCheckInterval;
             this.updateCheckTimer.Tick += new System.EventHandler(this.updateCheckTimer_Tick);
             // 
+            // allowInvalidCertToolStripMenuItem
+            // 
+            this.allowInvalidCertToolStripMenuItem.CheckOnClick = true;
+            this.allowInvalidCertToolStripMenuItem.Name = "allowInvalidCertToolStripMenuItem";
+            this.allowInvalidCertToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.allowInvalidCertToolStripMenuItem.Text = "Allow &Invalid Certificates";
+            this.allowInvalidCertToolStripMenuItem.CheckedChanged += new System.EventHandler(this.allowInvalidCertToolStripMenuItem_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -940,7 +952,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label newHostsLabel;
         private FastColoredTextBoxNS.FastColoredTextBox hostsFileView;
-
+        private System.Windows.Forms.ToolStripMenuItem allowInvalidCertToolStripMenuItem;
     }
 }
 

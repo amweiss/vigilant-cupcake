@@ -93,6 +93,14 @@ namespace VigilantCupcake {
             _aboutBox.ShowDialog();
         }
 
+        private void allowInvalidCertToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            UserConfig.Instance.AllowInvalidCertificates = allowInvalidCertToolStripMenuItem.Checked;
+
+            updateHostsFileView();
+            updateCurrentFragmentView();
+        }
+
         private void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
             _treeModel.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();

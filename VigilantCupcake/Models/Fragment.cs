@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,6 +29,8 @@ namespace VigilantCupcake.Models {
         public event EventHandler DownloadStarting;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private RemoteCertificateValidationCallback _allowInvalidCerts = (sender, cert, chain, sslPolicyErrors) => true;
 
         public bool Dirty {
             get { return _dirty; }
@@ -159,6 +163,12 @@ namespace VigilantCupcake.Models {
             OnDownloadStarting(EventArgs.Empty);
             var sb = new StringBuilder();
             try {
+                if (UserConfig.Instance.AllowInvalidCertificates){
+                    ServicePointManager.ServerCertificateValidationCallback = _allowInvalidCerts;
+                } else {
+                    ServicePointManager.ServerCertificateValidationCallback = null;
+                }
+
                 using (var client = new HttpClient()) {
                     var result = await client.GetStringAsync(RemoteLocation);
                     sb.Append(Regex.Replace(result, Regex.Escape(Properties.Settings.Default.LineCleaningRegex), Regex.Escape(Properties.Settings.Default.LineCleaningReplacement)));

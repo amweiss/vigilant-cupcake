@@ -21,6 +21,8 @@ namespace VigilantCupcake.Models {
 
         public static UserConfig Instance { get { return lazy.Value; } }
 
+        public bool AllowInvalidCertificates { get; set; }
+
         public bool AutoSaveOnStartup { get; set; }
 
         public bool CloseToTray { get; set; }
@@ -50,6 +52,7 @@ namespace VigilantCupcake.Models {
         }
 
         public void Reset() {
+            AllowInvalidCertificates = false;
             AutoSaveOnStartup = true;
             CloseToTray = false;
             DownloadInBackground = true;
