@@ -1,4 +1,4 @@
-version: 1.1.{build}
+version: {branch}+{build}
 os: Visual Studio 2015
 configuration: Release
 assembly_info:
@@ -20,7 +20,7 @@ artifacts:
 deploy:
 - provider: GitHub
   tag: 
-  description: Vigilant Cupcake Test
+  description: Vigilant Cupcake release
   auth_token:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
   on:
