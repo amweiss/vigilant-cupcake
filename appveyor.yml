@@ -8,13 +8,13 @@ install:
 - ps: >-
     $githubrelease = Invoke-RestMethod -Uri https://api.github.com/repos/amweiss/vigilant-cupcake/releases/latest?access_token=$env:GitHubToken | Select-Object -expand tag_name
 
-    $env:APPVEYOR_BUILD_VERSION = $githubrelease.TrimStart('v')
+    $env:LAST_RELEASE = $githubrelease.TrimStart('v')
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  assembly_version: '{LAST_RELEASE}'
+  assembly_file_version: '{LAST_RELEASE}'
+  assembly_informational_version: '{LAST_RELEASE}'
 before_build:
 - cmd: nuget restore
 after_build:
