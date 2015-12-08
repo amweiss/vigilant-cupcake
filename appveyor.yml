@@ -10,12 +10,13 @@ assembly_info:
 environment:
   GitHubToken:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
-install:
-- cmd: set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 before_build:
 - cmd: nuget restore
-before_deploy:
-- ps: .\squirrel.ps1
+after_build:
+- ps: ./squirrel.ps1
+artifacts:
+- path: Releases\*
+  name: releases
 deploy:
 - provider: GitHub
   tag: 
@@ -25,6 +26,3 @@ deploy:
   on:
     branch: /v?\d+\.\d+\.\d+/
     appveyor_repo_tag: true
-artifacts:
-  - path: 'Releases\*'
-    name: releases
