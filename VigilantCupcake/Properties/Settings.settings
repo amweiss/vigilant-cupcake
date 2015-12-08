@@ -39,7 +39,7 @@
       <Value Profile="(Default)">\r\n</Value>
     </Setting>
     <Setting Name="ReleasesUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://vigilantcupcake.com/Releases</Value>
+      <Value Profile="(Default)">https://github.com/amweiss/vigilant-cupcake</Value>
     </Setting>
     <Setting Name="NuspecId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">vigilantcupcake</Value>

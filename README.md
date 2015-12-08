@@ -4,7 +4,7 @@
 
 
 ##How to get it
-* Run from [here](http://vigilantcupcake.com/Releases/Setup.exe) to have it install the self-updating executable
+* Run Setup.exe from [here](https://github.com/amweiss/vigilant-cupcake/releases/latest) to have it install the self-updating executable
 
 ##What is it?
 Vigilant Cupcake is a tool to manage your hosts file.

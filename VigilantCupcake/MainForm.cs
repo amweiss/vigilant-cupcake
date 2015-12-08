@@ -329,7 +329,7 @@ namespace VigilantCupcake {
 
         async void updateCheckTimer_Tick(object sender, EventArgs e) {
             await Task.Factory.StartNew(async () => {
-                using (var mgr = new UpdateManager(Properties.Settings.Default.ReleasesUrl, Properties.Settings.Default.NuspecId)) {
+                using (var mgr = UpdateManager.GitHubUpdateManager(Properties.Settings.Default.ReleasesUrl).Result) {
                     bool ignoreDeltaUpdates = false;
 
                 retry:

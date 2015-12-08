@@ -190,3 +190,4 @@ ModelManifest.xml
 *.nupkg
 Releases/
 VigilantCupcake/vigilantcupcake/
+/.vs

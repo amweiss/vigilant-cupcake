@@ -133,7 +133,7 @@ namespace VigilantCupcake.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://vigilantcupcake.com/Releases")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/amweiss/vigilant-cupcake")]
         public string ReleasesUrl {
             get {
                 return ((string)(this["ReleasesUrl"]));
