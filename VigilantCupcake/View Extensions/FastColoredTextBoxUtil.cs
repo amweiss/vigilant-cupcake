@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace VigilantCupcake.ViewUtilities {
+namespace VigilantCupcake.ViewExtensions {
 
     public static class FastColoredTextBoxUtility {
-        private static TextStyle _commentStyle = new TextStyle(Brushes.DimGray, null, FontStyle.Regular);
-        private static TextStyle _conflictStyle = new TextStyle(Brushes.White, Brushes.Red, FontStyle.Regular);
+        static readonly TextStyle _commentStyle = new TextStyle(Brushes.DimGray, null, FontStyle.Regular);
+        static readonly TextStyle _conflictStyle = new TextStyle(Brushes.White, Brushes.Red, FontStyle.Regular);
 
         public static Dictionary<string, List<string>> Collisions { get; set; }
 
@@ -20,13 +20,11 @@ namespace VigilantCupcake.ViewUtilities {
             if (fctb != null) setStyles(fctb.Range);
         }
 
-        private static void setStyles(FastColoredTextBoxNS.Range range) {
+        static void setStyles(Range range) {
             if (range == null || string.IsNullOrEmpty(range.Text)) return;
             range.ClearStyle(_conflictStyle, _commentStyle);
 
-            if (Collisions != null
-                && Collisions.Keys != null
-                && Collisions.Keys.Count > 0) {
+            if (Collisions?.Keys?.Count > 0) {
                 Collisions.Keys.ToList().ForEach(x => {
                     var pattern = Regex.Escape(x);
                     range.SetStyle(_conflictStyle, @"(?<=[\s])" + pattern);

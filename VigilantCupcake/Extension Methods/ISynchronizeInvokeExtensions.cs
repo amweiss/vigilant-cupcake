@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace VigilantCupcake.ViewUtilities {
+namespace VigilantCupcake.ExtensionMethods {
 
-    internal static class ISynchronizeInvokeExtensions {
+    static class ISynchronizeInvokeExtensions {
 
         public static void BeginInvokeIfRequired(this ISynchronizeInvoke obj, MethodInvoker action) {
             if (obj.InvokeRequired) {

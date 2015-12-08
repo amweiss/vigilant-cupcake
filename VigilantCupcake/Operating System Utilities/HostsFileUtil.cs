@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
+using static VigilantCupcake.OperatingSystemUtilities.PlatformCheck;
 
 namespace VigilantCupcake.OperatingSystemUtilities {
 
-    internal static class HostsFileUtil {
+    static class HostsFileUtil {
 
         public static string CurrentHostsFile {
             get {
-                switch (OperatingSystemUtilities.PlatformCheck.RunningPlatform()) {
-                    case PlatformCheck.Platform.Windows: return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), Properties.Settings.Default.WindowsHostsFilePath);
+                switch (RunningPlatform()) {
+                    case Platform.Windows: return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), Properties.Settings.Default.WindowsHostsFilePath);
                     default: return Properties.Settings.Default.LinuxHostsFilePath;
                 }
             }

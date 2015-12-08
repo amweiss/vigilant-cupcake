@@ -6,7 +6,6 @@ namespace VigilantCupcake.Models {
 
     //TODO: Cleanup
     public class HostfileRecordCombiner {
-
         public Dictionary<string, List<string>> Collisions { get; private set; }
 
         public string Filter { get; set; }
@@ -30,13 +29,13 @@ namespace VigilantCupcake.Models {
             return results;
         }
 
-        private IEnumerable<string> filterHosts(IEnumerable<string> lines) {
+        IEnumerable<string> filterHosts(IEnumerable<string> lines) {
             if (lines == null || string.IsNullOrWhiteSpace(Filter)) return lines;
 
             return lines.Where(x => !Regex.IsMatch(x, Filter));
         }
 
-        private void GenerateMappingsFromMerged(string[] merged) {
+        void GenerateMappingsFromMerged(string[] merged) {
             foreach (string entry in merged) {
                 string trimmedEntry = entry.Trim();
 

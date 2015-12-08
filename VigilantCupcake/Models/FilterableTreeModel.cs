@@ -5,8 +5,8 @@ using System.Collections.Generic;
 namespace VigilantCupcake.Models {
 
     public class FilterableTreeModel : ITreeModel {
-        private string _filter = null;
-        private FragmentNode _root;
+        string _filter = null;
+        FragmentNode _root;
 
         public FilterableTreeModel() {
             _root = new FragmentNode();
@@ -19,18 +19,13 @@ namespace VigilantCupcake.Models {
             get { return _root; }
         }
 
-        public FragmentNode FindNode(TreePath path) {
-            if (path == null || path.IsEmpty())
-                return _root;
-            else
-                return FindNode(_root, path, 0);
-        }
+        public FragmentNode FindNode(TreePath path) => (path == null || path.IsEmpty()) ? _root : FindNode(_root, path, 0);
 
         public TreePath GetPath(FragmentNode node) {
             if (node == _root)
                 return TreePath.Empty;
             else {
-                Stack<object> stack = new Stack<object>();
+                var stack = new Stack<object>();
                 while (node != _root) {
                     stack.Push(node);
                     node = node.Parent;
@@ -39,7 +34,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private FragmentNode FindNode(FragmentNode root, TreePath path, int level) {
+        FragmentNode FindNode(FragmentNode root, TreePath path, int level) {
             foreach (FragmentNode node in root.Nodes)
                 if (node == path.FullPath[level]) {
                     if (level == path.FullPath.Length - 1)
@@ -89,22 +84,17 @@ namespace VigilantCupcake.Models {
         }
 
         internal void OnNodeInserted(FragmentNode parent, int index, FragmentNode node) {
-            if (NodesInserted != null) {
-                TreeModelEventArgs args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
-                NodesInserted(this, args);
-            }
+            var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+            NodesInserted?.Invoke(this, args);
         }
 
         internal void OnNodeRemoved(FragmentNode parent, int index, FragmentNode node) {
-            if (NodesRemoved != null) {
-                TreeModelEventArgs args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
-                NodesRemoved(this, args);
-            }
+            var args = new TreeModelEventArgs(GetPath(parent), new int[] { index }, new object[] { node });
+            NodesRemoved?.Invoke(this, args);
         }
 
         internal void OnNodesChanged(TreeModelEventArgs args) {
-            if (NodesChanged != null)
-                NodesChanged(this, args);
+            NodesChanged?.Invoke(this, args);
         }
 
         #endregion ITreeModel Members

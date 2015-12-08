@@ -8,16 +8,14 @@ using System.Windows.Forms;
 namespace VigilantCupcake.Models {
 
     public class FragmentNode {
-        private System.Windows.Forms.CheckState _checkState = System.Windows.Forms.CheckState.Unchecked;
-        private bool _firstUpdate = true;
-        private Fragment _fragment = null;
-        private string _text;
-        private int _updatingNodes = 0;
-
-        #region NodeCollection
+        CheckState _checkState = CheckState.Unchecked;
+        bool _firstUpdate = true;
+        Fragment _fragment = null;
+        string _text;
+        int _updatingNodes = 0;
 
         public class FragmentNodeCollection : Collection<FragmentNode> {
-            private FragmentNode _owner;
+            FragmentNode _owner;
 
             public FragmentNodeCollection(FragmentNode owner) {
                 _owner = owner;
@@ -30,7 +28,7 @@ namespace VigilantCupcake.Models {
 
             protected override void InsertItem(int index, FragmentNode item) {
                 if (item == null)
-                    throw new ArgumentNullException("item");
+                    throw new ArgumentNullException(nameof(item));
 
                 if (item.Parent != _owner) {
                     if (item.Parent != null)
@@ -56,29 +54,19 @@ namespace VigilantCupcake.Models {
 
             protected override void SetItem(int index, FragmentNode item) {
                 if (item == null)
-                    throw new ArgumentNullException("item");
+                    throw new ArgumentNullException(nameof(item));
 
                 RemoveAt(index);
                 InsertItem(index, item);
             }
         }
 
-        #endregion NodeCollection
+        FragmentNodeCollection _nodes;
 
-        #region Properties
-
-        private FilterableTreeModel _model;
-        private FragmentNodeCollection _nodes;
-
-        private FragmentNode _parent;
+        FragmentNode _parent;
 
         public int Index {
-            get {
-                if (_parent != null)
-                    return _parent.Nodes.IndexOf(this);
-                else
-                    return -1;
-            }
+            get { return (_parent != null) ? _parent.Nodes.IndexOf(this) : -1; }
         }
 
         public bool IsChecked {
@@ -86,10 +74,7 @@ namespace VigilantCupcake.Models {
                 return CheckState != CheckState.Unchecked;
             }
             set {
-                if (value)
-                    CheckState = CheckState.Checked;
-                else
-                    CheckState = CheckState.Unchecked;
+                CheckState = value ? CheckState.Checked : CheckState.Unchecked;
             }
         }
 
@@ -130,12 +115,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        internal FilterableTreeModel Model {
-            get { return _model; }
-            set { _model = value; }
-        }
-
-        #endregion Properties
+        internal FilterableTreeModel Model { get; set; }
 
         public FragmentNode()
             : this(string.Empty) {
@@ -148,15 +128,11 @@ namespace VigilantCupcake.Models {
 
         public CheckState CheckState {
             get { return _checkState; }
-            set {
-                UpdateCheckState(value, true);
-            }
+            set { UpdateCheckState(value, true); }
         }
 
         public string FilePath {
-            get {
-                return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath);
-            }
+            get { return Path.Combine(OperatingSystemUtilities.LocalFiles.BaseDirectoryRoot, FullPath); }
         }
 
         public Fragment Fragment {
@@ -165,7 +141,7 @@ namespace VigilantCupcake.Models {
                 if (_fragment != value) {
                     _fragment = value;
                     if (_fragment != null) {
-                        UpdateCheckState(_fragment.Enabled ? System.Windows.Forms.CheckState.Checked : System.Windows.Forms.CheckState.Unchecked);
+                        UpdateCheckState(_fragment.Enabled ? CheckState.Checked : CheckState.Unchecked);
                     }
                 }
             }
@@ -173,11 +149,7 @@ namespace VigilantCupcake.Models {
 
         public string FullPath {
             get {
-                if (Parent == null || Parent.Parent == null) {
-                    return Text;
-                } else {
-                    return Parent.FullPath + '\\' + Text;
-                }
+                return (Parent == null || Parent.Parent == null) ? Text : Parent.FullPath + '\\' + Text;
             }
         }
 
@@ -212,13 +184,13 @@ namespace VigilantCupcake.Models {
             if (model != null && Parent != null) {
                 TreePath path = model.GetPath(Parent);
                 if (path != null) {
-                    TreeModelEventArgs args = new TreeModelEventArgs(path, new int[] { Index }, new object[] { this });
+                    var args = new TreeModelEventArgs(path, new int[] { Index }, new object[] { this });
                     model.OnNodesChanged(args);
                 }
             }
         }
 
-        private FilterableTreeModel FindModel() {
+        FilterableTreeModel FindModel() {
             FragmentNode node = this;
             while (node != null) {
                 if (node.Model != null)
@@ -228,20 +200,20 @@ namespace VigilantCupcake.Models {
             return null;
         }
 
-        private void UpdateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false) {
-            if (fromProperty && newValue == System.Windows.Forms.CheckState.Indeterminate) {
-                newValue = System.Windows.Forms.CheckState.Unchecked;
+        void UpdateCheckState(System.Windows.Forms.CheckState newValue, bool fromProperty = false) {
+            if (fromProperty && newValue == CheckState.Indeterminate) {
+                newValue = CheckState.Unchecked;
             }
 
-            if (Fragment != null && newValue == System.Windows.Forms.CheckState.Indeterminate) {
-                newValue = System.Windows.Forms.CheckState.Unchecked;
+            if (Fragment != null && newValue == CheckState.Indeterminate) {
+                newValue = CheckState.Unchecked;
             }
 
             if (_updatingNodes == 0 && (_checkState != newValue || _firstUpdate)) {
                 _firstUpdate = false;
                 _checkState = newValue;
                 if (Fragment != null) {
-                    Fragment.Enabled = (_checkState == System.Windows.Forms.CheckState.Checked || _checkState == System.Windows.Forms.CheckState.Indeterminate);
+                    Fragment.Enabled = (_checkState == CheckState.Checked || _checkState == CheckState.Indeterminate);
                 }
 
                 _updatingNodes++;
@@ -250,7 +222,7 @@ namespace VigilantCupcake.Models {
                 }
 
                 try {
-                    if (Nodes.Count > 0 && _checkState != System.Windows.Forms.CheckState.Indeterminate) {
+                    if (Nodes.Count > 0 && _checkState != CheckState.Indeterminate) {
                         Nodes.ToList().ForEach(n => ((FragmentNode)n).UpdateCheckState(_checkState));
                     }
                 } catch (ArgumentOutOfRangeException) {
@@ -262,11 +234,11 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private void UpdateParent(System.Windows.Forms.CheckState checkstate) {
+        void UpdateParent(CheckState checkstate) {
             if (Parent.Nodes.All(n => n.CheckState == checkstate))
-                ((FragmentNode)Parent).UpdateCheckState(newValue: checkstate);
+                ((FragmentNode)Parent).UpdateCheckState(checkstate);
             else
-                ((FragmentNode)Parent).UpdateCheckState(newValue: System.Windows.Forms.CheckState.Indeterminate);
+                ((FragmentNode)Parent).UpdateCheckState(CheckState.Indeterminate);
         }
     }
 }

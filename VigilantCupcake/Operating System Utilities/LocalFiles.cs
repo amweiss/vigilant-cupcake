@@ -10,7 +10,7 @@ namespace VigilantCupcake.OperatingSystemUtilities {
 
         public static string BaseDirectory {
             get {
-                return System.IO.Path.Combine(BaseDirectoryRoot, FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName);
+                return Path.Combine(BaseDirectoryRoot, FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductName);
             }
         }
 
@@ -22,7 +22,7 @@ namespace VigilantCupcake.OperatingSystemUtilities {
 
         public static string AsFileName(this string value) {
             var sb = new StringBuilder(value);
-            foreach (char c in System.IO.Path.GetInvalidFileNameChars()) {
+            foreach (char c in Path.GetInvalidFileNameChars()) {
                 sb = sb.Replace(c, '_');
             }
             return sb.ToString();

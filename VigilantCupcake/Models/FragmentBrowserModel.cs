@@ -36,7 +36,7 @@ namespace VigilantCupcake.Models {
             }
         }
 
-        private FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo, FragmentNode parent) {
+        FragmentNode CreateDirectoryNode(DirectoryInfo directoryInfo, FragmentNode parent) {
             var directoryNode = new FragmentNode() { Text = directoryInfo.Name, Parent = parent };
             if (!directoryInfo.Exists) return directoryNode;
             foreach (var directory in directoryInfo.GetDirectories())
@@ -56,11 +56,9 @@ namespace VigilantCupcake.Models {
             return directoryNode;
         }
 
-        private void DoSaveAll() {
-            Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
-        }
+        void DoSaveAll() => Fragments.ToList().ForEach(f => f.Save()); //Doing it in parallel seems to deadlock UI on label update
 
-        private IEnumerable<FragmentNode> GetAllNodesRecursively(FragmentNode subnode) {
+        IEnumerable<FragmentNode> GetAllNodesRecursively(FragmentNode subnode) {
             yield return subnode;
 
             foreach (var node in subnode.Nodes) {
