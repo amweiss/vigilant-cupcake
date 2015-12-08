@@ -1,6 +1,6 @@
 #Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
-[![Build status](https://ci.appveyor.com/api/projects/status/e9ttq90fpql431m7?svg=true)](https://ci.appveyor.com/project/amweiss/vigilant-cupcake)
+[![Build status](https://ci.appveyor.com/api/projects/status/53wlsra4txwijo3p?svg=true)](https://ci.appveyor.com/project/amweiss/vigilant-cupcake)
 
 
 ##How to get it
