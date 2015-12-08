@@ -4,9 +4,9 @@ configuration: Release
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  assembly_version: '{branch}'
+  assembly_file_version: '{branch}'
+  assembly_informational_version: '{branch}'
 environment:
   GitHubToken:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
