@@ -1,12 +1,16 @@
 version: '{branch}+{build}'
 os: Visual Studio 2015
 configuration: Release
+install:
+- ps: >-
+    $githubrelease = Invoke-RestMethod -Uri https://api.github.com/repos/amweiss/vigilant-cupcake/releases/latest | Select-Object -expand tag_name
+    $env:APPVEYOR_BUILD_VERSION = $githubrelease.TrimStart('v')
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{branch}'
-  assembly_file_version: '{branch}'
-  assembly_informational_version: '{branch}'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
 environment:
   GitHubToken:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
