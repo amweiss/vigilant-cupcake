@@ -23,7 +23,7 @@ deploy:
   auth_token:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
   on:
-    branch: master
+    branch: /v?\d+\.\d+\.\d+/
     appveyor_repo_tag: true
 artifacts:
   - path: 'Releases\*'
