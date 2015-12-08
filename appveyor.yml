@@ -6,15 +6,15 @@ environment:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
 install:
 - ps: >-
-    $githubrelease = Invoke-RestMethod -Uri https://api.github.com/repos/amweiss/vigilant-cupcake/releases/latest?access_token=$env:GitHubToken | Select-Object -expand tag_name
+    $githubtags = Invoke-RestMethod -Uri https://api.github.com/repos/amweiss/vigilant-cupcake/tags?access_token=$env:GitHubToken
 
-    $env:LAST_RELEASE = $githubrelease.TrimStart('v')
+    $env:LAST_TAG = $githubtags[0].name.TrimStart('v')
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '$(LAST_RELEASE)'
-  assembly_file_version: '$(LAST_RELEASE)'
-  assembly_informational_version: '$(LAST_RELEASE)'
+  assembly_version: '$(LAST_TAG)'
+  assembly_file_version: '$(LAST_TAG)'
+  assembly_informational_version: '$(LAST_TAG)'
 before_build:
 - cmd: nuget restore
 after_build:
