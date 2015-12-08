@@ -57,6 +57,13 @@ namespace VigilantCupcake {
 
         void aboutToolStripMenuItem_Click(object sender, EventArgs e) => _aboutBox.ShowDialog();
 
+        private void allowInvalidCertToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            UserConfig.Instance.AllowInvalidCertificates = allowInvalidCertToolStripMenuItem.Checked;
+
+            updateHostsFileView();
+            updateCurrentFragmentView();
+        }
         void backgroundDownloadTimer_Tick(object sender, EventArgs e) {
             fragmentTreeView.Model.Fragments.AsParallel().ForAll(y => y.DownloadFile());
             saveAll();
@@ -71,7 +78,7 @@ namespace VigilantCupcake {
             foreach (var menuItem in syncronizeFragmentsToolStripMenuItem.DropDownItems.OfType<ToolStripMenuItem>().Where(i => i.Tag != null)) {
                 menuItem.Enabled = syncEnabledToolStripMenuItem.Checked;
                 menuItem.Checked = (int.Parse(menuItem.Tag.ToString()) == UserConfig.Instance.SecondsBetweenBackgroundDownloads);
-            }
+        }
         }
 
         void exit_Click(object sender, EventArgs e) {
@@ -218,7 +225,7 @@ namespace VigilantCupcake {
                 changedNode.Fragment.PropertyChanged += fragmentPropertyChanged;
                 changedNode.Fragment.DownloadStarting += fragmentDownloadStarting;
                 changedNode.Fragment.ContentsDownloaded += fragmentDownloadEnding;
-            }
+        }
         }
 
         void newHostFilterBox_TextChanged(object sender, EventArgs e) {
