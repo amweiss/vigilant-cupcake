@@ -15,7 +15,7 @@ install:
 before_build:
 - cmd: nuget restore
 before_deploy:
-- ps: squirrel.ps1
+- ps: $env:APPVEYOR_BUILD_FOLDER\squirrel.ps1
 deploy:
 - provider: GitHub
   tag: 
