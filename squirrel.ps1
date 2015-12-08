@@ -7,8 +7,8 @@ $nuspec_dir = "$src_dir"
 $temp_dir = "$build_dir\Temp"
 $release_dir = "$base_dir\Releases"
 $sharedAssemblyInfo = "$src_dir\Properties\AssemblyInfo.cs"
-$squirrel = "$package_dir\squirrel.windows.*\tools\Squirrel.exe"
-$syncReleases = "$package_dir\squirrel.windows.*\tools\SyncReleases.exe"
+$squirrel = Get-ChildItem "$package_dir\squirrel.windows.*\tools\Squirrel.exe"
+$syncReleases = Get-ChildItem "$package_dir\squirrel.windows.*\tools\SyncReleases.exe"
 
 function Exec #Taken from psake https://github.com/psake/psake
 {
@@ -76,14 +76,18 @@ if ($env:APPVEYOR) {
 
 $version = Get-BuildVersion
 
+Write-Host "Creating package"
 Create-Package "vigilantcupcake" $version
-	
+
+Write-Host "Syncing releases"	
 if ($token) {
 	Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $token }
 } else {
 	Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" }
 }
+Write-Host "Releasifying"
 Exec { .$squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" } # -n "/a /f build/windows/app_signing.p12 /p SECRETPASSWORD"
 
+Write-Host "Cleanup"
 # Remove synced releases for github
 Get-ChildItem "$release_dir.*" -exclude @('*' + $version + '*') | Remove-Item
