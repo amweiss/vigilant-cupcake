@@ -1,14 +1,26 @@
-Properties {
-	$base_dir = resolve-path .
-	$src_dir = "$base_dir\VigilantCupcake"
-	$package_dir = "$base_dir\packages"
-	$build_dir = "$src_dir\build"
-	$nuspec_dir = "$src_dir"
-	$temp_dir = "$build_dir\Temp"
-	$release_dir = "$base_dir\Releases"
-	$nuget = "$src_dir\.nuget\nuget.exe"
-	$squirrel = "$package_dir\squirrel.windows.*\tools\Squirrel.exe"
-	$syncReleases = "$package_dir\squirrel.windows.*\tools\SyncReleases.exe"
+# Much taken from https://github.com/BarryThePenguin/SparkleShare
+$base_dir = resolve-path .
+$src_dir = "$base_dir\VigilantCupcake"
+$package_dir = "$base_dir\packages"
+$build_dir = "$src_dir\build"
+$nuspec_dir = "$src_dir"
+$temp_dir = "$build_dir\Temp"
+$release_dir = "$base_dir\Releases"
+$sharedAssemblyInfo = "$src_dir\Properties\AssemblyInfo.cs"
+$squirrel = "$package_dir\squirrel.windows.*\tools\Squirrel.exe"
+$syncReleases = "$package_dir\squirrel.windows.*\tools\SyncReleases.exe"
+
+function Exec #Taken from psake https://github.com/psake/psake
+{
+	[CmdletBinding()]
+	param(
+		[Parameter(Position=0,Mandatory=1)][scriptblock]$cmd,
+		[Parameter(Position=1,Mandatory=0)][string]$errorMessage = ($msgs.error_bad_command -f $cmd)
+	)
+	& $cmd
+	if ($lastexitcode -ne 0) {
+		throw ("Exec: " + $errorMessage)
+	}
 }
 
 function Create-Package($project, $version) {
@@ -17,7 +29,7 @@ function Create-Package($project, $version) {
 
 	Try {
 		Replace-Content "$nuspec_dir\$project.nuspec" '0.0.0' $version
-		Exec { .$nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $version -Properties Platform=AnyCPU -Properties Configuration=Release }
+		Exec {nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $version -Properties Platform=AnyCPU -Properties Configuration=Release }
 	}
 	Finally {
 		Move-Files "$temp_dir\$project.nuspec" $nuspec_dir
@@ -62,18 +74,16 @@ if ($env:APPVEYOR) {
 	$token = $env:GitHubToken
 }
 
-Task Installer -Depends Pack -Description "Create Squirrel release." {
-	$version = Get-BuildVersion
+$version = Get-BuildVersion
 
-	Create-Package "vigilantcupcake" $version
+Create-Package "vigilantcupcake" $version
 	
-	if ($token) {
-		Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $token }
-	} else {
-		Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" }
-	}
-	Exec { .$squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" } # -n "/a /f build/windows/app_signing.p12 /p SECRETPASSWORD"
-
-	# Remove synced releases for github
-	Get-ChildItem "$release_dir.*" -exclude @('*' + $version + '*') | Remove-Item
+if ($token) {
+	Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $token }
+} else {
+	Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" }
 }
+Exec { .$squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" } # -n "/a /f build/windows/app_signing.p12 /p SECRETPASSWORD"
+
+# Remove synced releases for github
+Get-ChildItem "$release_dir.*" -exclude @('*' + $version + '*') | Remove-Item

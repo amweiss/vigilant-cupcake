@@ -13,7 +13,7 @@ build:
 deploy:
 - provider: GitHub
   tag: 
-  description: Vigilant Cupcake Releases
+  description: Vigilant Cupcake Test
   auth_token:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
   on:
