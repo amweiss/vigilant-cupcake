@@ -7,7 +7,7 @@ $nuspec_dir = "$src_dir"
 $temp_dir = "$build_dir\Temp"
 $release_dir = "$base_dir\Releases"
 $sharedAssemblyInfo = "$src_dir\Properties\AssemblyInfo.cs"
-$squirrel = Get-ChildItem "$package_dir\squirrel.windows.*\tools\Squirrel.exe"
+$squirrel = Get-ChildItem "$package_dir\squirrel.windows.*\tools\Squirrel.com"
 $syncReleases = Get-ChildItem "$package_dir\squirrel.windows.*\tools\SyncReleases.exe"
 
 function Create-Package($project, $version) {
