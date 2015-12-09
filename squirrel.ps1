@@ -15,8 +15,9 @@ function Create-Package($project, $version) {
 	Copy-Files "$nuspec_dir\$project.nuspec" $temp_dir
 
 	Try {
-		Replace-Content "$nuspec_dir\$project.nuspec" '0.0.0' $version
-		& nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $version -Properties Platform=AnyCPU -Properties Configuration=Release
+		$trimmedVersion = $version.Split('+')[0]
+		Replace-Content "$nuspec_dir\$project.nuspec" '0.0.0' $trimmedVersion
+		& nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $trimmedVersion -Properties Platform=AnyCPU -Properties Configuration=Release
 	}
 	Finally {
 		Move-Files "$temp_dir\$project.nuspec" $nuspec_dir
