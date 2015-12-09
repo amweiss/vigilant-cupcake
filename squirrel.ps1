@@ -15,9 +15,8 @@ function Create-Package($project, $version) {
 	Copy-Files "$nuspec_dir\$project.nuspec" $temp_dir
 
 	Try {
-		$trimmedVersion = $version.Split('+')[0]
-		Replace-Content "$nuspec_dir\$project.nuspec" '0.0.0' $trimmedVersion
-		& nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $trimmedVersion -Properties Platform=AnyCPU -Properties Configuration=Release
+		Replace-Content "$nuspec_dir\$project.nuspec" '0.0.0' $version
+		& nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$base_dir" -Version $version -Properties Platform=AnyCPU -Properties Configuration=Release
 	}
 	Finally {
 		Move-Files "$temp_dir\$project.nuspec" $nuspec_dir
@@ -58,9 +57,10 @@ if ($env:APPVEYOR) {
 }
 
 $version = Get-BuildVersion
+$trimmedVersion = $version.Split('+')[0]
 
 Write-Host "Creating package"
-Create-Package "vigilantcupcake" $version
+Create-Package "vigilantcupcake" $trimmedVersion
 
 Write-Host "Syncing releases"	
 if ($token) {
@@ -69,8 +69,8 @@ if ($token) {
 	& $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake"
 }
 Write-Host "Releasifying"
-& $squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass" | Write-Output
+& $squirrel -releasify "$build_dir\vigilantcupcake.$trimmedVersion.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass" | Write-Output
 
 Write-Host "Cleanup"
 # Remove synced releases for github
-Get-ChildItem "$release_dir.*" -exclude @('*' + $version + '*') | Remove-Item
+Get-ChildItem "$release_dir.*" -exclude @('*' + $trimmedVersion + '*') | Remove-Item
