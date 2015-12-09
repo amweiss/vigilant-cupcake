@@ -36,17 +36,6 @@ function Create-Package($project, $version) {
 	}
 }
 
-function Get-BuildVersion {
-	$version = Get-SharedVersion
-	$buildNumber = $env:APPVEYOR_BUILD_NUMBER
-
-	if ($env:APPVEYOR_REPO_TAG -ne "True" -And $buildNumber -ne $null) {
-		$version += "-build-" + $buildNumber.ToString().PadLeft(5, '0')
-	}
-
-	return $version
-}
-
 function Get-SharedVersion {
 	$line = Get-Content "$sharedAssemblyInfo" | where {$_.Contains("AssemblyVersion")}
 	$line.Split('"')[1]
@@ -74,7 +63,7 @@ if ($env:APPVEYOR) {
 	$token = $env:GitHubToken
 }
 
-$version = Get-BuildVersion
+$version = $env:LAST_TAG
 
 Write-Host "Creating package"
 Create-Package "vigilantcupcake" $version
@@ -86,7 +75,7 @@ if ($token) {
 	Exec { .$syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" }
 }
 Write-Host "Releasifying"
-Exec { .$squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f vigilant.pfx /p $env:SigningPass" | Write-Output }
+& $squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f vigilant.pfx /p $env:SigningPass" | Write-Output
 
 Write-Host "Cleanup"
 # Remove synced releases for github
