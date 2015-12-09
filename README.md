@@ -89,9 +89,9 @@ In fragment editors:
 * **Ctrl+I** - forced AutoIndentChars of current line
 
 ##Requirements
-* .NET 4.5 runtime
+* .NET 4.6 runtime
 
-##Coming Soon
+##Coming Soonish
 * OSX and Linux support via [Mono](http://www.mono-project.com/)
 
 
