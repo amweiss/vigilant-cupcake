@@ -25,7 +25,7 @@ namespace VigilantCupcake.SubForms {
         public static string AssemblyVersion {
             get {
                 var version = Assembly.GetExecutingAssembly().GetName().Version;
-                return $"{version.Major}.{version.Minor}.{version.Revision}";
+                return $"{version.Major}.{version.Minor}.{version.Build}";
             }
         }
 
