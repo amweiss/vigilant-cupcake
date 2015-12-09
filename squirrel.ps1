@@ -69,7 +69,7 @@ if ($token) {
 	& $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake"
 }
 Write-Host "Releasifying"
-& $squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f vigilant.pfx /p $env:SigningPass" | Write-Output
+& $squirrel -releasify "$build_dir\vigilantcupcake.$version.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass" | Write-Output
 
 Write-Host "Cleanup"
 # Remove synced releases for github
