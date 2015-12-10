@@ -4,6 +4,8 @@ configuration: Release
 environment:
   GitHubToken:
     secure: r6jryFbtdcnJ58qhoZOaNWcQWgueWcT9oSPAeX+vmoTC/yTiXCkhaYMhB9RuZbKD
+  SigningPass:
+    secure: VP66uiQQCi1kzZnqKY55/RXdpVT71VfAuAF1Lc5MDqc=
 install:
 - ps: >-
     $githubtags = Invoke-RestMethod -Uri https://api.github.com/repos/amweiss/vigilant-cupcake/tags?access_token=$env:GitHubToken

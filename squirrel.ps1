@@ -1,5 +1,5 @@
 # Much taken from https://github.com/BarryThePenguin/SparkleShare
-$base_dir = resolve-path .
+$base_dir = if ($env:APPVEYOR) {$env:APPVEYOR_BUILD_FOLDER} else {resolve-path .}
 $src_dir = "$base_dir\VigilantCupcake"
 $package_dir = "$base_dir\packages"
 $build_dir = "$src_dir\build"
@@ -46,14 +46,8 @@ function Move-Files($source, $destination) {
 	Move-Item "$source" $destination -Force > $null
 }
 
-
 function Replace-Content($file, $pattern, $substring) {
 	(gc $file) -Replace $pattern, $substring | sc $file
-}
-
-if ($env:APPVEYOR) {
-	$base_dir = $env:APPVEYOR_BUILD_FOLDER
-	$token = $env:GitHubToken
 }
 
 $version = Get-BuildVersion
@@ -63,14 +57,12 @@ Write-Host "Creating package"
 Create-Package "vigilantcupcake" $trimmedVersion
 
 Write-Host "Syncing releases"	
-if ($token) {
-	& $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $token
-} else {
-	& $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake"
-}
+& $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $env:GitHubToken
 Write-Host "Releasifying"
-& $squirrel -releasify "$build_dir\vigilantcupcake.$trimmedVersion.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass" | Write-Output
+& $squirrel -releasify "$build_dir\vigilantcupcake.$trimmedVersion.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass"
 
 Write-Host "Cleanup"
 # Remove synced releases for github
-Get-ChildItem "$release_dir.*" -exclude @('*' + $trimmedVersion + '*') | Remove-Item
+Get-ChildItem $release_dir\* -exclude @("Setup.*", "RELEASES", ("*"+$trimmedVersion+"*")) | Remove-Item
+# Remove old entries from RELEASES
+(Get-Content $release_dir\RELEASES) -match $trimmedVersion | Out-File $release_dir\RELEASES
