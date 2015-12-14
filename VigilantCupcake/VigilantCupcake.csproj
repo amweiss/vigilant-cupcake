@@ -215,6 +215,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="vc_loading.gif" />
     <None Include="Resources\NewSolutionFolder_6289.png" />
     <None Include="Resources\NewRequest_8796.png" />
     <None Include="Resources\Save_6530.png" />
