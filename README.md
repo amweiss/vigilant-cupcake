@@ -92,7 +92,7 @@ In fragment editors:
 * .NET 4.6 runtime
 
 ##Coming Soonish
-* OSX and Linux support via [Mono](http://www.mono-project.com/)
+* OSX and Linux support via [Mono](http://www.mono-project.com/) or [.NET Core](https://dotnet.github.io/)
 
 
 ##Libraries
