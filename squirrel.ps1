@@ -59,10 +59,10 @@ Create-Package "vigilantcupcake" $trimmedVersion
 Write-Host "Syncing releases"	
 & $syncReleases -releaseDir $release_dir -url "https://github.com/amweiss/vigilant-cupcake" -token $env:GitHubToken
 Write-Host "Releasifying"
-& $squirrel -releasify "$build_dir\vigilantcupcake.$trimmedVersion.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -loadingGif "$src_dir\vc_loading.gif" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass"
+& $squirrel -releasify "$build_dir\vigilantcupcake.$trimmedVersion.nupkg" -releaseDir $release_dir -setupIcon "$src_dir\VC2-nobg-whitecake.ico" -n "/a /f $src_dir\vigilant.pfx /p $env:SigningPass"
 
 Write-Host "Cleanup"
 # Remove synced releases for github
 Get-ChildItem $release_dir\* -exclude @("Setup.*", "RELEASES", ("*"+$trimmedVersion+"*")) | Remove-Item
 # Remove old entries from RELEASES
-(Get-Content $release_dir\RELEASES) -match $trimmedVersion | Out-File $release_dir\RELEASES
+(Get-Content $release_dir\RELEASES) -match $trimmedVersion | Out-File -Encoding utf8 $release_dir\RELEASES
