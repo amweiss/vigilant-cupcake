@@ -83,7 +83,7 @@
             this.latestBox.ReadOnly = true;
             this.latestBox.Size = new System.Drawing.Size(176, 20);
             this.latestBox.TabIndex = 3;
-            this.latestBox.Text = "Version";
+            this.latestBox.Text = "Checking...";
             // 
             // label2
             // 
