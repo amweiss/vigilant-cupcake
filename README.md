@@ -1,18 +1,18 @@
-#Vigilant Cupcake
+# Vigilant Cupcake
 ![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/53wlsra4txwijo3p?svg=true)](https://ci.appveyor.com/project/amweiss/vigilant-cupcake)
 
 
-##How to get it
+## How to get it
 * Run Setup.exe from [here](https://github.com/amweiss/vigilant-cupcake/releases/latest) to have it install the self-updating executable
 
-##What is it?
+## What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
 
 [![Example Usage](https://amweiss.github.io/vigilant-cupcake/images/example.png)](https://amweiss.github.io/vigilant-cupcake/images/example.png)
 
-##Features
+## Features
 * Combine multiple "fragments" to produce your hosts file
 * Sync fragments with remote URLs
 * Download and save files while running in the background
@@ -22,7 +22,7 @@ Vigilant Cupcake is a tool to manage your hosts file.
 * Filter the hosts file to exclude entries you don't want
 * Self updating executable
 
-##Usage
+## Usage
 The fragment list on the left is a collection of all the possible hosts file fragments you can use.
 
 Go to `File` > `New` to create a new fragment.
@@ -42,14 +42,14 @@ If you enable "New Hosts Analysis" from the options menu, filtering and conflict
 
 Filter the new hosts file by entering a regular expression into the "Exclude:" text box.
 
-###Importing
+### Importing
 Currently you can import a set of fragments by right clicking an empty folder and selecting `Import Remote Fragments`.
 
 The format is one URL per line.
 
 The "Open File" dialog can read from a local file or remote URL.
 
-###Hotkeys
+### Hotkeys
 The file windows support the following hotkeys:
 Main tools:
 * **Ctrl+N** - create a new fragment
@@ -88,14 +88,14 @@ In fragment editors:
 * **Ctrl+(NumpadPlus, NumpadMinus, 0)** - zoom in, zoom out, no zoom
 * **Ctrl+I** - forced AutoIndentChars of current line
 
-##Requirements
+## Requirements
 * .NET 4.6 runtime
 
-##Coming Soonish
+## Coming Soonish
 * OSX and Linux support via [Mono](http://www.mono-project.com/) or [.NET Core](https://dotnet.github.io/)
 
 
-##Libraries
+## Libraries
 * [FastColoredTextBox](https://www.nuget.org/packages/FastColoredTextBox/)
 * [TreeViewAdv](https://www.nuget.org/packages/TreeViewAdv/)
 * [Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows)
