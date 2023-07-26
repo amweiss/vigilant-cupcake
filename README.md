@@ -7,7 +7,7 @@
 ## What is it?
 Vigilant Cupcake is a tool to manage your hosts file.
 
-[![Example Usage](https://amweiss.github.io/vigilant-cupcake/images/example.png)](https://amweiss.github.io/vigilant-cupcake/images/example.png)
+[![Example Usage](https://raw.githubusercontent.com/amweiss/vigilant-cupcake/gh-pages/images/example.png)](https://amweiss.github.io/vigilant-cupcake/images/example.png)
 
 ## Features
 * Combine multiple "fragments" to produce your hosts file
