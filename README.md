@@ -1,8 +1,5 @@
 # Vigilant Cupcake
-![Vigilant Cupcake](https://amweiss.github.io/vigilant-cupcake/images/VC2-nobg-whitecake.png)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/53wlsra4txwijo3p?svg=true)](https://ci.appveyor.com/project/amweiss/vigilant-cupcake)
-
+![Vigilant Cupcake](https://raw.githubusercontent.com/amweiss/vigilant-cupcake/gh-pages/images/VC2-nobg-whitecake.png)
 
 ## How to get it
 * Run Setup.exe from [here](https://github.com/amweiss/vigilant-cupcake/releases/latest) to have it install the self-updating executable
